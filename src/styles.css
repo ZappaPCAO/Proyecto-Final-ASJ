@@ -1,1 +1,40 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Inconsolata&family=Roboto+Slab&display=swap');
+
+*{
+    font-family: 'Inconsolata', monospace,'Roboto Slab', serif !important;
+}
+.mi-bg-black{
+    background-color: #202020 !important;
+}
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+.b-degrade {
+height: 0.2rem;
+background: rgb(189, 189, 189);
+background: linear-gradient(90deg, #fff 0%, rgb(150, 126, 197) 0%, #8732CD 48%, #CE1793 100%);
+background-size: 300% 100%;
+animation: gradient 5s ease infinite;
+}
+.mi-btn-add{
+    background-color: #8732CD !important;
+    color: white !important;
+    opacity: 100% !important;
+    transition: all .3s linear !important;
+}
+.mi-btn-add:hover{
+    opacity: 80% !important;
+}
+.shadow-light{
+    box-shadow: 0 1rem 3rem rgba(255, 255, 255, 0.35) !important;
+}
+
+/* `LISTAS` */

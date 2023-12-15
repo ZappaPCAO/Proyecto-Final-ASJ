@@ -1,0 +1,141 @@
+<main class="mi-bg-black">
+    <div class="container-fluid p-4">
+        <div class="row justify-content-center">
+            <div class="col-lg-7">
+                <div class="card shadow-light bg-light px-2">
+                    <div class="card-header"><h3 class="text-center font-weight-light my-3">Nuevo Proveedor</h3></div>
+                    <div class="card-body">
+                        <form id="form-proveedores">
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <div class="form-floating mb-3 mb-md-0">
+                                        <input class="form-control" id="inputCode" type="text" placeholder="" />
+                                        <label id="labelCode" for="inputCode">Codigo:</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input class="form-control" id="inputRazonSocial" type="text" placeholder="" />
+                                        <label for="inputRazonSocial">Razon Social:</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <div class="form-floating mb-3 mb-md-0">
+                                        <input class="form-control" id="inputRubro" type="text" placeholder="" />
+                                        <label id="labelRubro" for="inputRubro">Rubro:</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="inputEmail" type="email" placeholder="name@example.com" />
+                                        <label for="inputEmail">Email:</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <p class="h6">Direccion: </p>
+                                <div class="col-md-6">                                                                                                       
+                                    <div class="form-floating">                                                                                                               
+                                        <input type="text" class="form-control" id="inputCalle" placeholder="">
+                                        <label for="inputCalle">Calle: </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">                                                        
+                                        <input type="text" class="form-control" id="inputCalleNro" placeholder="">
+                                        <label for="inputCalleNro">Numero: </label>
+                                    </div>
+                                </div>          
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-4">  
+                                    <div class="form-floating">                                                 
+                                        <select class="form-control" id="SelPais">
+                                            <option value="argentina">Argentina</option>
+                                            <option value="espana">España</option>
+                                            <!-- Mas opc -->
+                                        </select>
+                                        <label for="SelPais">País:</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">  
+                                    <div class="form-floating">                                                 
+                                        <select class="form-control" id="SelProvincia">
+                                            <option value="entre rios">Entre Rios</option>
+                                            <option value="buenos aires">Buenos Aires</option>
+                                            <option value="malaga">Malaga</option>
+                                            <!-- Mas opc -->
+                                        </select>
+                                        <label for="SelPais">Provincia:</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">  
+                                    <div class="form-floating">                                                 
+                                        <select class="form-control" id="SelLocalidad">
+                                            <option value="caba">Ciudad Autonoma de Buenos Aires</option>
+                                            <option value="oro verde">Oro Verde</option>
+                                            <option value="santa fe">Santa Fe</option>
+                                            <!-- Mas opc -->
+                                        </select>
+                                        <label for="SelLocalidad">Localidad:</label>
+                                    </div>
+                                </div>                                                
+                            </div>
+                            <div class="row mb-3">
+                                <p class="h6">Datos Fiscales: </p>
+                                <div class="col-md-6">                                                                                                       
+                                    <div class="form-floating">                                                                                                               
+                                        <input type="text" class="form-control" id="inputCuit" placeholder="">
+                                        <label for="inputCuit">CUIT: </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">                                                        
+                                        <input type="text" class="form-control" id="inputCondIva" placeholder="">
+                                        <label for="inputCondIva">Cond. iva: </label>
+                                    </div>
+                                </div>          
+                            </div>
+                            <div class="row mb-3">
+                                <p class="h6">Datos de Contacto: </p>
+                                <div class="col-md-6">                                                                                                       
+                                    <div class="form-floating">                                                                                                               
+                                        <input type="text" class="form-control" id="inputNombre" placeholder="">
+                                        <label for="inputNombre">Nombre: </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">                                                        
+                                        <input type="text" class="form-control" id="inputApellido" placeholder="">
+                                        <label for="inputApellido">Apellido: </label>
+                                    </div>
+                                </div>                                                        
+                            </div>
+                            <div class="row mb-3">                                      
+                                <div class="col-md-6">
+                                    <div class="form-floating">                                                        
+                                        <input type="text" class="form-control" id="inputTelefono" placeholder="">
+                                        <label for="inputTelefono">Telefono: </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">                                                        
+                                        <input type="text" class="form-control" id="inputRol" placeholder="">
+                                        <label for="inputRol">Rol: </label>
+                                    </div>
+                                </div>                                                        
+                            </div>                                                                                  
+                            <div class="mt-4 mb-0">
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-block mi-btn-add" id="btnCrearProveedor">Crear Proveedor</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

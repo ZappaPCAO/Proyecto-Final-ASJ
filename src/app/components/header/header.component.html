@@ -1,0 +1,61 @@
+<header class="mi-header">
+    <nav class="navbar navbar-expand-lg p-0 m-0">
+      <div class="container-fluid mi-bg-black">
+        <a class="navbar-brand" href="#">
+            <img class="img-logo" src="../../../assets/img/logo-t-zappa.webp" alt="logo-t-zappa"/>
+        </a>
+        <button class="navbar-toggler" id="drop-menu" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+          <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.--><path fill="#ffffff" d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg>
+        </button>
+        <div class="navbar-collapse justify-content-end align-items-center" id="navbarScroll">
+          <ul class="navbar-nav navbar-nav-scroll header-options px-4">
+            <li class="nav-item px-2">
+                <button class="mi-bg-black btn mi-btn px-2">
+                    Inicio
+                </button>              
+            </li>
+            <li class="nav-item dropdown px-2">                
+                <button class="mi-bg-black btn dropdown-toggle dropdown mi-btn  px-2" data-bs-toggle="dropdown" aria-expanded="false">
+                  Proveedores
+                </button>
+                <ul class="dropdown-menu mi-bg-black dropdown-menu-end dropdown-menu-lg-star border p-2">
+                  <li><a class="dropdown-item" routerLink="provider/add-provider">Agregar proveedor</a></li>                  
+                  <li><a class="dropdown-item" routerLink="provider/list-providers">Ver listado</a></li>
+                  <li><a class="dropdown-item" href="#">Proximamente</a></li>
+                </ul>
+            </li>            
+            <li class="nav-item dropdown px-2">                
+                <button class="mi-bg-black btn dropdown-toggle dropdown mi-btn  px-2" data-bs-toggle="dropdown" aria-expanded="false">
+                  Articulos
+                </button>
+                <ul class="dropdown-menu mi-bg-black dropdown-menu-end dropdown-menu-lg-star border p-2">
+                  <li><a class="dropdown-item" routerLink="article/add-article">Agregar articulo</a></li>                  
+                  <li><a class="dropdown-item" routerLink="article/list-articles">Ver listado</a></li>
+                  <li><a class="dropdown-item" href="#">Proximamente</a></li>
+                </ul>
+            </li>
+            <li class="nav-item dropdown px-2">                
+                <button class="mi-bg-black btn dropdown-toggle dropdown mi-btn  px-2" data-bs-toggle="dropdown" aria-expanded="false">
+                  Ordenes de compras
+                </button>
+                <ul class="dropdown-menu mi-bg-black dropdown-menu-end dropdown-menu-lg-star border p-2">
+                  <li><a class="dropdown-item" routerLink="purchase-order/add-purchase-order">Agregar orden de compra</a></li>                  
+                  <li><a class="dropdown-item" routerLink="purchase-order/list-purchases-orders">Ver listado</a></li>
+                  <li><a class="dropdown-item" href="#">Proximamente</a></li>
+                </ul>
+            </li> 
+            <li class="nav-item dropdown px-2">                
+                <button class="mi-bg-black btn dropdown-toggle dropdown mi-btn  px-2" data-bs-toggle="dropdown" aria-expanded="false">
+                  <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.--><path fill="#ffffff" d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464H398.7c-8.9-63.3-63.3-112-129-112H178.3c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3z"/></svg>
+                </button>
+                <ul class="dropdown-menu mi-bg-black dropdown-menu-end dropdown-menu-lg-star border p-2">
+                  <li><a class="dropdown-item" href="#">Ingresar</a></li>                  
+                  <li><a class="dropdown-item" href="#">Registrarse</a></li>
+                </ul>
+            </li>               
+          </ul>
+        </div>        
+      </div>        
+    </nav>
+    <div class="b-degrade"></div>
+  </header>

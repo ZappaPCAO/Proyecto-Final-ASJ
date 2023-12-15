@@ -1,0 +1,12 @@
+.img-logo-footer{
+    border-radius: 4rem;
+    width: 7.5rem;
+}
+p, .footer-redes a{
+    color: white !important;
+    opacity: 80%;
+    transition: all .3s linear;
+}
+.footer-redes a:hover{
+    opacity: 100%;
+}

@@ -1,0 +1,68 @@
+<main class="mi-bg-black">
+    <div class="container-fluid p-4">
+        <div class="row justify-content-center">
+            <div class="col-lg-7">
+                <div class="card shadow-light bg-light px-2">
+                    <div class="card-header"><h3 class="text-center font-weight-light my-3">Nueva Orden de Compra</h3></div>
+                    <div class="card-body">
+                        <form id="form-oc">
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <div class="form-floating mb-3 mb-md-0">
+                                        <input class="form-control" readonly id="inputNroOrdenCompra" min="100000" type="number" placeholder="" />
+                                        <label id="labelCode" for="inputNroOrdenCompra">Nro. Orden de Compra: </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input class="form-control" id="inputFecEmi" type="date" placeholder="" />
+                                        <label for="inputFecEmi">Fecha de emision:</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <div class="form-floating mb-3 mb-md-0">
+                                        <input class="form-control" id="inputFecRecep" type="date" placeholder="" />
+                                        <label for="inputFecRecep">Fecha de recepcion:</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">  
+                                    <div class="form-floating">                                                 
+                                        <select class="form-control" id="SelProvedores">                                                           
+                                        </select>
+                                        <label for="SelProvedores">Provedor:</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input class="form-control" id="inputEmail" type="email" placeholder="name@example.com" />
+                                <label for="inputEmail">Email address</label>
+                            </div>                                            
+                            <div class="row mb-3">
+                                <div class="col-md-6">  
+                                    <div class="form-floating">                                                 
+                                        <select class="form-control" id="SelProductos">                                                           
+                                        </select>
+                                        <label for="SelProductos">Articulo:</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">                                                        
+                                        <input type="number" min="1" value="1" class="form-control" id="inputCantidad" placeholder="">
+                                        <label for="inputCantidad">Cantidad:</label>
+                                    </div>
+                                </div>          
+                            </div>                                                                                 
+                            <div class="mt-4 mb-0">
+                                <div class="d-grid">
+                                    <button class="btn btn-block mi-btn-add" id="btnCrearOC">Crear Orden de compra</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

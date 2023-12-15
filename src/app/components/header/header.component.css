@@ -1,0 +1,20 @@
+.img-logo{
+    border-radius: 1rem;
+    width: 10rem;
+    height: 3rem;
+    margin: .5rem .5rem !important;
+    opacity: 80%;
+    transition: all .3s linear;
+}
+.img-logo:hover{
+    opacity: 100%;
+}
+
+.header-options li a{
+    color: white !important;
+    padding: 0 3rem;
+}
+
+.mi-btn{
+    color: white !important;
+}
