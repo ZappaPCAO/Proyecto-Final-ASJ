@@ -6,5 +6,10 @@ import { Component } from '@angular/core';
   styleUrl: './add-article.component.css'
 })
 export class AddArticleComponent {
+agregarArticulo() {
+throw new Error('Method not implemented.');
+}
+
+
 
 }

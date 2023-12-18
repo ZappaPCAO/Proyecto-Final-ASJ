@@ -1,1 +1,63 @@
-<p>provider-list works!</p>
+<main>
+    <div class="container-fluid px-4">
+        <h1 class="mt-4">Tabla de Articulos</h1>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item"><a href="../index.html">Inicio</a></li>
+            <li class="breadcrumb-item active">Tabla</li>
+        </ol>                        
+        <div id="contenedor-tabla" class="card mb-4">
+            <div id="tabla-contenedor" class="card-body">
+                <table id="datatablesSimple">
+                    <thead id="header-table">
+                        <tr>
+                            <th>Cod</th>
+                            <th>Razon Social</th>
+                            <th>Mail</th>
+                            <th>Rubro</th>
+                            <th>Numero</th>
+                            <th>Pais</th>
+                            <th>Provincia</th>
+                            <th>Localidad</th>
+                            <th>Cuit</th>
+                            <th>Cond. Iva</th>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Telefono</th>
+                            <th>Rol</th>
+                        </tr>
+                    </thead>
+                    <tbody id="body-table">
+                        <tr *ngFor="let provider of this.providers">
+                            <th>{{provider.cod}}</th>
+                            <th>{{provider.razSocial}}</th>
+                            <th>{{provider.email}}</th>
+                            <th>{{provider.rubro}}</th>
+                            <th>{{provider.calle}}</th>
+                            <th>{{provider.nro}}</th>
+                            <th>{{provider.pais}}</th>
+                            <th>{{provider.provincia}}</th>
+                            <th>{{provider.localidad}}</th>
+                            <th>{{provider.cuit}}</th>
+                            <th>{{provider.condIva}}</th>
+                            <th>{{provider.nombre}}</th>
+                            <th>{{provider.apellido}}</th>
+                            <th>{{provider.rol}}</th>
+                        </tr>
+                    </tbody>
+                    <tfoot id="footer-table">
+                        <tr>
+                            <th>Cod</th>
+                            <th>Razon Social</th>
+                            <th>Mail</th>
+                            <th>Cuit</th>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Telefono</th>
+                            <th>Rol</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>

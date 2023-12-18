@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AddProviderComponent } from './components/forms/add-provider/add-provider.component';
 import { AddArticleComponent } from './components/forms/add-article/add-article.component';
@@ -9,12 +9,25 @@ import { PurhcaseOrderListComponent } from './components/lists/purhcase-order-li
 
 const routes: Routes = [
   {path: ``, component: AddProviderComponent},
-  {path: `provider/add-provider`, component: AddProviderComponent},
-  {path: `article/add-article`, component: AddArticleComponent},
-  {path: `purchase-order/add-purchase-order`, component: AddPurchaseOrderComponent},
-  {path: `provider/list-providers`, component: ProviderListComponent},
-  {path: `article/list-articles`, component: ArticleListComponent},
-  {path: `purchase-order/list-purchases-orders`, component: PurhcaseOrderListComponent},
+  {path: `article`,
+    children:[
+      {path: `add-article`, component: AddArticleComponent},
+      {path: `list-articles`, component: ArticleListComponent}      
+    ]
+  },
+  {path: `provider`,
+    children:[
+      {path: `add-providers`, component: AddProviderComponent},
+      {path: `list-providers`, component: ProviderListComponent}
+    ]
+  },
+  {path: `purchase-order`,
+    children:[
+      {path: `add-purchase-order`, component: AddPurchaseOrderComponent},
+      {path: `list-purchase-order`, component: PurhcaseOrderListComponent}
+    ]
+  },
+  {path: `**`, component: AddProviderComponent}
 ];
 
 @NgModule({

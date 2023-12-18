@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
+// Components 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -12,6 +15,12 @@ import { AddPurchaseOrderComponent } from './components/forms/add-purchase-order
 import { ProviderListComponent } from './components/lists/provider-list/provider-list.component';
 import { ArticleListComponent } from './components/lists/article-list/article-list.component';
 import { PurhcaseOrderListComponent } from './components/lists/purhcase-order-list/purhcase-order-list.component';
+
+// Services
+import { ArticleService } from './services/article.service';
+import { ProviderService } from './services/provider.service';
+import { PurchaseOrderService } from './services/purchase-order.service';
+
 
 @NgModule({
   declarations: [
@@ -29,8 +38,14 @@ import { PurhcaseOrderListComponent } from './components/lists/purhcase-order-li
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
+    FormsModule,
   ],
-  providers: [],
+  providers: [
+    ArticleService,
+    ProviderService,
+    PurchaseOrderService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

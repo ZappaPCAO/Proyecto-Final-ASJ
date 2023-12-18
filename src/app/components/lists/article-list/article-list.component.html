@@ -6,7 +6,6 @@
             <li class="breadcrumb-item active">Tabla</li>
         </ol>                        
         <div id="contenedor-tabla" class="card mb-4">
-            
             <div id="tabla-contenedor" class="card-body">
                 <table id="datatablesSimple">
                     <thead id="header-table">
@@ -20,15 +19,15 @@
                             <th>Telefono</th>
                             <th>Rol</th>
                         </tr>
-                    </thead>                                    
+                    </thead>
                     <tbody id="body-table">
-                        <tr>
-                            <td>Ejemplo</td>
-                            <td>Ejemplo</td>
-                            <td>Ejemplo</td>
-                            <td>Ejemplo</td>
-                            <td>Ejemplo</td>
-                            <td>Ejemplo</td>
+                        <tr *ngFor="let article of this.articles">
+                            <td>{{article.proveedor}}</td>
+                            <td>{{article.cod}}</td>
+                            <td>{{article.categoria}}</td>
+                            <td>{{article.producto}}</td>
+                            <td>{{article.descri}}</td>
+                            <td>{{article.precio | currency:'$':'symbol':'1.2-2'}}</td>
                         </tr>
                     </tbody>
                     <tfoot id="footer-table">
