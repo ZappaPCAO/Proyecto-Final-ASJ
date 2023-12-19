@@ -20,7 +20,7 @@
                 </button>
                 <ul class="dropdown-menu mi-bg-black dropdown-menu-end dropdown-menu-lg-star border p-2">
                   <li><a class="dropdown-item" routerLink="provider/add-provider">Agregar proveedor</a></li>                  
-                  <li><a class="dropdown-item" routerLink="provider/list-providers">Ver listado</a></li>
+                  <li><a class="dropdown-item" [routerLink]="['provider/list', 'providers']">Ver listado</a></li>
                   <li><a class="dropdown-item" href="#">Proximamente</a></li>
                 </ul>
             </li>            
@@ -30,7 +30,7 @@
                 </button>
                 <ul class="dropdown-menu mi-bg-black dropdown-menu-end dropdown-menu-lg-star border p-2">
                   <li><a class="dropdown-item" routerLink="article/add-article">Agregar articulo</a></li>                  
-                  <li><a class="dropdown-item" routerLink="article/list-articles">Ver listado</a></li>
+                  <li><a class="dropdown-item" [routerLink]="['article/list', 'articles']">Ver listado</a></li>
                   <li><a class="dropdown-item" href="#">Proximamente</a></li>
                 </ul>
             </li>
@@ -40,7 +40,7 @@
                 </button>
                 <ul class="dropdown-menu mi-bg-black dropdown-menu-end dropdown-menu-lg-star border p-2">
                   <li><a class="dropdown-item" routerLink="purchase-order/add-purchase-order">Agregar orden de compra</a></li>                  
-                  <li><a class="dropdown-item" routerLink="purchase-order/list-purchases-orders">Ver listado</a></li>
+                  <li><a class="dropdown-item" [routerLink]="['purchase-order/list', 'purchase-orders']">Ver listado</a></li>
                   <li><a class="dropdown-item" href="#">Proximamente</a></li>
                 </ul>
             </li> 

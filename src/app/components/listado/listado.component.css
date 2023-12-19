@@ -1,0 +1,8 @@
+.table-dark {
+    background-color: #333 !important;
+  }
+  
+  .table-dark th, .table-dark td {
+    border-color: #565656 !important;
+    color: #fff !important; /* Texto blanco para mejor contraste en fondos oscuros */
+  }

@@ -1,4 +1,24 @@
-export const providers = [
+export type Provider = {
+  id: number;
+  cod: string;
+  razSocial: string;
+  email: string;
+  rubro: string;
+  calle: string;
+  nro: string;
+  pais: string;
+  provincia: string;
+  localidad: string;
+  cuit: string;
+  condIva: string;
+  nombre: string;
+  apellido: string;
+  telefono: string;
+  rol: string;
+}
+
+
+export const providers: Provider[] = [
     {
       id: 1,
       cod: 'C001',

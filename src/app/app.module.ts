@@ -12,14 +12,13 @@ import { MainComponent } from './components/main/main.component';
 import { AddProviderComponent } from './components/forms/add-provider/add-provider.component';
 import { AddArticleComponent } from './components/forms/add-article/add-article.component';
 import { AddPurchaseOrderComponent } from './components/forms/add-purchase-order/add-purchase-order.component';
-import { ProviderListComponent } from './components/lists/provider-list/provider-list.component';
-import { ArticleListComponent } from './components/lists/article-list/article-list.component';
-import { PurhcaseOrderListComponent } from './components/lists/purhcase-order-list/purhcase-order-list.component';
+import { ListadoComponent } from './components/listado/listado.component';
 
 // Services
 import { ArticleService } from './services/article.service';
 import { ProviderService } from './services/provider.service';
 import { PurchaseOrderService } from './services/purchase-order.service';
+
 
 
 @NgModule({
@@ -31,9 +30,7 @@ import { PurchaseOrderService } from './services/purchase-order.service';
     AddProviderComponent,
     AddArticleComponent,
     AddPurchaseOrderComponent,
-    ProviderListComponent,
-    ArticleListComponent,
-    PurhcaseOrderListComponent
+    ListadoComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,29 @@
+<main>
+    <div class="container-fluid px-4">
+        <h1 class="mt-4">Tabla de Articulos</h1>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item"><a href="../index.html">Inicio</a></li>
+            <li class="breadcrumb-item active">Tabla</li>
+        </ol>                        
+        <div id="contenedor-tabla" class="card mb-4">
+            <div id="tabla-contenedor" class="card-body">
+                <table id="datatablesSimple" class="table table-black" >
+                    <thead id="header-table">
+                        <tr>
+                            <th scope="col" *ngFor="let key of this.thead">
+                                {{key}}
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="body-table">
+                        <tr scope="row" *ngFor="let provider of this.tbody">
+                            <th *ngFor="let key of thead"> 
+                                  {{provider[key]}}                              
+                            </th>                        
+                        </tr>
+                    </tbody>                    
+                </table>
+            </div>
+        </div>
+    </div>
+</main>

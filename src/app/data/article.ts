@@ -1,5 +1,15 @@
+export type Article = {
+  id: number,
+  proveedor: string,
+  cod: string,
+  categoria: string,
+  producto: string,
+  descri: string,
+  precio: number,
+}
+
 // Agregar el ID del proveedor para poder buscarlo y mostrarlo mas facil.-
-export const articles = [ 
+export const articles: Article[] = [ 
     {
       id: 1,
       proveedor: 'ProveedorUno',
@@ -7,7 +17,7 @@ export const articles = [
       categoria: 'Electrónica',
       producto: 'Producto Uno',
       descri: 'Descripción del Producto Uno',
-      precio: '100',
+      precio: 100,
     },
     {
       id: 2,
@@ -16,7 +26,7 @@ export const articles = [
       categoria: 'Ropa',
       producto: 'Producto Dos',
       descri: 'Descripción del Producto Dos',
-      precio: '50',
+      precio: 50,
     },
     {
       id: 3,
@@ -25,7 +35,7 @@ export const articles = [
       categoria: 'Herramientas',
       producto: 'Producto Tres',
       descri: 'Descripción del Producto Tres',
-      precio: '120',
+      precio: 120,
     },
     {
       id: 4,
@@ -34,7 +44,7 @@ export const articles = [
       categoria: 'Muebles',
       producto: 'Producto Cuatro',
       descri: 'Descripción del Producto Cuatro',
-      precio: '200',
+      precio: 200,
     },
     {
       id: 5,
@@ -43,7 +53,7 @@ export const articles = [
       categoria: 'Juguetes',
       producto: 'Producto Cinco',
       descri: 'Descripción del Producto Cinco',
-      precio: '15',
+      precio: 15,
     },
     {
       id: 6,
@@ -52,7 +62,7 @@ export const articles = [
       categoria: 'Electrodomésticos',
       producto: 'Producto Seis',
       descri: 'Descripción del Producto Seis',
-      precio: '300',
+      precio: 300,
     },
     {
       id: 7,
@@ -61,7 +71,7 @@ export const articles = [
       categoria: 'Librería',
       producto: 'Producto Siete',
       descri: 'Descripción del Producto Siete',
-      precio: '25',
+      precio: 25,
     },
     {
       id: 8,
@@ -70,7 +80,7 @@ export const articles = [
       categoria: 'Automotriz',
       producto: 'Producto Ocho',
       descri: 'Descripción del Producto Ocho',
-      precio: '150',
+      precio: 150,
     },
     {
       id: 9,
@@ -79,7 +89,7 @@ export const articles = [
       categoria: 'Deportes',
       producto: 'Producto Nueve',
       descri: 'Descripción del Producto Nueve',
-      precio: '80',
+      precio: 80,
     },
     {
       id: 10,
@@ -88,6 +98,6 @@ export const articles = [
       categoria: 'Alimentos',
       producto: 'Producto Diez',
       descri: 'Descripción del Producto Diez',
-      precio: '10',
+      precio: 10,
     },
   ];

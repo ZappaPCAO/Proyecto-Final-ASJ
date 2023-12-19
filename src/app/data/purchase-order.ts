@@ -1,4 +1,15 @@
-export const purchaseOrders = [
+export type PurchaseOrder = {
+  id: number,
+  nroOC: string,
+  fecEmi: string,
+  fecRecep: string,
+  email: string,
+  proveedor: string,
+  articulo: string,
+  cantidad: number,
+}
+
+export const purchaseOrders: PurchaseOrder[] = [
     {
       id: 1,
       nroOC: 'OC001',
@@ -7,7 +18,7 @@ export const purchaseOrders = [
       email: 'correo1@example.com',
       proveedor: 'ProveedorUno',
       articulo: 'Producto Uno',
-      cantidad: '5',
+      cantidad: 5,
     },
     {
       id: 2,
@@ -17,7 +28,7 @@ export const purchaseOrders = [
       email: 'correo2@example.com',
       proveedor: 'ProveedorDos',
       articulo: 'Producto Dos',
-      cantidad: '10',
+      cantidad: 10,
     },
     {
       id: 3,
@@ -27,7 +38,7 @@ export const purchaseOrders = [
       email: 'correo3@example.com',
       proveedor: 'ProveedorTres',
       articulo: 'Producto Tres',
-      cantidad: '8',
+      cantidad: 8,
     },
     {
       id: 4,
@@ -37,7 +48,7 @@ export const purchaseOrders = [
       email: 'correo4@example.com',
       proveedor: 'ProveedorCuatro',
       articulo: 'Producto Cuatro',
-      cantidad: '15',
+      cantidad: 15,
     },
     {
       id: 5,
@@ -47,7 +58,7 @@ export const purchaseOrders = [
       email: 'correo5@example.com',
       proveedor: 'ProveedorCinco',
       articulo: 'Producto Cinco',
-      cantidad: '3',
+      cantidad: 3,
     },
     {
       id: 6,
@@ -57,7 +68,7 @@ export const purchaseOrders = [
       email: 'correo6@example.com',
       proveedor: 'ProveedorSeis',
       articulo: 'Producto Seis',
-      cantidad: '12',
+      cantidad: 12,
     },
     {
       id: 7,
@@ -67,7 +78,7 @@ export const purchaseOrders = [
       email: 'correo7@example.com',
       proveedor: 'ProveedorSiete',
       articulo: 'Producto Siete',
-      cantidad: '6',
+      cantidad: 6,
     },
     {
       id: 8,
@@ -77,7 +88,7 @@ export const purchaseOrders = [
       email: 'correo8@example.com',
       proveedor: 'ProveedorOcho',
       articulo: 'Producto Ocho',
-      cantidad: '9',
+      cantidad: 9,
     },
     {
       id: 9,
@@ -87,7 +98,7 @@ export const purchaseOrders = [
       email: 'correo9@example.com',
       proveedor: 'ProveedorNueve',
       articulo: 'Producto Nueve',
-      cantidad: '7',
+      cantidad: 7,
     },
     {
       id: 10,
@@ -97,6 +108,6 @@ export const purchaseOrders = [
       email: 'correo10@example.com',
       proveedor: 'ProveedorDiez',
       articulo: 'Producto Diez',
-      cantidad: '4',
+      cantidad: 4,
     },
   ];

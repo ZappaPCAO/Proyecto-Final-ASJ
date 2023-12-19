@@ -5,17 +5,17 @@
                 <div class="card shadow-light bg-light px-2">
                     <div class="card-header"><h3 class="text-center font-weight-light my-3">Nueva Orden de Compra</h3></div>
                     <div class="card-body">
-                        <form id="form-oc">
+                        <form #miForm="ngForm" (ngSubmit)="agregarPurchaseOrder()">
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <div class="form-floating mb-3 mb-md-0">
-                                        <input class="form-control" readonly id="inputNroOrdenCompra" min="100000" type="number" placeholder="" />
+                                        <input class="form-control" name="nroOC" [(ngModel)]="this.purchaseOrder.nroOC" type="text" placeholder="" />
                                         <label id="labelCode" for="inputNroOrdenCompra">Nro. Orden de Compra: </label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <input class="form-control" id="inputFecEmi" type="date" placeholder="" />
+                                        <input class="form-control" name="fecEmi" [(ngModel)]="this.purchaseOrder.fecEmi" type="date" placeholder="" />
                                         <label for="inputFecEmi">Fecha de emision:</label>
                                     </div>
                                 </div>
@@ -23,33 +23,39 @@
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <div class="form-floating mb-3 mb-md-0">
-                                        <input class="form-control" id="inputFecRecep" type="date" placeholder="" />
+                                        <input class="form-control" name="fecRecep" [(ngModel)]="this.purchaseOrder.fecRecep" type="date" placeholder="" />
                                         <label for="inputFecRecep">Fecha de recepcion:</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">  
                                     <div class="form-floating">                                                 
-                                        <select class="form-control" id="SelProvedores">                                                           
+                                        <select class="form-control" name="proveedor" [(ngModel)]="this.purchaseOrder.proveedor">
+                                            <option *ngFor="let provider of this.arrProviders" value="{{provider}}">
+                                                {{provider | uppercase}}
+                                            </option>                                                           
                                         </select>
                                         <label for="SelProvedores">Provedor:</label>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-floating mb-3">
-                                <input class="form-control" id="inputEmail" type="email" placeholder="name@example.com" />
+                                <input class="form-control" name="email" [(ngModel)]="this.purchaseOrder.email" type="email" placeholder="name@example.com" />
                                 <label for="inputEmail">Email address</label>
                             </div>                                            
                             <div class="row mb-3">
                                 <div class="col-md-6">  
                                     <div class="form-floating">                                                 
-                                        <select class="form-control" id="SelProductos">                                                           
+                                        <select class="form-control" name="articulo" [(ngModel)]="this.purchaseOrder.articulo">
+                                            <option *ngFor="let article of this.arrArticles" value="{{article}}">
+                                                {{article | uppercase	}}
+                                            </option>                                                           
                                         </select>
                                         <label for="SelProductos">Articulo:</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating">                                                        
-                                        <input type="number" min="1" value="1" class="form-control" id="inputCantidad" placeholder="">
+                                        <input type="number" min="1" value="1" class="form-control" [(ngModel)]="this.purchaseOrder.cantidad" name="cantidad" placeholder="">
                                         <label for="inputCantidad">Cantidad:</label>
                                     </div>
                                 </div>          

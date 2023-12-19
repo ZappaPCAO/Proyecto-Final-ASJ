@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { purchaseOrders } from '../data/purchase-order';
 
-const dataPurchaseOrders = purchaseOrders;
+const dataPurchaseOrders = purchaseOrders || [];
 
 @Injectable({
   providedIn: 'root'
@@ -9,4 +9,14 @@ const dataPurchaseOrders = purchaseOrders;
 export class PurchaseOrderService {
 
   constructor() { }
+
+  get(){
+    return dataPurchaseOrders;
+  }
+
+  post(purchaseOrder: any){
+    purchaseOrder.id = (dataPurchaseOrders && dataPurchaseOrders.length > 0) ? dataPurchaseOrders[dataPurchaseOrders.length-1].id + 1 : 1; // Controlo la id
+    
+    dataPurchaseOrders.push(purchaseOrder);
+  }
 }

@@ -20,6 +20,7 @@ export class ArticleService {
   }
   
   post(article: any){
+    article.id = (dataArticles && dataArticles.length > 0) ? dataArticles[dataArticles.length-1].id + 1 : 1; // Controlo la id
     dataArticles.push(article);
   }
 }
