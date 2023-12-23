@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AddProviderComponent } from './components/forms/add-provider/add-provider.component';
 import { AddArticleComponent } from './components/forms/add-article/add-article.component';
 import { AddPurchaseOrderComponent } from './components/forms/add-purchase-order/add-purchase-order.component';
-import { ListadoComponent } from './components/listado/listado.component';
+import { ListadoComponent } from './components/list/listado.component';
 
 const routes: Routes = [
   {path:``, component: AddProviderComponent},

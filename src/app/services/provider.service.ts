@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { providers } from '../data/provider';
+import { Injectable } from '@angular/core'; 
+import { providers } from '../models/provider';
 
 const dataProviders = providers || [];
 

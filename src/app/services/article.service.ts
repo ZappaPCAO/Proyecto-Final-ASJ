@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { articles } from '../data/article';
+import { articles } from '../models/article';
 
 const dataArticles = articles;
 

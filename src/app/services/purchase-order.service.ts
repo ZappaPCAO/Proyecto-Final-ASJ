@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { purchaseOrders } from '../data/purchase-order';
+import { purchaseOrders } from '../models/purchase-order';
 
 const dataPurchaseOrders = purchaseOrders || [];
 
