@@ -13,17 +13,26 @@
                             <th scope="col" *ngFor="let key of this.thead">
                                 {{key}}
                             </th>
+                            <th> . . . </th>
                         </tr>
                     </thead>
                     <tbody id="body-table">
-                        <tr scope="row" *ngFor="let provider of this.tbody">
+                        <tr scope="row" *ngFor="let el of this.tbody;let i = index">
                             <th *ngFor="let key of thead"> 
-                                  {{provider[key]}}                              
+                                  {{el[key]}}                              
+                            </th>
+                            <th>
+                                <div class="d-flex">
+                                    <button class="btn btn-outline-secondary" (click)="onEdit(el)">
+                                        Editar</button>
+                                    <button class="btn btn-outline-danger ms-1" (click)="onDelete(el)">
+                                        Eliminar</button>
+                                </div>
                             </th>                        
-                        </tr>
+                        </tr>                      
                     </tbody>                    
-                </table>
+                </table>                
             </div>
-        </div>
+        </div>       
     </div>
 </main>

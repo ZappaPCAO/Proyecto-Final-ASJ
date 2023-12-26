@@ -10,25 +10,27 @@ const routes: Routes = [
   {path: `article`,
     children:[
       {path: `add-article`, component: AddArticleComponent},
-      {path: `list/:tipo`, component: ListadoComponent},
+      {path: `update-article/:id`, component: AddArticleComponent},
       {path: `**`, component: AddArticleComponent},
     ]
   },
   {path: `provider`,
     children:[
       {path: `add-provider`, component: AddProviderComponent},
-      {path: `list/:tipo`, component: ListadoComponent},
-      {path: `**`, component: AddProviderComponent},
+      {path: 'update-provider/:id', component:AddProviderComponent},
+      {path: `**`, component: AddPurchaseOrderComponent},
     ]
   },
   {path: `purchase-order`,
     children:[
       {path: `add-purchase-order`, component: AddPurchaseOrderComponent},
-      {path: `list/:tipo`, component: ListadoComponent},
+      {path: `update-purchase-order/:id`, component:AddPurchaseOrderComponent},
       {path: `**`, component: AddPurchaseOrderComponent},
     ]
   },
-  {path: `**`, component: AddProviderComponent},
+  {path: `:tipo/list`, component: ListadoComponent},
+  
+  {path: `**`, component: AddProviderComponent}
 ];
 
 @NgModule({

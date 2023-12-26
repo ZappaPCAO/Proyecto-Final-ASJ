@@ -1,5 +1,5 @@
 export interface Provider {
-  id: string;
+  id: number;
   cod: string;
   razSocial: string;
   email: string;
@@ -9,6 +9,7 @@ export interface Provider {
   rubro: string;
   calle: string;
   nroCalle: number;
+  cp: string;
   pais: string;
   provincia: string;
   localidad: string;
@@ -21,7 +22,7 @@ export interface Provider {
 }
 
 export const providers: Provider[] = Array.from({ length: 20 }, (_, index) => ({
-  id: `id${index + 1}`,
+  id: index + 1,
   cod: `cod${index + 1}`,
   razSocial: `Razón Social ${index + 1}`,
   email: `email${index + 1}@example.com`,
@@ -31,6 +32,7 @@ export const providers: Provider[] = Array.from({ length: 20 }, (_, index) => ({
   rubro: `Rubro ${index + 1}`,
   calle: `Calle ${index + 1}`,
   nroCalle: index + 1,
+  cp: `E310 ${index + 1}`,
   pais: `País ${index + 1}`,
   provincia: `Provincia ${index + 1}`,
   localidad: `Localidad ${index + 1}`,

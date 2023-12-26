@@ -1,7 +1,7 @@
 <header class="mi-header">
     <nav class="navbar navbar-expand-lg p-0 m-0">
       <div class="container-fluid mi-bg-black">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" routerLink="provider/add-provider">
             <img class="img-logo" src="../../../assets/img/logo-t-zappa.webp" alt="logo-t-zappa"/>
         </a>
         <button class="navbar-toggler" id="drop-menu" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
@@ -10,7 +10,7 @@
         <div class="navbar-collapse justify-content-end align-items-center" id="navbarScroll">
           <ul class="navbar-nav navbar-nav-scroll header-options px-4">
             <li class="nav-item px-2">
-                <button class="mi-bg-black btn mi-btn px-2">
+                <button class="mi-bg-black btn mi-btn px-2" routerLink="provider/add-provider">
                     Inicio
                 </button>              
             </li>
@@ -20,7 +20,7 @@
                 </button>
                 <ul class="dropdown-menu mi-bg-black dropdown-menu-end dropdown-menu-lg-star border p-2">
                   <li><a class="dropdown-item" routerLink="provider/add-provider">Agregar proveedor</a></li>                  
-                  <li><a class="dropdown-item" [routerLink]="['provider/list', 'providers']">Ver listado</a></li>
+                  <li><a class="dropdown-item" [routerLink]="['providers', 'list']">Ver listado</a></li>
                   <li><a class="dropdown-item" href="#">Proximamente</a></li>
                 </ul>
             </li>            
@@ -30,7 +30,7 @@
                 </button>
                 <ul class="dropdown-menu mi-bg-black dropdown-menu-end dropdown-menu-lg-star border p-2">
                   <li><a class="dropdown-item" routerLink="article/add-article">Agregar articulo</a></li>                  
-                  <li><a class="dropdown-item" [routerLink]="['article/list', 'articles']">Ver listado</a></li>
+                  <li><a class="dropdown-item" [routerLink]="['articles', 'list']">Ver listado</a></li>
                   <li><a class="dropdown-item" href="#">Proximamente</a></li>
                 </ul>
             </li>
@@ -40,7 +40,7 @@
                 </button>
                 <ul class="dropdown-menu mi-bg-black dropdown-menu-end dropdown-menu-lg-star border p-2">
                   <li><a class="dropdown-item" routerLink="purchase-order/add-purchase-order">Agregar orden de compra</a></li>                  
-                  <li><a class="dropdown-item" [routerLink]="['purchase-order/list', 'purchase-orders']">Ver listado</a></li>
+                  <li><a class="dropdown-item" [routerLink]="['purchase-orders', 'list']">Ver listado</a></li>
                   <li><a class="dropdown-item" href="#">Proximamente</a></li>
                 </ul>
             </li> 
