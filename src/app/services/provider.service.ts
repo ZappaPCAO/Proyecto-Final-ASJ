@@ -42,6 +42,9 @@ export class ProviderService {
   }
 
   delete(provider: Provider){
-
+    let index: number;
+    index = dataProviders.findIndex(provi => provi.id === provider.id);
+    
+    dataProviders.splice(index, 1);
   }
 }

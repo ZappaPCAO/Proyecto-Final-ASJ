@@ -1,4 +1,4 @@
-<main>
+<!-- <main>
     <div class="container-fluid px-4">
         <h1 class="mt-4">Tabla de Articulos</h1>
         <ol class="breadcrumb mb-4">
@@ -7,32 +7,125 @@
         </ol>                        
         <div id="contenedor-tabla" class="card mb-4">
             <div id="tabla-contenedor" class="card-body">
-                <table id="datatablesSimple" class="table table-black" >
+                <table id="datatablesSimple" class="table table-black">
                     <thead id="header-table">
-                        <tr>
-                            <th scope="col" *ngFor="let key of this.thead">
-                                {{key}}
-                            </th>
-                            <th> . . . </th>
-                        </tr>
+                      <tr>
+                        <th scope="col" *ngFor="let key of this.thead">
+                          <ng-container *ngIf="key !== 'datosContacto'; else datosContactoTitle">
+                            {{key | uppercase}}
+                          </ng-container>
+                          <ng-template #datosContactoTitle>
+                            <th span="3">
+                              Datos de contacto                          
+                            </th>                            
+                          </ng-template>
+                        </th>
+                        <th>Acciones</th>
+                      </tr>
                     </thead>
                     <tbody id="body-table">
-                        <tr scope="row" *ngFor="let el of this.tbody;let i = index">
-                            <th *ngFor="let key of thead"> 
-                                  {{el[key]}}                              
-                            </th>
-                            <th>
-                                <div class="d-flex">
-                                    <button class="btn btn-outline-secondary" (click)="onEdit(el)">
-                                        Editar</button>
-                                    <button class="btn btn-outline-danger ms-1" (click)="onDelete(el)">
-                                        Eliminar</button>
-                                </div>
-                            </th>                        
-                        </tr>                      
-                    </tbody>                    
-                </table>                
+                      <tr scope="row" *ngFor="let el of this.tbody; let i = index">
+                        <td *ngFor="let key of thead">
+                          <ng-container *ngIf="key !== 'datosContacto'; else datosContactoBody">
+                            {{el[key]}}
+                          </ng-container>
+                          <ng-template #datosContactoBody>
+                            <tr>
+                                <td>{{el[key].email}}</td>
+                                <td>{{el[key].telefono}}</td>
+                                <td>{{el[key].sitioWeb}}</td>
+                            </tr>                                          
+                          </ng-template>
+                        </td>
+                        <td>
+                          <div class="d-flex">
+                            <button class="btn btn-outline-secondary" (click)="onEdit(el)">
+                              Editar
+                            </button>
+                            <button class="btn btn-outline-danger ms-1" (click)="onDelete(el)">
+                              Eliminar
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>                              
             </div>
         </div>       
     </div>
+</main> -->
+
+<main class="intro">
+  <div class="bg-image h-100">
+    <div class="mask d-flex align-items-center h-100">
+      <div class="container-fluid">
+        <div class="row justify-content-center">
+          <div class="col-12">
+            <div class="card shadow-2-strong">
+              <div class="card-body p-0">
+                <div class="table-responsive table-scroll" data-mdb-perfect-scrollbar="true" style="position: relative; height: 700px">
+                  <table class="table table-dark mb-0">
+                    <thead>
+                      <tr class="text-uppercase text-center">                        
+                        <ng-container *ngFor="let key of thead">                          
+                          <ng-container *ngIf="key !== 'datosContacto'; else datosContactoHeader">
+                            <th>{{key}}</th>
+                          </ng-container>                          
+                          <ng-template #datosContactoHeader>
+                            <th colspan="3">
+                              <table class="table table-borderless mb-0">
+                                <tr class="text-uppercase text-center">
+                                  <th colspan="3">Datos de contacto</th>
+                                </tr>
+                                <tr class="text-uppercase text-center">
+                                  <th>Sitio</th>
+                                  <th>Email</th>
+                                  <th>Teléfono</th>
+                                </tr>
+                              </table>
+                            </th>                            
+                          </ng-template>
+                        </ng-container>                        
+                        <th>ACCIONES</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr scope="row" class="text-uppercase text-center" *ngFor="let el of this.tbody; let i = index">
+                        <ng-container *ngFor="let key of thead">                         
+                          <ng-container *ngIf="key !== 'datosContacto'; else datosContactoCell">                            
+                            <td>{{el[key]}}</td>
+                          </ng-container>                          
+                          <ng-template #datosContactoCell>
+                            <td colspan="3">
+                              <table class="table table-borderless">                                
+                                <tr class="text-uppercase">
+                                  <td>{{el['sitioWeb']}}</td>
+                                  <td>{{el[key].email}}</td>
+                                  <td>{{el[key].telefono}}</td>
+                                </tr>
+                              </table>
+                            </td>                               
+                          </ng-template>
+                        </ng-container>
+                        <td>
+                          <div class="d-flex">
+                            <button class="btn btn-outline-secondary" (click)="onEdit(el)">
+                              Editar
+                            </button>
+                            <button class="btn btn-outline-danger ms-1" (click)="onDelete(el)">
+                              Eliminar
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </main>

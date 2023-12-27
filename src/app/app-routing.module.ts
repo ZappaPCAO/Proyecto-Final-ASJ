@@ -6,30 +6,39 @@ import { AddPurchaseOrderComponent } from './components/forms/add-purchase-order
 import { ListadoComponent } from './components/list/listado.component';
 
 const routes: Routes = [
+  // {path: `article`,
+  //   children:[
+  //     {path: `add-article`, component: AddArticleComponent},
+  //     {path: `update-article/:id`, component: AddArticleComponent},
+  //     {path: `**`, component: AddArticleComponent},
+  //   ]
+  // },
+  // {path: `provider`,
+  //   children:[
+  //     {path: `add-provider`, component: AddProviderComponent},
+  //     {path: 'update-provider/:id', component:AddProviderComponent},
+  //     {path: `**`, component: AddPurchaseOrderComponent},
+  //   ]
+  // },
+  // {path: `purchase-order`,
+  //   children:[
+  //     {path: `add-purchase-order`, component: AddPurchaseOrderComponent},
+  //     {path: `update-purchase-order/:id`, component:AddPurchaseOrderComponent},
+  //     {path: `**`, component: AddPurchaseOrderComponent},
+  //   ]
+  // },
+  // {path: `:tipo/list`, component: ListadoComponent},
   {path:``, component: AddProviderComponent},
-  {path: `article`,
-    children:[
-      {path: `add-article`, component: AddArticleComponent},
-      {path: `update-article/:id`, component: AddArticleComponent},
-      {path: `**`, component: AddArticleComponent},
-    ]
-  },
-  {path: `provider`,
-    children:[
-      {path: `add-provider`, component: AddProviderComponent},
-      {path: 'update-provider/:id', component:AddProviderComponent},
-      {path: `**`, component: AddPurchaseOrderComponent},
-    ]
-  },
-  {path: `purchase-order`,
-    children:[
-      {path: `add-purchase-order`, component: AddPurchaseOrderComponent},
-      {path: `update-purchase-order/:id`, component:AddPurchaseOrderComponent},
-      {path: `**`, component: AddPurchaseOrderComponent},
-    ]
-  },
-  {path: `:tipo/list`, component: ListadoComponent},
-  
+  {path: ':tipo', children: [
+    {path: `add-article`, component: AddArticleComponent},
+    {path: `update-article/:id`, component: AddArticleComponent},
+    {path: `add-provider`, component: AddProviderComponent},
+    {path: 'update-provider/:id', component:AddProviderComponent},
+    {path: `add-purchase-order`, component: AddPurchaseOrderComponent},
+    {path: `update-purchase-order/:id`, component:AddPurchaseOrderComponent},
+    {path: `list`, component: ListadoComponent},
+    {path: `**`, component: AddProviderComponent},
+  ]},
   {path: `**`, component: AddProviderComponent}
 ];
 

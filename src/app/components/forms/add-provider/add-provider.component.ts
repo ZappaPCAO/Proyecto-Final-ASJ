@@ -15,10 +15,35 @@ import { ProvLocArgentinasService } from '../../../services/prov-loc-argentinas.
 export class AddProviderComponent implements OnInit {
   indexProv = 0; provincias!: Provincia[];
 
-  provider: Provider = {id: 0, cod: '', razSocial: '', email: '', rubro: '', calle: '', 
-                        nroCalle: 0, cp: '', pais: '', provincia: '', localidad: '', cuit: '', condIva: '',
-                        nombre: '', apellido: '', telefono: 0, rol: '', emailEmpresa: '',
-                        telefonoEmpresa: 0, sitioWeb: ''};
+  provider: Provider = {
+    id: 0,
+    cod: '',
+    razSocial: '',
+    rubro: '',
+    sitioWeb: '',
+    email: '',
+    telefono: 0,
+    direccion: {
+      calle: '',
+      nro: 0,
+      cp: '',
+      localidad: '',
+      provincia: '',
+      pais: '',
+    },
+    datosFiscales: {
+      cuit: '',
+      condIva: '',
+    },
+    datosContacto: {
+      nombre: '',
+      apellido: '',
+      telefono: 0,
+      email: '',
+      rol: '',
+    },
+  };
+  
   idProvider: any;
 
   constructor(private router: Router, private route: ActivatedRoute,
@@ -26,7 +51,7 @@ export class AddProviderComponent implements OnInit {
     private provService: ProvLocArgentinasService){}
   
   updateLocalidades(){ // para el change de la provincia
-    this.indexProv = this.provincias.findIndex(provincia => provincia.nombre === this.provider.provincia); 
+    this.indexProv = this.provincias.findIndex(provincia => provincia.nombre === this.provider.direccion.provincia); 
   }
 
   verificarUpdate(){
@@ -63,6 +88,6 @@ export class AddProviderComponent implements OnInit {
 
     this.verificarUpdate();
 
-    console.log(`id =>  ${this.provider.localidad}`);
+    console.log(`id =>  ${this.provider.direccion.localidad}`);
   };
 }

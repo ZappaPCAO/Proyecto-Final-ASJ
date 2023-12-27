@@ -20,7 +20,7 @@ export class AddArticleComponent implements OnInit {
 
   ngOnInit(): void {
     for (const provedor of this.providerService.get()) {
-      this.arrProviders.push(provedor.nombre);
+      this.arrProviders.push(provedor.datosContacto.nombre);
     }
   }
 

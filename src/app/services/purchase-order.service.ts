@@ -7,6 +7,9 @@ const dataPurchaseOrders = purchaseOrders || [];
   providedIn: 'root'
 })
 export class PurchaseOrderService {
+  delete(dato:any) {
+    throw new Error('Method not implemented.');
+  }
 
   constructor() { }
 

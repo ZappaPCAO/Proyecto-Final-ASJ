@@ -21,7 +21,7 @@ export class AddPurchaseOrderComponent implements OnInit {
 
   ngOnInit(): void {
     for (const provedor of this.providerService.get()) {
-      this.arrProviders.push(provedor.nombre);
+      this.arrProviders.push(provedor.datosContacto.nombre);
     }
     for (const article of this.articleService.get()) {
       this.arrArticles.push(article.producto);

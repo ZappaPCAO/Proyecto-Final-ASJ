@@ -40,13 +40,13 @@
                             <div class="row mb-3">                      
                                 <div class="col-md-6">
                                     <div class="form-floating mb-3 mb-md-0">
-                                        <input required class="form-control" name="emailEmpresa" [(ngModel)]="provider.emailEmpresa" type="email" minlength="4" placeholder="" />
+                                        <input required class="form-control" name="emailEmpresa" [(ngModel)]="provider.email" type="email" minlength="4" placeholder="" />
                                         <label id="labelCode" for="inputCode">E-mail:</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <input required class="form-control" name="telefonoEmpresa" [(ngModel)]="provider.telefonoEmpresa" type="number" placeholder="" />
+                                        <input required class="form-control" name="telefonoEmpresa" [(ngModel)]="provider.telefono" type="number" placeholder="" />
                                         <label for="inputRazonSocial">Telefono: </label>
                                     </div>
                                 </div>
@@ -55,19 +55,19 @@
                                 <p class="h6">Direccion: </p>
                                 <div class="col-md-4">                                                                                                       
                                     <div class="form-floating">                                                                                                               
-                                        <input required type="text" class="form-control" name="calle" [(ngModel)]="provider.calle" placeholder="">
+                                        <input required type="text" class="form-control" name="calle" [(ngModel)]="provider.direccion.calle" placeholder="">
                                         <label for="inputCalle">Calle: </label>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-floating">                                                        
-                                        <input required type="number" class="form-control" name="nroCalle" [(ngModel)]="provider.nroCalle" placeholder="">
+                                        <input required type="number" class="form-control" name="nroCalle" [(ngModel)]="provider.direccion.nro" placeholder="">
                                         <label for="inputCalleNro">Numero: </label>
                                     </div>
                                 </div>
                                 <div class="col-md-4">                                                                                                       
                                     <div class="form-floating">                                                                                                               
-                                        <input required type="text" class="form-control" name="codigo-postal" [(ngModel)]="provider.cp" placeholder="">
+                                        <input required type="text" class="form-control" name="codigo-postal" [(ngModel)]="provider.direccion.cp" placeholder="">
                                         <label for="inputCalle">Cod. Postal: </label>
                                     </div>
                                 </div>          
@@ -75,7 +75,7 @@
                             <div class="row mb-3">
                                 <div class="col-md-4">  
                                     <div class="form-floating">                                                 
-                                        <select required class="form-control" name="pais" [(ngModel)]="provider.pais">
+                                        <select required class="form-control" name="pais" [(ngModel)]="provider.direccion.pais">
                                             <option value="argentina">Argentina</option>
                                             <option value="espana">España</option>
                                             <!-- Mas opc -->
@@ -85,7 +85,7 @@
                                 </div>
                                 <div class="col-md-4">  
                                     <div class="form-floating">                                                 
-                                        <select required class="form-control" name="provincia" [(ngModel)]="provider.provincia" (change)="updateLocalidades()">
+                                        <select required class="form-control" name="provincia" [(ngModel)]="provider.direccion.provincia" (change)="updateLocalidades()">
                                             <option *ngFor="let provincia of provincias" value="{{ provincia.nombre }}">{{ provincia.nombre }}</option>
                                         </select>
                                         <label for="SelPais">Provincia:</label>
@@ -93,7 +93,7 @@
                                 </div>
                                 <div class="col-md-4">  
                                     <div class="form-floating">                                                 
-                                        <select required class="form-control" name="localidad" [(ngModel)]="provider.localidad">
+                                        <select required class="form-control" name="localidad" [(ngModel)]="provider.direccion.localidad">
                                             <option  *ngFor="let localidad of provincias[this.indexProv].localidades" value="{{ localidad.nombre }}">{{ localidad.nombre }}</option>
                                         </select>
                                         <label for="SelLocalidad">Localidad:</label>
@@ -104,13 +104,13 @@
                                 <p class="h6">Datos Fiscales: </p>
                                 <div class="col-md-6">                                                                                                       
                                     <div class="form-floating">                                                                                                               
-                                        <input required type="text" class="form-control" name="cuit" [(ngModel)]="provider.cuit" placeholder="">
+                                        <input required type="text" class="form-control" name="cuit" [(ngModel)]="provider.datosFiscales.cuit" placeholder="">
                                         <label for="inputCuit">CUIT: </label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating">                                                        
-                                        <input required type="text" class="form-control" name="condIva" [(ngModel)]="provider.condIva" placeholder="">
+                                        <input required type="text" class="form-control" name="condIva" [(ngModel)]="provider.datosFiscales.condIva" placeholder="">
                                         <label for="inputCondIva">Cond. iva: </label>
                                     </div>
                                 </div>          
@@ -119,13 +119,13 @@
                                 <p class="h6">Datos de Contacto: </p>
                                 <div class="col-md-6">                                                                                                       
                                     <div class="form-floating">                                                                                                               
-                                        <input required type="text" class="form-control" name="nombre" [(ngModel)]="provider.nombre" placeholder="">
+                                        <input required type="text" class="form-control" name="nombre" [(ngModel)]="provider.datosContacto.nombre" placeholder="">
                                         <label for="inputNombre">Nombre: </label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating">                                                        
-                                        <input required type="text" class="form-control" name="apellido" [(ngModel)]="provider.apellido" placeholder="">
+                                        <input required type="text" class="form-control" name="apellido" [(ngModel)]="provider.datosContacto.apellido" placeholder="">
                                         <label for="inputApellido">Apellido: </label>
                                     </div>
                                 </div>                                                        
@@ -133,7 +133,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-floating mb-3">
-                                        <input required class="form-control" name="email" [(ngModel)]="provider.email" type="email" placeholder="name@example.com" />
+                                        <input required class="form-control" name="email" [(ngModel)]="provider.datosContacto.email" type="email" placeholder="name@example.com" />
                                         <label for="inputEmail">Email:</label>
                                     </div>
                                 </div>
@@ -141,13 +141,13 @@
                             <div class="row mb-3">                                      
                                 <div class="col-md-6">
                                     <div class="form-floating">                                                        
-                                        <input required type="number" class="form-control" name="telefono" [(ngModel)]="provider.telefono" placeholder="">
+                                        <input required type="number" class="form-control" name="telefono" [(ngModel)]="provider.datosContacto.telefono" placeholder="">
                                         <label for="inputTelefono">Telefono: </label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating">                                                        
-                                        <input required type="text" class="form-control" name="rol" [(ngModel)]="provider.rol" placeholder="">
+                                        <input required type="text" class="form-control" name="rol" [(ngModel)]="provider.datosContacto.rol" placeholder="">
                                         <label for="inputRol">Rol: </label>
                                     </div>
                                 </div>                                                        
