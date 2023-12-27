@@ -92,20 +92,34 @@
                     <tbody>
                       <tr scope="row" class="text-uppercase text-center" *ngFor="let el of this.tbody; let i = index">
                         <ng-container *ngFor="let key of thead">                         
-                          <ng-container *ngIf="key !== 'datosContacto'; else datosContactoCell">                            
-                            <td>{{el[key]}}</td>
-                          </ng-container>                          
-                          <ng-template #datosContactoCell>
-                            <td colspan="3">
-                              <table class="table table-borderless">                                
-                                <tr class="text-uppercase">
-                                  <td>{{el['sitioWeb']}}</td>
-                                  <td>{{el[key].email}}</td>
-                                  <td>{{el[key].telefono}}</td>
-                                </tr>
-                              </table>
-                            </td>                               
-                          </ng-template>
+                          <ng-container [ngSwitch]="key">
+                            <ng-container *ngSwitchCase="'datosContacto'">
+                              <td colspan="3">
+                                <table class="table table-borderless">
+                                  <tr class="text-uppercase">
+                                    <td>{{el['sitioWeb']}}</td>
+                                    <td>{{el[key].email}}</td>
+                                    <td>{{el[key].telefono}}</td>
+                                  </tr>
+                                </table>
+                              </td>
+                            </ng-container>
+                            <ng-container *ngSwitchCase="'proveedor'">
+                              <td>{{el[key].razSocial}}</td>
+                            </ng-container>
+                            <ng-container *ngSwitchCase="'detalle'">
+                              <td>{{el[key][0].proveedor.razSocial}}</td>                                                         
+                            </ng-container>
+                            <ng-container *ngSwitchCase="'precio'">
+                              <td>{{el[key] | currency:'USD':'symbol':'1.2-2'}}</td>                                                          
+                            </ng-container>
+                            <ng-container *ngSwitchCase="'total'">
+                              <td>{{el[key] | currency:'USD':'symbol':'1.2-2'}}</td>                                                          
+                            </ng-container> 
+                            <ng-container *ngSwitchDefault>
+                              <td>{{el[key]}}</td>
+                            </ng-container>
+                          </ng-container>
                         </ng-container>
                         <td>
                           <div class="d-flex">

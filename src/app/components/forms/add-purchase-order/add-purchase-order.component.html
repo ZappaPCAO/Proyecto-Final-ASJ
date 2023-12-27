@@ -5,7 +5,7 @@
                 <div class="card shadow-light bg-light px-2">
                     <div class="card-header"><h3 class="text-center font-weight-light my-3">Nueva Orden de Compra</h3></div>
                     <div class="card-body">
-                        <form #miForm="ngForm" (ngSubmit)="agregarPurchaseOrder()">
+                        <form #miForm="ngForm" (ngSubmit)="agregarPurchaseOrder(miForm)">
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <div class="form-floating mb-3 mb-md-0">
@@ -45,7 +45,7 @@
                             <div class="row mb-3">
                                 <div class="col-md-5">  
                                     <div class="form-floating">                                                 
-                                        <select [title]="purchaseOrder.detalle.length > 0 ? 'No puedes modificar el proveedor, una ves iniciado el detalle' : 'Proveedores'" [disabled]="purchaseOrder.detalle.length > 0" class="form-control" name="proveedor" [(ngModel)]="idProveedor">
+                                        <select (change)="updateArticles()" [title]="purchaseOrder.detalle.length > 0 ? 'No puedes modificar el proveedor, una ves iniciado el detalle' : 'Proveedores'" [disabled]="purchaseOrder.detalle.length > 0" class="form-control" name="proveedor" [(ngModel)]="idProveedor">
                                             <option *ngFor="let provider of arrProviders" value="{{provider.id}}">
                                                 {{provider.razSocial| uppercase}}
                                             </option>                                                           
@@ -55,12 +55,12 @@
                                 </div>
                                 <div class="col-md-4">  
                                     <div class="form-floating">                                                 
-                                        <select class="form-control" name="articulo" [(ngModel)]="idArticulo">
+                                        <select required class="form-control" name="articulo" [(ngModel)]="idArticulo" #articulo="ngModel">
                                             <option *ngFor="let article of arrArticles" value="{{article.id}}">
                                                 {{article.producto| uppercase	}}
                                             </option>                                                           
                                         </select>
-                                        <label for="SelProductos">Articulo:</label>
+                                        <label for="SelProductos">Articulo:</label>                                        
                                     </div>
                                 </div>
                                 <div class="col-md-2">
@@ -79,7 +79,7 @@
                             </div>
                             <p class="text-uppercase h5 p-0 m-0">Detalle: </p>
                             <div *ngIf="purchaseOrder.detalle.length > 0" class="row mt-0">
-                                <div class="col-md-12">
+                                <div class="col-md-12 table-responsive table-scroll">
                                     <table class="table mt-4 text-center text-uppercase">
                                         <thead>
                                           <tr>

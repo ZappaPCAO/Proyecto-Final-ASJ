@@ -67,14 +67,13 @@ export class AddProviderComponent implements OnInit {
       ( verificarDatos(this.provider) && // que no hay ningun caracter raro
         verificarLongitudes(this.provider) && // que los largos sean los que quiero
         verificarCamposEspeciales(this.provider) ) ){ // controlo campos especificos
-
         if(this.idProvider === 0){ // 0 => Nuevo ; >0 => Edito
           this.providerService.post(this.provider);
         }else{
           this.providerService.put(this.provider);
         }
       
-      this.router.navigate(['providers', 'list']); // Ver luego para q pueda agregar mas
+      this.router.navigate(['provider', 'list']); // Ver luego para q pueda agregar mas
       // Si devuelve todo ok, mostrar correcto con sweetalert seguramente.
     }else{
       // Hago lo que hizo el profe con los cartelitos.

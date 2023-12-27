@@ -9,8 +9,8 @@
                             <div class="row mb-3">
                                 <div class="col-md-6">  
                                     <div class="form-floating">                                                 
-                                        <select required class="form-control" name="proveedor" [(ngModel)]="this.article.proveedor" >
-                                            <option *ngFor="let provider of this.arrProviders" value="{{provider}}">
+                                        <select required class="form-control" name="proveedor" [(ngModel)]="idProveedor" >
+                                            <option *ngFor="let provider of this.arrProviders" value="{{provider.id}}">
                                                 {{provider.razSocial | uppercase}}
                                             </option>
                                         </select>

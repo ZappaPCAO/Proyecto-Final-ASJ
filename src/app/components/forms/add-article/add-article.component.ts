@@ -50,7 +50,7 @@ export class AddArticleComponent implements OnInit {
     precio: 0,
   };
   arrProviders!: Provider[];
-  idArticle: number = 0;
+  idArticle: number = 0;idProveedor: number = 0;
 
   constructor(private router: Router, private route: ActivatedRoute,
     private providerService: ProviderService, private articleService: ArticleService){}
@@ -62,6 +62,8 @@ export class AddArticleComponent implements OnInit {
   }
 
   agregarArticle(form: NgForm){ 
+    this.article.proveedor = this.arrProviders.find(provi => provi.id == this.idProveedor)!;
+
     if( form.valid && 
       ( verificarDatos(this.article) && // que no hay ningun caracter raro
         verificarLongitudes(this.article) && // que los largos sean los que quiero

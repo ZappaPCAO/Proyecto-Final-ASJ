@@ -1,7 +1,7 @@
 import { Article } from "./article";
 import { Provider } from "./provider";
 
-export type PurchaseOrder = {
+export interface PurchaseOrder {
   id: number,
   nroOC: string,
   fecEmision: string,
@@ -13,7 +13,7 @@ export type PurchaseOrder = {
   total: number,
 }
 
-export type Detalle = {
+export interface Detalle{
   proveedor: Provider,
   articulo: Article,
   cantidad: number,

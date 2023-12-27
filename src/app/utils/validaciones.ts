@@ -83,7 +83,7 @@ export function verificarCamposEspeciales(data: any): boolean{
             
             if(key === 'email'){ // Verifico los 2 correos
                 band = esCorreo(data[key]);
-                band = esCorreo(data['datosContacto'].email);
+                //band = esCorreo(data['datosContacto'].email); omito de momento.
             }            
             if(key === 'sitioWeb')
                 band = esWeb(data[key]);               
