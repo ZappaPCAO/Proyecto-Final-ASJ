@@ -5,13 +5,13 @@
                 <div class="card shadow-light bg-light px-2">
                     <div class="card-header"><h3 class="text-center font-weight-light my-3">Nuevo Articulo</h3></div>
                     <div class="card-body">
-                        <form #miForm="ngForm" (ngSubmit)="agregarArticle()">
+                        <form #miForm="ngForm" (ngSubmit)="agregarArticle(miForm)">
                             <div class="row mb-3">
                                 <div class="col-md-6">  
                                     <div class="form-floating">                                                 
-                                        <select class="form-control" name="proveedor" [(ngModel)]="this.article.proveedor" >
+                                        <select required class="form-control" name="proveedor" [(ngModel)]="this.article.proveedor" >
                                             <option *ngFor="let provider of this.arrProviders" value="{{provider}}">
-                                                {{provider | uppercase}}
+                                                {{provider.razSocial | uppercase}}
                                             </option>
                                         </select>
                                         <label for="SelProvedor">Provedor:</label>
@@ -19,7 +19,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating mb-3 mb-md-0">
-                                        <input class="form-control" name="cod" [(ngModel)]="this.article.cod" type="text" placeholder="" />
+                                        <input required class="form-control" name="cod" [(ngModel)]="this.article.cod" type="text" placeholder="" />
                                         <label id="labelCode" for="inputCode">Codigo</label>
                                     </div>
                                 </div>                                                                                          
@@ -27,9 +27,14 @@
                             <div class="row mb-3">
                                 <div class="col-md-6">  
                                     <div class="form-floating">                                                 
-                                        <select class="form-control" name="categoria" [(ngModel)]="this.article.categoria">
-                                            <option value="deportes">Deportes</option>
-                                            <option value="climatico">Climatico</option>
+                                        <select required class="form-control" name="categoria" [(ngModel)]="this.article.categoria">
+                                            <option value="deportes">deportes</option>
+                                            <option value="electronica">electronica</option>
+                                            <option value="moda">moda</option>
+                                            <option value="hogar">hogar</option>                                            
+                                            <option value="entretenimiento">entretenimiento</option>
+                                            <option value="electrodomesticos">electrodomesticos</option>
+                                            <option value="alimentos">alimentos</option>
                                             <!-- Mas opc -->
                                         </select>
                                         <label for="SelCategoria">Categoria:</label>
@@ -37,15 +42,19 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating mb-3 mb-md-0">
-                                        <input class="form-control" [(ngModel)]="this.article.producto" name="producto" type="text" placeholder="" />
+                                        <input required minlength="3" class="form-control" [(ngModel)]="this.article.producto" name="producto" type="text" placeholder="" />
                                         <label id="labelCode" for="inputProducto">Producto: </label>
                                     </div>
                                 </div>                                                
                             </div>
-                            <div class="form-floating mb-3">
-                                <textarea class="form-control" name="descri" [(ngModel)]="this.article.descri" type="text" placeholder=""></textarea>
-                                <label for="inputDescri">Descripcion: </label>
-                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-12">
+                                    <div class="form-floating mb-3">
+                                        <textarea maxlength="512" class="form-control" name="descri" [(ngModel)]="this.article.descri" type="text" placeholder=""></textarea>
+                                        <label for="inputDescri">Descripcion: </label>
+                                    </div>
+                                </div>                                
+                            </div>                            
                             <div class="row mb-3">
                                 <div class="col-md-12">
                                     <div class="form-floating mb-3 mb-md-0">

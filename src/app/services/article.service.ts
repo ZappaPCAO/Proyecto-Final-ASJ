@@ -1,28 +1,45 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { articles } from '../models/article';
-
-const dataArticles = articles;
+import { Article, articles } from '../models/article';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ArticleService {
+  dataArticles: Article[] = articles;
+
   constructor(private http: HttpClient) {
     console.log(`Servicio funcionando correctamente!`);
   }
 
   get (){
-    return dataArticles;
-    // return this.http.get('URL API');
-  }
-  
-  post(article: any){
-    article.id = (dataArticles && dataArticles.length > 0) ? dataArticles[dataArticles.length-1].id + 1 : 1; // Controlo la id
-    dataArticles.push(article);
+    return this.dataArticles;
   }
 
-  delete(dato:any) {
-    throw new Error('Method not implemented.');
+  getById(id: number): Article {
+    let article!: any;
+
+    if(this.dataArticles.length > 0){
+      article = this.dataArticles.find( article => article.id == id ); 
+    }
+
+    return article;
+  }
+  
+  post(article: Article){
+    article.id = (this.dataArticles && this.dataArticles.length > 0) ? this.dataArticles[this.dataArticles.length-1].id + 1 : 1; // Controlo la id
+    this.dataArticles.push(article);
+  }
+
+  put(article: Article) {
+    let auxArticle: Article = this.dataArticles.find(arti => arti.id = article.id)!;
+
+    auxArticle = article;
+  }
+
+  delete(article: Article) {
+    let index: number = this.dataArticles.findIndex(arti => arti.id === article.id);
+    
+    this.dataArticles.splice(index, 1);
   }
 }

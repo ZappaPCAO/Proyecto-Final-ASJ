@@ -1,24 +1,23 @@
 import { Injectable } from '@angular/core'; 
 import { providers, Provider } from '../models/provider';
 
-const dataProviders = providers || [];
-
 @Injectable({
   providedIn: 'root'
 })
 export class ProviderService {
+  private dataProviders = providers || [];
 
   constructor() { }
 
   get(){
-    return dataProviders;
+    return this.dataProviders;
   }
 
   getById(id: number): Provider {
     let provider!: Provider;
 
-    if(dataProviders.length > 0){
-      provider = dataProviders.find( provider => provider.id == id )!; 
+    if(this.dataProviders.length > 0){
+      provider = this.dataProviders.find( provider => provider.id == id )!; 
     }
 
     return provider
@@ -26,25 +25,25 @@ export class ProviderService {
 
   post(provider: Provider){
 
-    provider.id = (dataProviders && dataProviders.length > 0) ? dataProviders[dataProviders.length-1].id + 1 : 1; // Controlo la id
+    provider.id = (this.dataProviders && this.dataProviders.length > 0) ? this.dataProviders[this.dataProviders.length-1].id + 1 : 1; // Controlo la id
     
-    dataProviders.push(provider);
+    this.dataProviders.push(provider);
 
-    console.log(dataProviders);
+    console.log(this.dataProviders);
   }
 
   put(provider: Provider){
     let auxProvider!: Provider;
 
-    auxProvider = dataProviders.find(provi => provi.id = provider.id)!;
+    auxProvider = this.dataProviders.find(provi => provi.id = provider.id)!;
     
     auxProvider = provider;
   }
 
   delete(provider: Provider){
     let index: number;
-    index = dataProviders.findIndex(provi => provi.id === provider.id);
+    index = this.dataProviders.findIndex(provi => provi.id === provider.id);
     
-    dataProviders.splice(index, 1);
+    this.dataProviders.splice(index, 1);
   }
 }
