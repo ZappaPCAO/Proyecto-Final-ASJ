@@ -18,6 +18,7 @@ import { ListadoComponent } from './components/list/listado.component';
 import { ArticleService } from './services/article.service';
 import { ProviderService } from './services/provider.service';
 import { PurchaseOrderService } from './services/purchase-order.service';
+import { HomeComponent } from './components/home/home.component';
 
 
 
@@ -30,7 +31,8 @@ import { PurchaseOrderService } from './services/purchase-order.service';
     AddProviderComponent,
     AddArticleComponent,
     AddPurchaseOrderComponent,
-    ListadoComponent
+    ListadoComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

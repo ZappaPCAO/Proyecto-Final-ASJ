@@ -4,6 +4,7 @@ import { AddProviderComponent } from './components/forms/add-provider/add-provid
 import { AddArticleComponent } from './components/forms/add-article/add-article.component';
 import { AddPurchaseOrderComponent } from './components/forms/add-purchase-order/add-purchase-order.component';
 import { ListadoComponent } from './components/list/listado.component';
+import { HomeComponent } from './components/home/home.component';
 
 const routes: Routes = [
   // {path: `article`,
@@ -28,7 +29,7 @@ const routes: Routes = [
   //   ]
   // },
   // {path: `:tipo/list`, component: ListadoComponent},
-  {path:``, component: AddProviderComponent},
+  {path:``, component: HomeComponent},
   {path: ':tipo', children: [
     {path: `add-article`, component: AddArticleComponent},
     {path: `update-article/:id`, component: AddArticleComponent},
@@ -37,9 +38,9 @@ const routes: Routes = [
     {path: `add-purchase-order`, component: AddPurchaseOrderComponent},
     {path: `update-purchase-order/:id`, component:AddPurchaseOrderComponent},
     {path: `list`, component: ListadoComponent},
-    {path: `**`, component: AddProviderComponent},
+    {path: `**`, component: HomeComponent},
   ]},
-  {path: `**`, component: AddProviderComponent}
+  {path: `**`, component: HomeComponent}
 ];
 
 @NgModule({
