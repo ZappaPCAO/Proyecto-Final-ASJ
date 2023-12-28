@@ -19,7 +19,7 @@ onAdd() {
 throw new Error('Method not implemented.');
 }
   thead: any = [];tbody: any = [];
-  condicion!: string;
+  condicion: string = '';
   rightPanelStyle: any;
   currentRecord!: Provider | Article | PurchaseOrder;
 
@@ -89,8 +89,11 @@ throw new Error('Method not implemented.');
   }
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => this.condicion = params['tipo']);
-    console.log(`condicion ${this.condicion}`);
-    this.generarArreglos();
+    this.route.params.subscribe(params => { this.condicion = params["tipo"];
+      if(this.condicion !== null){
+        this.generarArreglos();
+      }
+      console.log(`condicion ${this.condicion}`);
+    });
   }
 }
