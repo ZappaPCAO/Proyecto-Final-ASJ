@@ -6,6 +6,7 @@ import { verificarCamposEspeciales, verificarDatos, verificarLongitudes } from '
 import { NgForm } from '@angular/forms';
 import { Provincia } from '../../../models/provincias';
 import { ProvLocArgentinasService } from '../../../services/prov-loc-argentinas.service';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -72,9 +73,22 @@ export class AddProviderComponent implements OnInit {
         }else{
           this.providerService.put(this.provider);
         }
-      
-      this.router.navigate(['provider', 'list']); // Ver luego para q pueda agregar mas
-      // Si devuelve todo ok, mostrar correcto con sweetalert seguramente.
+        Swal.fire({
+          title: "¿Desea crear otro?",          
+          icon: 'success',
+          timer: 2500,       
+          showCancelButton: true, 
+          confirmButtonColor: "var(--color-primary)",
+          cancelButtonColor: "var(--color-secondary)",          
+          confirmButtonText: "Si",
+          cancelButtonText: "No"
+        }).then((result) => {
+          if (result.isConfirmed) {
+            form.reset();
+          }else{
+            this.router.navigate(['provider', 'list']);
+          }
+        });
     }else{
       // Hago lo que hizo el profe con los cartelitos.
     }

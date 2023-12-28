@@ -9,6 +9,7 @@ import { Article } from '../../../models/article';
 import { formatDate } from '../../../utils/formatoFecha';
 import { NgForm } from '@angular/forms';
 import { verificarCamposEspeciales, verificarDatos, verificarLongitudes } from '../../../utils/validaciones';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'add-purchase-order',
@@ -54,6 +55,14 @@ export class AddPurchaseOrderComponent implements OnInit {
         this.purchaseOrder.total += newDetalle.subtotal;
       }
     }
+    Swal.fire({
+      position: "bottom-end",
+      icon: 'success',      
+      title: "Agregado al detalle!",
+      showConfirmButton: false,
+      timer: 1000
+    });
+
     this.idArticulo = 0; // Limpio el select
   }
 
@@ -82,9 +91,22 @@ export class AddPurchaseOrderComponent implements OnInit {
         }else{
           this.purchaseOrderService.put(this.purchaseOrder);
         }
-      
-        this.router.navigate(['purchase-order', "list"]); // Ver luego para q pueda agregar mas
-      // Si devuelve todo ok, mostrar correcto con sweetalert seguramente.
+        Swal.fire({
+          title: "¿Desea crear otro?",          
+          icon: 'success',
+          timer: 2500,       
+          showCancelButton: true, 
+          confirmButtonColor: "var(--color-primary)",
+          cancelButtonColor: "var(--color-secondary)",          
+          confirmButtonText: "Si",
+          cancelButtonText: "No"
+        }).then((result) => {
+          if (result.isConfirmed) {
+            form.reset();
+          }else{
+            this.router.navigate(['purchase-order', "list"]); 
+          }
+        });
     }else{
       // Hago lo que hizo el profe con los cartelitos.
     }

@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { verificarCamposEspeciales, verificarDatos, verificarLongitudes } from '../../../utils/validaciones';
 import { NgForm } from '@angular/forms';
 import { Provider } from '../../../models/provider';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'add-article',
@@ -69,20 +70,30 @@ export class AddArticleComponent implements OnInit {
         verificarLongitudes(this.article) && // que los largos sean los que quiero
         verificarCamposEspeciales(this.article) ) ){ // controlo campos especificos
 
-        if(this.idArticle === 0){ // 0 => Nuevo ; >0 => Edito
-          this.articleService.post(this.article);
+      if(this.idArticle === 0){ // 0 => Nuevo ; >0 => Edito
+        this.articleService.post(this.article);
+      }else{
+        this.articleService.put(this.article);
+      }
+      Swal.fire({
+        title: "¿Desea crear otro?",          
+        icon: 'success',
+        timer: 2500,       
+        showCancelButton: true, 
+        confirmButtonColor: "var(--color-primary)",
+        cancelButtonColor: "var(--color-secondary)",          
+        confirmButtonText: "Si",
+        cancelButtonText: "No"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          form.reset();
         }else{
-          this.articleService.put(this.article);
+          this.router.navigate(['article', 'list']);
         }
-      
-      this.router.navigate(['article', 'list']); // Ver luego para q pueda agregar mas
-      // Si devuelve todo ok, mostrar correcto con sweetalert seguramente.
+      });
     }else{
       // Hago lo que hizo el profe con los cartelitos.
     }
-
-    // this.articleService.post(this.article);
-    // this.router.navigate(['provider/list', 'providers']);
   }
 
   ngOnInit(): void {

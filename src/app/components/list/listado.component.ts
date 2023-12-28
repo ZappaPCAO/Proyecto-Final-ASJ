@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ArticleService } from '../../services/article.service';
-import { ProviderService } from '../../services/provider.service';
-import { PurchaseOrderService } from '../../services/purchase-order.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdministrarServicesService } from '../../services/administrar-services.service';
 import { Provider } from '../../models/provider';
 import { Article } from '../../models/article';
 import { PurchaseOrder } from '../../models/purchase-order';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'listado',
@@ -14,12 +12,16 @@ import { PurchaseOrder } from '../../models/purchase-order';
   styleUrl: './listado.component.css'
 })
 export class ListadoComponent implements OnInit{
+onInfo() {
+throw new Error('Method not implemented.');
+}
+onAdd() {
+throw new Error('Method not implemented.');
+}
   thead: any = [];tbody: any = [];
   condicion!: string;
-
-  // rightPanelStyle: { display: string, left?: number, top?: number } = { display: 'none' };
   rightPanelStyle: any;
-  currentRecord: any;
+  currentRecord!: Provider | Article | PurchaseOrder;
 
   constructor(private route: ActivatedRoute, private router: Router, 
     private serivicioAdm: AdministrarServicesService){
@@ -54,13 +56,36 @@ export class ListadoComponent implements OnInit{
           key !== 'email' && key !== 'telefono' )); // para Proveedores.
   }                                                                        
 
-  onEdit(soyAlgo: any){
+  onEdit(){
+    this.closeContextMenu();
     let tipo = `${this.condicion}/update-${this.condicion}`;
-    this.router.navigate([tipo, soyAlgo.id]);
+    this.router.navigate([tipo, this.currentRecord.id]);
   }
-  onDelete(soyAlgo: any){
-    // Preguntar si esta seguro que desea eliminar el proveedor etc
-    this.serivicioAdm.delete(soyAlgo, this.condicion);
+
+  onDelete(){
+    Swal.fire({
+      title: "¿Estas seguro?",
+      text: `¡${this.currentRecord.id} sera eliminado permanentemente!`,
+      
+      showCancelButton: true,
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      confirmButtonColor: "var(--color-primary)",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.serivicioAdm.delete(this.currentRecord, this.condicion); // ver de poner una promesa
+        this.closeContextMenu();
+        Swal.fire({
+          position: "bottom-end",
+          icon: "success",
+          title: "Eliminado con exito",
+          showConfirmButton: false,
+          timer: 1500
+        });
+      }
+    });
   }
 
   ngOnInit(): void {
@@ -68,5 +93,4 @@ export class ListadoComponent implements OnInit{
     console.log(`condicion ${this.condicion}`);
     this.generarArreglos();
   }
-
 }

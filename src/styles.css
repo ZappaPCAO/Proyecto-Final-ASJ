@@ -30,6 +30,18 @@ background: linear-gradient(90deg, #fff 0%, rgb(150, 126, 197) 0%, var(--color-p
 background-size: 300% 100%;
 animation: gradient 5s ease infinite;
 }
+.mi-btn-add{
+    background-color: #8732CD !important;
+    color: white !important;
+    opacity: 100% !important;
+    transition: all .3s linear !important;
+}
+.mi-btn-add:hover{
+    opacity: 80% !important;
+}
+.shadow-light{
+    box-shadow: 0 1rem 3rem rgba(255, 255, 255, 0.35) !important;
+}
 
 body::-webkit-scrollbar {
     width: .4rem; 
@@ -40,4 +52,3 @@ body::-webkit-scrollbar-thumb {
     background-color: #adadad;
     border-radius: 5rem;
 }
-
