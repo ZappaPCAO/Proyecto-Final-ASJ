@@ -31,7 +31,7 @@ export class ArticleService {
     article.id = (this.dataArticles && this.dataArticles.length > 0) ? this.dataArticles[this.dataArticles.length-1].id + 1 : 1; // Controlo la id
     this.dataArticles.push(article);
     
-    pisarDatosByTipo('provider', this.dataArticles);
+    pisarDatosByTipo('article', this.dataArticles);
   }
 
   put(article: Article) {
@@ -46,6 +46,6 @@ export class ArticleService {
     let index: number = this.dataArticles.findIndex(arti => arti.id === article.id);
     
     this.dataArticles.splice(index, 1);
-    pisarDatosByTipo('provider', this.dataArticles);
+    pisarDatosByTipo('article', this.dataArticles);
   }
 }

@@ -77,6 +77,7 @@ export class AddArticleComponent implements OnInit {
       }else{
         this.articleService.put(this.article);
       }
+
       Swal.fire({
         title: "¿Desea crear otro?",          
         icon: 'success',
@@ -90,6 +91,7 @@ export class AddArticleComponent implements OnInit {
         if (result.isConfirmed) {
           form.reset();
         }else{
+          form.reset();
           this.router.navigate(['article', 'list']);
         }
       });

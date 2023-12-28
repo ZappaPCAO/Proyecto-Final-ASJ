@@ -72,29 +72,50 @@
             </tbody>
           </table>
         </div>
-        <!-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div *ngIf="condicion == 'purchase-order'" class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                <h2 class="modal-title fs-5" id="exampleModalLabel">Detalle Orden: {{currentRecord.nroOC}}</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
-                <p>algo: {{currentRecord.detalle[0].proveedor.razSocial}}</p>
-                <p>algo2: {{currentRecord.detalle[0].articulo.producto}}</p>
                 <div class="row">
-                  <div class="col" *ngFor="let el in currentRecord.detalle">
-                    
-                  </div>
+                  <p class="h4 text-center">{{currentRecord.detalle[0].proveedor.razSocial}}</p>
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>Articulo</th>                        
+                        <th>Precio</th>
+                        <th>Subtotal</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr class="col" *ngFor="let el of currentRecord.detalle">
+                        <td>
+                          {{el.articulo.producto}} {{(el.cantidad > 1)?'('+el.cantidad+')':''}}
+                        </td>
+                        <td>
+                          {{el.articulo.precio}}
+                        </td>
+                        <td>
+                          {{el.subtotal}}
+                        </td>
+                      </tr>
+                    </tbody>
+                    <tfoot>
+                      <tr>
+                        <th colspan="3" class="text-end">
+                          <p class="px-5 mx-5">Total: {{currentRecord.total}}</p>
+                        </th>
+                      </tr>
+                    </tfoot>
+                  </table>
                 </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-              </div>
+              </div>              
             </div>
           </div>
-        </div>          -->
+        </div>         
         <span class="row contextMenu  p-0 m-0" [ngStyle]="this.rightPanelStyle" (clickOutside)="closeContextMenu()">    
             <div class="col-12  p-0 m-0">
               <div class="d-flex flex-column p-0 m-0" role="group">

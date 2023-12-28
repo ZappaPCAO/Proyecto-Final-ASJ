@@ -25,7 +25,6 @@ export class ProviderService {
   }
 
   post(provider: Provider){
-
     provider.id = (this.dataProviders && this.dataProviders.length > 0) ? this.dataProviders[this.dataProviders.length-1].id + 1 : 1; // Controlo la id
 
     this.dataProviders.push(provider);

@@ -57,7 +57,6 @@ export class ListadoComponent implements OnInit{
 
 
   generarArreglos(){
-    console.log('holaaaaaaaaaaaa')
     this.tbody = this.serivicioAdm.get(this.condicion);
     console.log(this.tbody + 'array');
     if(this.tbody && this.tbody.length > 0)
@@ -71,7 +70,7 @@ export class ListadoComponent implements OnInit{
         this.thead = ['nroOC','fecEmision','fecEntrega','detalle','estado', 'total'];
         this.tbody.sort((a:PurchaseOrder,b:PurchaseOrder) => a.fecEmision.localeCompare(b.fecEmision));
       }
-      //this.currentRecord = this.tbody[0]
+      this.currentRecord = this.tbody[0]
   }                                                                        
   
   onEdit(){
