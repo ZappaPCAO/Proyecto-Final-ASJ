@@ -9,8 +9,18 @@
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <div class="form-floating mb-3 mb-md-0">
-                                        <input class="form-control" name="nroOC" [(ngModel)]="purchaseOrder.nroOC" type="text" placeholder="" />
+                                        <input required minlength="3" maxlength="25" class="form-control" name="nroOC" [(ngModel)]="purchaseOrder.nroOC" type="text" placeholder="" 
+                                        #nroOc="ngModel" [ngClass]="!nroOc.value ? 'mi-requerido': nroOc.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'"
+                                        />
                                         <label id="labelCode" for="inputNroOrdenCompra">Nro. Orden de Compra: </label>
+                                        <ng-container *ngIf="nroOc.value">
+                                            <span *ngIf="nroOc.errors?.['minlength']" class="mi-invalid-feedback">
+                                                Longitud minima 3
+                                            </span>
+                                            <span *ngIf="nroOc.errors?.['maxlength']" class="mi-invalid-feedback">
+                                                Longitud maxima 25
+                                            </span>                                            
+                                        </ng-container> 
                                     </div>
                                 </div>
                                 <div class="col-md-6">
