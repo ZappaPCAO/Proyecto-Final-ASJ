@@ -11,8 +11,6 @@ html,body,.intro {
   border-color: #393939;
 }
 
-
-
 .card {
   border-radius: .5rem;
 }
@@ -38,4 +36,25 @@ thead tr th{
 
 .table-borderless th{
   margin-left: 2rem !important;
+}
+
+/* PRUEBA */
+
+.contextMenu{
+  position: fixed;
+  opacity: 0.9;
+  background-color: #FFF;
+  display: none;
+  border: solid var(--color-primary);
+}
+
+.contextMenu .bttn{
+  border-radius: 70%;
+  margin: 0 !important;
+  transition: all .3s linear;
+}
+.contextMenu .bttn:hover{
+  border-radius: 0%;
+  background-color: var(--color-primary);
+  color: #FFF;
 }

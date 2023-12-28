@@ -4,6 +4,9 @@ import { ProviderService } from '../../services/provider.service';
 import { PurchaseOrderService } from '../../services/purchase-order.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdministrarServicesService } from '../../services/administrar-services.service';
+import { Provider } from '../../models/provider';
+import { Article } from '../../models/article';
+import { PurchaseOrder } from '../../models/purchase-order';
 
 @Component({
   selector: 'listado',
@@ -14,8 +17,32 @@ export class ListadoComponent implements OnInit{
   thead: any = [];tbody: any = [];
   condicion!: string;
 
+  // rightPanelStyle: { display: string, left?: number, top?: number } = { display: 'none' };
+  rightPanelStyle: any;
+  currentRecord: any;
+
   constructor(private route: ActivatedRoute, private router: Router, 
     private serivicioAdm: AdministrarServicesService){
+  }
+
+  detectRightMouseClick($event: any, el: Provider | Article | PurchaseOrder) {
+    if ($event.which === 3) {
+      // Ajusta la posición del menú respecto a la ventana del navegador
+      this.rightPanelStyle = {
+        'display': 'block',               
+        'left.px': $event.clientX,
+        'top.px': $event.clientY,      
+      };
+      this.currentRecord = el;
+    }else{
+      this.closeContextMenu();
+    }
+  }
+  
+  closeContextMenu() {
+    this.rightPanelStyle = {
+      display: 'none'
+    };
   }
 
   generarArreglos(){

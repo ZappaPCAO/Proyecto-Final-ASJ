@@ -3,6 +3,11 @@
 *{
     font-family: 'Inconsolata', monospace,'Roboto Slab', serif !important;
 }
+
+:root {
+    --color-primary: #8732cd;
+  }
+
 .mi-bg-black{
     background-color: #202020 !important;
 }
