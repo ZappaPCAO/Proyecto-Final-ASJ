@@ -52,3 +52,25 @@ body::-webkit-scrollbar-thumb {
     background-color: #adadad;
     border-radius: 5rem;
 }
+
+.mi-valid, .mi-valid:focus{
+    border-color: var(--color-primary) !important;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' height='16' width='14' viewBox='0 0 448 512'%3e%3c!--!Font%20Awesome%20Free%206.5.1%20by%20@fontawesome%20-%20https://fontawesome.com%20License%20-%20https://fontawesome.com/license/free%20Copyright%202023%20Fonticons,%20Inc.--%3e%3cpath fill='%238732cd' d='M342.6%2086.6c12.5-12.5%2012.5-32.8%200-45.3s-32.8-12.5-45.3%200L160%20178.7l-57.4-57.4c-12.5-12.5-32.8-12.5-45.3%200s-12.5%2032.8%200%2045.3l80%2080c12.5%2012.5%2032.8%2012.5%2045.3%200l160-160zm96%20128c12.5-12.5%2012.5-32.8%200-45.3s-32.8-12.5-45.3%200L160%20402.7%2054.6%20297.4c-12.5-12.5-32.8-12.5-45.3%200s-12.5%2032.8%200%2045.3l128%20128c12.5%2012.5%2032.8%2012.5%2045.3%200l256-256z'/%3e%3c/svg%3e") !important;
+}
+
+.mi-invalid, .mi-invalid:focus{
+    border-color: var(--color-secondary) !important;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' height='16' width='14' viewBox='0 0 448 512'%3e%3c!--!Font%20Awesome%20Free%206.5.1%20by%20@fontawesome%20-%20https://fontawesome.com%20License%20-%20https://fontawesome.com/license/free%20Copyright%202023%20Fonticons,%20Inc.--%3e%3cpath fill='%23ce1793' d='M368%20128c0%2044.4-25.4%2083.5-64%20106.4V256c0%2017.7-14.3%2032-32%2032H176c-17.7%200-32-14.3-32-32V234.4c-38.6-23-64-62.1-64-106.4C80%2057.3%20144.5%200%20224%200s144%2057.3%20144%20128zM168%20176a32%2032%200%201%200%200-64%2032%2032%200%201%200%200%2064zm144-32a32%2032%200%201%200-64%200%2032%2032%200%201%200%2064%200zM3.4%20273.7c7.9-15.8%2027.1-22.2%2042.9-14.3L224%20348.2l177.7-88.8c15.8-7.9%2035-1.5%2042.9%2014.3s1.5%2035-14.3%2042.9L295.6%20384l134.8%2067.4c15.8%207.9%2022.2%2027.1%2014.3%2042.9s-27.1%2022.2-42.9%2014.3L224%20419.8%2046.3%20508.6c-15.8%207.9-35%201.5-42.9-14.3s-1.5-35%2014.3-42.9L152.4%20384%2017.7%20316.6C1.9%20308.7-4.5%20289.5%203.4%20273.7z'/%3e%3c/svg%3e") !important;
+}
+
+.mi-requerido{
+    padding-right: calc(1.5em + 0.75rem);
+    background-repeat: no-repeat;
+    background-position: right calc(0.375em + 0.1875rem) center;
+    background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='16' width='12' viewBox='0 0 384 512'%3E%3Cpath fill='%23d6b300' d='M192 32c17.7 0 32 14.3 32 32V199.5l111.5-66.9c15.2-9.1 34.8-4.2 43.9 11s4.2 34.8-11 43.9L254.2 256l114.3 68.6c15.2 9.1 20.1 28.7 11 43.9s-28.7 20.1-43.9 11L224 312.5V448c0 17.7-14.3 32-32 32s-32-14.3-32-32V312.5L48.5 379.4c-15.2 9.1-34.8 4.2-43.9-11s-4.2-34.8 11-43.9L129.8 256 15.5 187.4c-15.2-9.1-20.1-28.7-11-43.9s28.7-20.1 43.9-11L160 199.5V64c0-17.7 14.3-32 32-32z'/%3E%3C/svg%3E") !important;
+}
+
+.mi-invalid-feedback{
+    color: var(--color-secondary) !important;
+}
