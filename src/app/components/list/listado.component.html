@@ -10,9 +10,8 @@
                     <ng-container *ngSwitchCase="'provider'">
                       <th>cod</th>
                       <th>raz. social</th>
-                      <th colspan="3">contacto</th>
-                      <th>nombre</th>
-                      <th>apellido</th>
+                      <th>nombre completo</th>
+                      <th>contacto</th>                      
                     </ng-container>
                     <ng-container *ngSwitchCase="'article'">
                       <th>producto</th>
@@ -38,15 +37,18 @@
                 <ng-container *ngFor="let key of thead">
                   <ng-container [ngSwitch]="key">
                     <ng-container *ngSwitchCase="'datosContacto'">
-                      <td colspan="3">
+                      <td>
+                        <span class="p-0 m-0 text-center">
+                          <p>{{el[key].nombre}}<strong> - </strong>{{el[key].apellido}}</p>
+                        </span>
+                      </td>
+                      <td>
                         <span class="p-0 m-0 text-start">
                           <p class="p-0 m-0"><strong>Sitio: </strong> {{el['sitioWeb']}}</p>
                           <p class="p-0 m-0"><strong>Email: </strong> {{el[key].email}}</p>
                           <p class="p-0 m-0"><strong>Telefono: </strong> {{el[key].telefono}}</p>
                         </span>           
-                      </td>
-                      <td>{{el[key].nombre}}</td>
-                      <td>{{el[key].apellido}}</td>
+                      </td>                      
                     </ng-container>
                     <ng-container *ngSwitchCase="'proveedor'">
                       <td>{{el[key].razSocial}}</td>
