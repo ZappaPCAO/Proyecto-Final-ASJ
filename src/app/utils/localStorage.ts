@@ -1,14 +1,18 @@
-import { Article } from "../models/article";
-import { Provider } from "../models/provider";
-import { PurchaseOrder } from "../models/purchase-order";
+// import { Article } from "../models/article";
+// import { Provider } from "../models/provider";
+// import { PurchaseOrder } from "../models/purchase-order";
 
-export function agregarObjetoSiExiste(tipo:string, el: Article | Provider | PurchaseOrder) {
+export function agregarObjetoSiExiste(tipo:string, el: any) {
     const arregloExistente = JSON.parse(localStorage.getItem(tipo)!) || [];
+
+    console.log("este es el objeto que llega.. " + JSON.stringify(el, null, 1));
     
+    console.log("localstorage.. " + JSON.stringify(arregloExistente, null, 1));
     let objetoExistente = arregloExistente.find((objeto:any) => objeto.id == el.id);
 
+    console.log("este es el objeto que esta en el localstorage.. " + JSON.stringify(objetoExistente, null, 1));
+
     if (objetoExistente) {
-      // Si el objeto ya existe, lo actualizo
       objetoExistente = el; 
     } else {
       arregloExistente.push(el);

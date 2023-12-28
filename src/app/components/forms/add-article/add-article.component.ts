@@ -90,8 +90,7 @@ export class AddArticleComponent implements OnInit {
       }).then((result) => {
         if (result.isConfirmed) {
           form.reset();
-        }else{
-          form.reset();
+        }else{          
           this.router.navigate(['article', 'list']);
         }
       });
