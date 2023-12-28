@@ -6,25 +6,31 @@
           <table class="table table-dark table-bordered table-hover p-0 m-0">
             <thead>
               <tr class="text-uppercase text-center">
-                <ng-container *ngFor="let key of thead">
-                  <ng-container *ngIf="key !== 'datosContacto'; else datosContactoHeader">
-                    <th>{{key}}</th>
-                  </ng-container>
-                  <ng-template #datosContactoHeader>
-                    <th colspan="3">
-                      <table class="table table-borderless mb-0">
-                        <tr class="text-uppercase text-center">
-                          <th colspan="3">Datos de contacto</th>
-                        </tr>
-                        <tr class="text-uppercase text-center">
-                          <th>Sitio</th>
-                          <th>Email</th>
-                          <th>Teléfono</th>
-                        </tr>
-                      </table>
-                    </th>
-                  </ng-template>
-                </ng-container>                
+                <ng-container [ngSwitch]="condicion">
+                    <ng-container *ngSwitchCase="'provider'">
+                      <th>cod</th>
+                      <th>raz. social</th>
+                      <th colspan="3">contacto</th>
+                      <th>nombre</th>
+                      <th>apellido</th>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'article'">
+                      <th>producto</th>
+                      <th>categoria</th>
+                      <th>proveedor</th>
+                      <th>precio</th>                      
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'purchase-order'">
+                      <th>n° orden</th>
+                      <th>fec. emision</th>
+                      <th>fec. entrega</th>
+                      <th>proveedor</th>
+                      <th>total</th>                      
+                    </ng-container>
+                    <ng-container *ngSwitchDefault=>
+                      algo
+                    </ng-container>
+                  </ng-container>                       
               </tr>
             </thead>
             <tbody>
@@ -33,14 +39,14 @@
                   <ng-container [ngSwitch]="key">
                     <ng-container *ngSwitchCase="'datosContacto'">
                       <td colspan="3">
-                        <table class="table table-borderless">
-                          <tr class="text-uppercase">
-                            <td>{{el['sitioWeb']}}</td>
-                            <td>{{el[key].email}}</td>
-                            <td>{{el[key].telefono}}</td>
-                          </tr>
-                        </table>
+                        <span class="p-0 m-0 text-start">
+                          <p class="p-0 m-0"><strong>Sitio: </strong> {{el['sitioWeb']}}</p>
+                          <p class="p-0 m-0"><strong>Email: </strong> {{el[key].email}}</p>
+                          <p class="p-0 m-0"><strong>Telefono: </strong> {{el[key].telefono}}</p>
+                        </span>           
                       </td>
+                      <td>{{el[key].nombre}}</td>
+                      <td>{{el[key].apellido}}</td>
                     </ng-container>
                     <ng-container *ngSwitchCase="'proveedor'">
                       <td>{{el[key].razSocial}}</td>

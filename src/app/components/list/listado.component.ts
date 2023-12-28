@@ -46,20 +46,38 @@ throw new Error('Method not implemented.');
       display: 'none'
     };
   }
+  
+
 
   generarArreglos(){
+    console.log('holaaaaaaaaaaaa')
     this.tbody = this.serivicioAdm.get(this.condicion);
     console.log(this.tbody + 'array');
     if(this.tbody && this.tbody.length > 0)
-      this.thead = Object.keys(this.tbody[0]).filter(key => // Obtengo las claves a mostrar individualmente. Las q agrupo las trabajo en el html. 
-        ( key !== 'id' && key !== 'rubro' && key !== 'direccion' && key !== 'datosFiscales' && key !== 'sitioWeb' &&
-          key !== 'email' && key !== 'telefono' )); // para Proveedores.
+      // this.thead = Object.keys(this.tbody[0]).filter(key => // Obtengo las claves a mostrar individualmente. Las q agrupo las trabajo en el html. 
+      //   ( key !== 'id' && key !== 'rubro' && key !== 'direccion' && key !== 'datosFiscales' && key !== 'sitioWeb' &&
+      //     key !== 'email' && key !== 'telefono' && // para Proveedores.
+      //     key !== 'descri' && key !== 'codArt')); // para Articulos
+      // Me la habia re complicado
+      if(this.condicion === 'article'){
+        this.thead = ['producto','categoria','proveedor', 'precio'];
+        this.tbody.sort((a:Article,b:Article) => a.producto.localeCompare(b.producto));        
+      }else if(this.condicion === 'provider'){
+        this.thead = ['cod','razSocial','datosContacto'];
+        this.tbody.sort((a:Provider,b:Provider) => a.razSocial.localeCompare(b.razSocial));  
+      }else{
+        this.thead = ['nroOc','fecEmision','fecEntrega','detalle','estado', 'total'];
+        this.tbody.sort((a:PurchaseOrder,b:PurchaseOrder) => a.fecEmision.localeCompare(b.fecEmision));
+      }
   }                                                                        
-
+  
   onEdit(){
-    this.closeContextMenu();
     let tipo = `${this.condicion}/update-${this.condicion}`;
+
+    console.log("id " + this.currentRecord.id + ", tipo: "+tipo )
+
     this.router.navigate([tipo, this.currentRecord.id]);
+    this.closeContextMenu();
   }
 
   onDelete(){
@@ -94,6 +112,7 @@ throw new Error('Method not implemented.');
         this.generarArreglos();
       }
       console.log(`condicion ${this.condicion}`);
+      console.log('algo '+this.thead)
     });
   }
 }

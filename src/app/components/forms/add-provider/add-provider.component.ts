@@ -61,6 +61,7 @@ export class AddProviderComponent implements OnInit {
       this.provider = this.providerService.getById(this.idProvider);
       this.updateLocalidades();
     }
+    console.log(this.provider)
   }
 
   agregarProvider(form: NgForm){

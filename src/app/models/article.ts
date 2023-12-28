@@ -2,10 +2,10 @@ import { Provider } from "./provider";
 
 export interface Article {
   id: number,
-  proveedor: Provider,
-  cod: string,
-  categoria: string,
   producto: string,
+  categoria: string,
+  proveedor: Provider,
+  codArt: string,
   descri: string,
   precio: number,
 }
@@ -40,7 +40,7 @@ export const articles: Article[] = Array.from({ length: 20 }, (_, index) => ({
       rol: `Rol ${index + 1}`,
     },
   },
-  cod: `COD${index + 1}`,
+  codArt: `COD${index + 1}`,
   categoria: `Categoria ${index + 1}`,
   producto: `Producto ${index + 1}`,
   descri: `Descripción ${index + 1}`,

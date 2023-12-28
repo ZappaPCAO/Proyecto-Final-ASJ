@@ -44,7 +44,7 @@ export class AddArticleComponent implements OnInit {
         rol: '',
       }
     },
-    cod: '',
+    codArt: '',
     categoria: '',
     producto: '',
     descri: '',
@@ -59,7 +59,9 @@ export class AddArticleComponent implements OnInit {
   verificarUpdate(){
     if(this.idArticle > 0){      
       this.article = this.articleService.getById(this.idArticle);
+      this.idProveedor = this.article.proveedor.id;
     }
+    console.log(this.article);
   }
 
   agregarArticle(form: NgForm){ 

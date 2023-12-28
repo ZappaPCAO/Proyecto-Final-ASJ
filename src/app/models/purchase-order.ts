@@ -86,7 +86,7 @@ export const purchasesOrders: PurchaseOrder[] = [{
           rol: '',
         }
       },
-      cod: '',
+      codArt: '',
       categoria: '',
       producto: '',
       descri: '',
