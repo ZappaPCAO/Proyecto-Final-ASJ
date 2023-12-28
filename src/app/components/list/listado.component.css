@@ -1,44 +1,33 @@
- /* .table-dark {
-    background-color: #333 !important;
-  }
-  
-  .table-dark th, .table-dark td {
-    border-color: #565656 !important;
-    color: #fff !important; /* Texto blanco para mejor contraste en fondos oscuros */
-  /* }  */ 
-html,body,.intro {
-  height: 100%;
-  border-color: #393939;
-}
-
-.card {
-  border-radius: .5rem;
-}
-
-.table-scroll {
-  border-radius: .5rem;
-}
 table td,
 table th {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-}
-
+}        
 thead {
   top: 0;
   position: sticky;
 }
-
 thead tr th{
-  color: violet !important;
+  color: var(--color-primary) !important;
+  background-color: rgba(0, 0, 0, .95);
 }
 
-.table-borderless th{
-  margin-left: 2rem !important;
+.table-scroll{
+  position: relative !important;
+  height: 50.01rem !important;
 }
 
-/* PRUEBA */
+.table-scroll::-webkit-scrollbar {
+  width: .4rem; 
+  background-color: #202020;
+}
+
+.table-scroll::-webkit-scrollbar-thumb {
+  background-color: var(--color-secondary);
+  border-radius: 5rem;
+}
+/* Menu contextual  */
 
 .contextMenu{
   position: fixed;
@@ -53,8 +42,17 @@ thead tr th{
   margin: 0 !important;
   transition: all .3s linear;
 }
+
+.contextMenu .bttn .icono{
+  fill: var(--color-primary);
+  transition: all .3s linear;
+}
+
 .contextMenu .bttn:hover{
   border-radius: 0%;
   background-color: var(--color-primary);
   color: #FFF;
+}
+.contextMenu .bttn:hover .icono{
+  fill: #FFF;
 }
