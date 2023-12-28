@@ -1,44 +1,47 @@
 import { Injectable } from '@angular/core';
 import { PurchaseOrder, purchasesOrders } from '../models/purchase-order';
-
-const dataPurchaseOrders = purchasesOrders || [];
+import { agregarObjetoSiExiste, pisarDatosByTipo } from '../utils/localStorage'; 
 
 @Injectable({
   providedIn: 'root'
 })
 export class PurchaseOrderService {
-
+  dataPurchaseOrders: PurchaseOrder[] = purchasesOrders || [];
 
   constructor() { }
 
   get (){
-    return dataPurchaseOrders;
+    return this.dataPurchaseOrders;
   }
 
   getById(id: number): PurchaseOrder {
     let purchaseOrder!: any;
 
-    if(dataPurchaseOrders.length > 0){
-      purchaseOrder = dataPurchaseOrders.find( purchaseOrder => purchaseOrder.id == id ); 
+    if(this.dataPurchaseOrders.length > 0){
+      purchaseOrder = this.dataPurchaseOrders.find( purchaseOrder => purchaseOrder.id == id ); 
     }
 
     return purchaseOrder;
   }
   
   post(purchaseOrder: PurchaseOrder){
-    purchaseOrder.id = (dataPurchaseOrders && dataPurchaseOrders.length > 0) ? dataPurchaseOrders[dataPurchaseOrders.length-1].id + 1 : 1; // Controlo la id
-    dataPurchaseOrders.push(purchaseOrder);
+    purchaseOrder.id = (this.dataPurchaseOrders && this.dataPurchaseOrders.length > 0) ? this.dataPurchaseOrders[this.dataPurchaseOrders.length-1].id + 1 : 1; // Controlo la id
+    this.dataPurchaseOrders.push(purchaseOrder);
+    pisarDatosByTipo('purchase-order', this.dataPurchaseOrders);
   }
 
   put(purchaseOrder: PurchaseOrder) {
-    let auxPurchaseOrder: PurchaseOrder = dataPurchaseOrders.find(purOrder => purOrder.id == purchaseOrder.id)!;
+    let auxPurchaseOrder: PurchaseOrder = this.dataPurchaseOrders.find(purOrder => purOrder.id == purchaseOrder.id)!;
     
     auxPurchaseOrder = purchaseOrder;
+    agregarObjetoSiExiste('purchase-order', purchaseOrder);
   }
 
   delete(purchaseOrder: PurchaseOrder) {
-    let index: number = dataPurchaseOrders.findIndex(purOrder => purOrder.id === purchaseOrder.id);
+    let index: number = this.dataPurchaseOrders.findIndex(purOrder => purOrder.id === purchaseOrder.id);
     
-    dataPurchaseOrders.splice(index, 1);
+    this.dataPurchaseOrders.splice(index, 1);
+    
+    pisarDatosByTipo('purchase-order', this.dataPurchaseOrders);
   }
 }

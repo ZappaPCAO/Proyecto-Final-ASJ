@@ -1,3 +1,4 @@
+import { obtenerObjetoByTipo } from "../utils/localStorage";
 import { Article } from "./article";
 import { Provider } from "./provider";
 
@@ -20,81 +21,83 @@ export interface Detalle{
   subtotal: number,
 }
 
-export const purchasesOrders: PurchaseOrder[] = [{
-  id: 0,
-  nroOC: '',
-  fecEmision: '',
-  fecEntrega: '',
-  email: '',
-  descri: '',
-  detalle: [{
-    proveedor: {
-      id: 0,
-      cod: '',
-      razSocial: '',
-      rubro: '',
-      sitioWeb: '',
-      email: '',
-      telefono: 0,
-      direccion: {
-        calle: '',
-        nro: 0,
-        cp: '',
-        localidad: '',
-        provincia: '',
-        pais: '',
-      },
-      datosFiscales: {
-        cuit: '',
-        condIva: '',
-      },
-      datosContacto: {
-        nombre: '',
-        apellido: '',
-        telefono: 0,
-        email: '',
-        rol: '',
-      }
-    },
-    articulo: {
-      id: 0,
-      proveedor: {
-        id: 0,
-        cod: '',
-        razSocial: '',
-        rubro: '',
-        sitioWeb: '',
-        email: '',
-        telefono: 0,
-        direccion: {
-          calle: '',
-          nro: 0,
-          cp: '',
-          localidad: '',
-          provincia: '',
-          pais: '',
-        },
-        datosFiscales: {
-          cuit: '',
-          condIva: '',
-        },
-        datosContacto: {
-          nombre: '',
-          apellido: '',
-          telefono: 0,
-          email: '',
-          rol: '',
-        }
-      },
-      codArt: '',
-      categoria: '',
-      producto: '',
-      descri: '',
-      precio: 0,
-    },
-    cantidad: 0,
-    subtotal: 0,
-  }],
-  estado: 'activa',
-  total: 0,
-}];
+export const purchasesOrders: PurchaseOrder[] = obtenerObjetoByTipo("purchase-order");
+
+// [{
+//   id: 0,
+//   nroOC: '',
+//   fecEmision: '',
+//   fecEntrega: '',
+//   email: '',
+//   descri: '',
+//   detalle: [{
+//     proveedor: {
+//       id: 0,
+//       cod: '',
+//       razSocial: '',
+//       rubro: '',
+//       sitioWeb: '',
+//       email: '',
+//       telefono: 0,
+//       direccion: {
+//         calle: '',
+//         nro: 0,
+//         cp: '',
+//         localidad: '',
+//         provincia: '',
+//         pais: '',
+//       },
+//       datosFiscales: {
+//         cuit: '',
+//         condIva: '',
+//       },
+//       datosContacto: {
+//         nombre: '',
+//         apellido: '',
+//         telefono: 0,
+//         email: '',
+//         rol: '',
+//       }
+//     },
+//     articulo: {
+//       id: 0,
+//       proveedor: {
+//         id: 0,
+//         cod: '',
+//         razSocial: '',
+//         rubro: '',
+//         sitioWeb: '',
+//         email: '',
+//         telefono: 0,
+//         direccion: {
+//           calle: '',
+//           nro: 0,
+//           cp: '',
+//           localidad: '',
+//           provincia: '',
+//           pais: '',
+//         },
+//         datosFiscales: {
+//           cuit: '',
+//           condIva: '',
+//         },
+//         datosContacto: {
+//           nombre: '',
+//           apellido: '',
+//           telefono: 0,
+//           email: '',
+//           rol: '',
+//         }
+//       },
+//       codArt: '',
+//       categoria: '',
+//       producto: '',
+//       descri: '',
+//       precio: 0,
+//     },
+//     cantidad: 0,
+//     subtotal: 0,
+//   }],
+//   estado: 'activa',
+//   total: 0,
+// }];
