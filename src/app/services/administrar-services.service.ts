@@ -52,4 +52,21 @@ export class AdministrarServicesService {
           break;
       }
     }
+    put(dato:any, tipo:string){
+      console.log(JSON.stringify(dato,null,1) + 'holasdsadas' + tipo)
+      switch (tipo) {        
+        case 'article':
+          this.serviceArticle.put(dato);
+          break;
+        case 'provider':
+          this.serviceProvider.put(dato);
+          break;
+        case 'purchase-order':
+          this.servicePurchaseOrder.put(dato)
+          break;
+
+        default:
+          break;
+      }
+    }
 }

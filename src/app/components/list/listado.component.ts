@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdministrarServicesService } from '../../services/administrar-services.service';
 import { Provider } from '../../models/provider';
@@ -12,16 +12,11 @@ import Swal from 'sweetalert2';
   styleUrl: './listado.component.css'
 })
 export class ListadoComponent implements OnInit{
-onInfo() {
-throw new Error('Method not implemented.');
-}
-onAdd() {
-throw new Error('Method not implemented.');
-}
+
   thead: any = [];tbody: any = [];
   condicion: string = '';
   rightPanelStyle: any;
-  currentRecord!: Provider | Article | PurchaseOrder;
+  currentRecord!: any;
 
   constructor(private route: ActivatedRoute, private router: Router, 
     private serivicioAdm: AdministrarServicesService){
@@ -47,6 +42,18 @@ throw new Error('Method not implemented.');
     };
   }
   
+  onInfo() {
+    console.log(this.currentRecord);
+  }
+
+  onAdd() {
+  
+  }
+
+  onCancel() {
+    this.currentRecord.estado = 'cancelada';
+    this.serivicioAdm.put(this.currentRecord, this.condicion);
+  }
 
 
   generarArreglos(){
@@ -54,11 +61,6 @@ throw new Error('Method not implemented.');
     this.tbody = this.serivicioAdm.get(this.condicion);
     console.log(this.tbody + 'array');
     if(this.tbody && this.tbody.length > 0)
-      // this.thead = Object.keys(this.tbody[0]).filter(key => // Obtengo las claves a mostrar individualmente. Las q agrupo las trabajo en el html. 
-      //   ( key !== 'id' && key !== 'rubro' && key !== 'direccion' && key !== 'datosFiscales' && key !== 'sitioWeb' &&
-      //     key !== 'email' && key !== 'telefono' && // para Proveedores.
-      //     key !== 'descri' && key !== 'codArt')); // para Articulos
-      // Me la habia re complicado
       if(this.condicion === 'article'){
         this.thead = ['producto','categoria','proveedor', 'precio'];
         this.tbody.sort((a:Article,b:Article) => a.producto.localeCompare(b.producto));        
@@ -66,9 +68,10 @@ throw new Error('Method not implemented.');
         this.thead = ['cod','razSocial','datosContacto'];
         this.tbody.sort((a:Provider,b:Provider) => a.razSocial.localeCompare(b.razSocial));  
       }else{
-        this.thead = ['nroOc','fecEmision','fecEntrega','detalle','estado', 'total'];
+        this.thead = ['nroOC','fecEmision','fecEntrega','detalle','estado', 'total'];
         this.tbody.sort((a:PurchaseOrder,b:PurchaseOrder) => a.fecEmision.localeCompare(b.fecEmision));
       }
+      //this.currentRecord = this.tbody[0]
   }                                                                        
   
   onEdit(){

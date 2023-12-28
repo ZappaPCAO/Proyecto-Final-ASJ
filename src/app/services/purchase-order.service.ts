@@ -31,8 +31,8 @@ export class PurchaseOrderService {
   }
 
   put(purchaseOrder: PurchaseOrder) {
-    let auxPurchaseOrder: PurchaseOrder = dataPurchaseOrders.find(purOrder => purOrder.id = purchaseOrder.id)!;
-
+    let auxPurchaseOrder: PurchaseOrder = dataPurchaseOrders.find(purOrder => purOrder.id == purchaseOrder.id)!;
+    
     auxPurchaseOrder = purchaseOrder;
   }
 
