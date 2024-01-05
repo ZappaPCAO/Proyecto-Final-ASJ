@@ -62,15 +62,15 @@ export class ListadoComponent implements OnInit{
     if(this.tbody && this.tbody.length > 0)
       if(this.condicion === 'article'){
         this.thead = ['producto','categoria','proveedor', 'precio'];
-        this.tbody.sort((a:Article,b:Article) => a.producto.localeCompare(b.producto));        
+        // this.tbody.sort((a:Article,b:Article) => a.producto.localeCompare(b.producto));        
       }else if(this.condicion === 'provider'){
         this.thead = ['cod','razSocial','datosContacto'];
-        this.tbody.sort((a:Provider,b:Provider) => a.razSocial.localeCompare(b.razSocial));  
+        // this.tbody.sort((a:Provider,b:Provider) => a.razSocial.localeCompare(b.razSocial));  
       }else{
         this.thead = ['nroOC','fecEmision','fecEntrega','detalle','estado', 'total'];
-        this.tbody.sort((a:PurchaseOrder,b:PurchaseOrder) => a.fecEmision.localeCompare(b.fecEmision));
+        // this.tbody.sort((a:PurchaseOrder,b:PurchaseOrder) => a.fecEmision.localeCompare(b.fecEmision));
       }
-      this.currentRecord = this.tbody[0]
+      // this.currentRecord = this.tbody[0]
   }                                                                        
   
   onEdit(){

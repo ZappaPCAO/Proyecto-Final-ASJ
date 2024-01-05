@@ -28,7 +28,8 @@ export class ArticleService {
   }
   
   post(article: Article){
-    article.id = (this.dataArticles && this.dataArticles.length > 0) ? this.dataArticles[this.dataArticles.length-1].id + 1 : 1; // Controlo la id
+    // article.id = (this.dataArticles && this.dataArticles.length > 0) ? this.dataArticles[this.dataArticles.length-1].id + 1 : 1; // Controlo la id
+       article.id = (this.dataArticles && this.dataArticles.length > 0) ? this.dataArticles[this.dataArticles.length-1].id + 1 : 1; // Controlo la id
     this.dataArticles.push(article);
     
     pisarDatosByTipo('article', this.dataArticles);
