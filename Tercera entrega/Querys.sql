@@ -119,7 +119,7 @@ where id = 4
 -- 11. Escribir la sentencia para eliminar el producto con id = 1 (NO EJECUTAR, SÓLO MOSTRAR SENTENCIA)
 
 DELETE FROM Images 
-WHERE (Images.id_article = 4)
+WHERE (Images.id_article = 1)
 
 DELETE FROM Articles
 WHERE (Articles.id = 1)
