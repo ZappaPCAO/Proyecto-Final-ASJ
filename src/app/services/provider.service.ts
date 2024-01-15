@@ -11,7 +11,7 @@ export class ProviderService {
   constructor() { }
 
   get(){
-    return this.dataProviders;
+    return this.dataProviders.sort((a:Provider,b:Provider) => a.razSocial.localeCompare(b.razSocial));
   }
 
   getById(id: number): Provider {

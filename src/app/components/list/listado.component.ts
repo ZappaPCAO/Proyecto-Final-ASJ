@@ -58,25 +58,17 @@ export class ListadoComponent implements OnInit{
 
   generarArreglos(){
     this.tbody = this.serivicioAdm.get(this.condicion);
-    console.log(this.tbody + 'array');
-    if(this.tbody && this.tbody.length > 0)
-      if(this.condicion === 'article'){
-        this.thead = ['producto','categoria','proveedor', 'precio'];
-        // this.tbody.sort((a:Article,b:Article) => a.producto.localeCompare(b.producto));        
-      }else if(this.condicion === 'provider'){
-        this.thead = ['cod','razSocial','datosContacto'];
-        // this.tbody.sort((a:Provider,b:Provider) => a.razSocial.localeCompare(b.razSocial));  
-      }else{
-        this.thead = ['nroOC','fecEmision','fecEntrega','detalle','estado', 'total'];
-        // this.tbody.sort((a:PurchaseOrder,b:PurchaseOrder) => a.fecEmision.localeCompare(b.fecEmision));
-      }
-      // this.currentRecord = this.tbody[0]
+
+    if(this.tbody && this.tbody.length > 0){
+
+      this.thead = (this.condicion === 'article')  ? ['producto','categoria','proveedor', 'precio'] :
+                   (this.condicion === 'provider') ? ['cod','razSocial','datosContacto'] : 
+                                                     ['nroOC','fecEmision','fecEntrega','detalle','estado', 'total'];
+    }
   }                                                                        
   
   onEdit(){
     let tipo = `${this.condicion}/update-${this.condicion}`;
-
-    console.log("id " + this.currentRecord.id + ", tipo: "+tipo )
 
     this.router.navigate([tipo, this.currentRecord.id]);
     this.closeContextMenu();

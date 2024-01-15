@@ -59,7 +59,7 @@ export class AddArticleComponent implements OnInit {
   verificarUpdate(){
     if(this.idArticle > 0){      
       this.article = this.articleService.getById(this.idArticle);
-      this.idProveedor = this.article.proveedor.id;
+      this.idProveedor = this.article.proveedor.id;      
     }
     console.log(this.article);
   }
@@ -71,29 +71,37 @@ export class AddArticleComponent implements OnInit {
       ( verificarDatos(this.article) && // que no hay ningun caracter raro
         verificarLongitudes(this.article) && // que los largos sean los que quiero
         verificarCamposEspeciales(this.article) ) ){ // controlo campos especificos
-
+          
       if(this.idArticle === 0){ // 0 => Nuevo ; >0 => Edito
-        this.articleService.post(this.article);
+        Swal.fire({
+          title: "¿Desea crear otro?",          
+          icon: 'success',
+          timer: 2500,       
+          showCancelButton: true, 
+          confirmButtonColor: "var(--color-primary)",
+          cancelButtonColor: "var(--color-secondary)",          
+          confirmButtonText: "Si",
+          cancelButtonText: "No"
+        }).then((result) => {
+          this.articleService.post(this.article);
+          if (result.isConfirmed) {
+            form.reset();
+          }else{          
+            this.router.navigate(['article', 'list']);
+          }
+        });        
       }else{
-        this.articleService.put(this.article);
+        Swal.fire({
+          position: "bottom-end",
+          icon: "success",
+          title: "Editado correctamente!!",
+          showConfirmButton: false,
+          timer: 1500
+        }).then(() => {
+          this.articleService.put(this.article);
+          this.router.navigate(['article', 'list']);          
+        });
       }
-
-      Swal.fire({
-        title: "¿Desea crear otro?",          
-        icon: 'success',
-        timer: 2500,       
-        showCancelButton: true, 
-        confirmButtonColor: "var(--color-primary)",
-        cancelButtonColor: "var(--color-secondary)",          
-        confirmButtonText: "Si",
-        cancelButtonText: "No"
-      }).then((result) => {
-        if (result.isConfirmed) {
-          form.reset();
-        }else{          
-          this.router.navigate(['article', 'list']);
-        }
-      });
     }else{
       // Hago lo que hizo el profe con los cartelitos.
     }

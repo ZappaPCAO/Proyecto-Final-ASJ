@@ -106,7 +106,8 @@
                             </div>                                                                                                                          
                             <div class="mt-4 mb-0">
                                 <div class="d-grid">
-                                    <button class="btn btn-block mi-btn-add" type="submit">Crear Articulo</button>
+                                    <button *ngIf="idArticle==0" class="btn btn-block mi-btn-add" type="submit">Crear Articulo</button>
+                                    <button *ngIf="idArticle>0" class="btn btn-block mi-btn-add" type="submit">Editar Articulo</button>
                                 </div>
                             </div>
                         </form>

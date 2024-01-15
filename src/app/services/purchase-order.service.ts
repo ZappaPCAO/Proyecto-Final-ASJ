@@ -11,7 +11,7 @@ export class PurchaseOrderService {
   constructor() { }
 
   get (){
-    return this.dataPurchaseOrders;
+    return this.dataPurchaseOrders.sort((a:PurchaseOrder,b:PurchaseOrder) => a.fecEmision.localeCompare(b.fecEmision));
   }
 
   getById(id: number): PurchaseOrder {
