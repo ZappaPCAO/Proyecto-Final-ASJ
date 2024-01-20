@@ -95,14 +95,12 @@ export class AddProviderComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {
-    // this.loadProvincias(); // Busco de la API las prinvincias Argentinas.
-    this.route.params.subscribe(params => this.idProvider = params['id'] || 0);
-
-    this.provincias = this.provService.provincias; // get
-
-    this.verificarUpdate();
-
-    console.log(`id =>  ${this.provider.direccion.localidad}`);
+  ngOnInit(): void {   
+    this.route.params.subscribe((params) => {
+      this.idProvider = params['id'] || 0;      
+      this.provincias = this.provService.provincias; // get
+      
+      this.verificarUpdate();
+    });  
   };
 }

@@ -108,10 +108,11 @@ export class AddArticleComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => this.idArticle = params['id'] || 0);
+    this.route.params.subscribe((params) => {
+      this.idArticle = params['id'] || 0;      
+      this.arrProviders = this.providerService.get(); //get
 
-    this.arrProviders = this.providerService.get()
-
-    this.verificarUpdate();
+      this.verificarUpdate();
+    });
   }
 }

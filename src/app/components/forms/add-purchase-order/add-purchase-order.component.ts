@@ -117,12 +117,13 @@ export class AddPurchaseOrderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => this.idPurchaseOrder = params['id'] || 0);
+    this.route.params.subscribe((params) => {
+      this.idPurchaseOrder = params['id'] || 0;      
+      this.arrProviders = this.providerService.get(); //get
+      this.arrArticles = this.articleService.get(); //get
+      this.purchaseOrder.fecEmision = formatDate(new Date());
 
-    this.arrProviders = this.providerService.get();
-    this.arrArticles = this.articleService.get();
-    this.purchaseOrder.fecEmision = formatDate(new Date());
-
-    this.verificarUpdate();
+      this.verificarUpdate();     
+    });
   }
 }

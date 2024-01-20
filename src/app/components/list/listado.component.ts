@@ -20,6 +20,9 @@ export class ListadoComponent implements OnInit{
 
   constructor(private route: ActivatedRoute, private router: Router, 
     private serivicioAdm: AdministrarServicesService){
+      this.route.data.subscribe(data => {
+        console.log('Estado recibido:', data);
+      });
   }
 
   detectRightMouseClick($event: any, el: Provider | Article | PurchaseOrder) {
@@ -68,9 +71,7 @@ export class ListadoComponent implements OnInit{
   }                                                                        
   
   onEdit(){
-    let tipo = `${this.condicion}/update-${this.condicion}`;
-
-    this.router.navigate([tipo, this.currentRecord.id]);
+    this.router.navigate([this.condicion, this.currentRecord.id]);
     this.closeContextMenu();
   }
 
@@ -101,12 +102,14 @@ export class ListadoComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => { this.condicion = params["tipo"];
-      if(this.condicion !== null){
-        this.generarArreglos();
-      }
-      console.log(`condicion ${this.condicion}`);
-      console.log('algo '+this.thead)
+    this.route.data.subscribe(data => {
+
+      if(data && data['tipo']){       
+        this.condicion = data['tipo'];        
+          this.generarArreglos();
+      }else{
+        this.router.navigate(['']); // Lo mando al home
+      }   
     });
   }
 }
