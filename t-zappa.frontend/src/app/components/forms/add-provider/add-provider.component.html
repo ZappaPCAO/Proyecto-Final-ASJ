@@ -112,13 +112,13 @@
                                 <p class="h6">Direccion: </p>
                                 <div class="col-md-4">                                                                                                       
                                     <div class=" form-floating">                                                                                                               
-                                        <input required minlength="3" maxlength="25" type="text" class="form-control form-control-sm" 
+                                        <input required minlength="3" maxlength="30" type="text" class="form-control form-control-sm" 
                                          name="calle" [(ngModel)]="provider.direccion.calle" placeholder=""
                                          #calle="ngModel" [ngClass]="!calle.value ? 'mi-requerido': calle.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'">
                                         <label for="inputCalle">Calle: </label>
                                         <ng-container *ngIf="calle.value">
                                             <span *ngIf="calle.errors?.['minlength']" class="mi-invalid-feedback">
-                                                Longitud maxima 25
+                                                Longitud maxima 30
                                             </span>
                                             <span *ngIf="calle.errors?.['maxlength']" class="mi-invalid-feedback">
                                                 Longitud minima 3
