@@ -13,7 +13,7 @@ import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name="Sectors")
-public class Sectors {
+public class SectorsModel {
 	
 	@Id
 	@NotNull(message="[id] no puede ser nula.")
@@ -36,9 +36,9 @@ public class Sectors {
 
 	// Metodos
 	
-	public Sectors() {}
+	public SectorsModel() {}
 	
-	public Sectors(Integer id, String sector) {		
+	public SectorsModel(Integer id, String sector) {		
 		this.id = id;
 		this.sector = sector;
 		this.created_at = LocalDateTime.now();

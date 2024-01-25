@@ -1,6 +1,5 @@
 package com.bootcampASJ.tzappa.Models;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -11,38 +10,33 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 @Entity
-@Table(name="Taxs_Data")
-public class Taxs_Data {
-
+@Table(name="Countries")
+public class CountriesModel {
+	
 	@Id
 	@NotNull(message="[id] no puede ser nula.")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@NotNull(message="[cuit] no puede ser nula.")
-	@NotBlank(message="[cuit] no puede estar vacia.")
-	@Size(min = 13, max = 13, message = "[cuit] la longitud tiene que ser 13.")
-	@Column(unique = true)
-	private String cuit;
-	
-	// FK => Providers
-	// FK => IVA_Conditions
-	
+	@NotNull(message="[name] no puede ser nula.")
+	@NotBlank(message="[name] no puede estar vacia.")
+	@Size(min = 3, max = 30, message = "[name] longitud fuera de rango 3-30.")
+	private String name;
+
 	// Metodos
 	
-	public Taxs_Data() {}
+	public CountriesModel() {}
 	
-	public Taxs_Data(Integer id, String cuit) {		
+	public CountriesModel(Integer id, String name) {		
 		this.id = id;
-		this.cuit = cuit;
-		// Si no le erro, deberian estar aca tmb las vinculaciones con las fk.
+		this.name = name;
 	}
 
 	public Integer getId() {
 		return id;
 	}
 
-	public String getCuit() {
-		return cuit;
+	public String getName() {
+		return name;
 	}
 }

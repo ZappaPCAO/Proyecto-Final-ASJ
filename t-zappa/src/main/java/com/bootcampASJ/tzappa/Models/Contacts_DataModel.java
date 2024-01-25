@@ -12,7 +12,7 @@ import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name="Contacts_Data")
-public class Contacts_Data {
+public class Contacts_DataModel {
 	
 	@Id
 	@NotNull(message="[id] no puede ser nula.")
@@ -50,8 +50,8 @@ public class Contacts_Data {
 	
 	// Metodos
 	
-	public Contacts_Data() {}
-	public Contacts_Data(Integer id, String name, String last_name, String phone,
+	public Contacts_DataModel() {}
+	public Contacts_DataModel(Integer id, String name, String last_name, String phone,
 			String email, String role) {		
 		this.id = id;
 		this.name = name;

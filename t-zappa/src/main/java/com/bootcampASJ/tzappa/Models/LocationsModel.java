@@ -13,7 +13,7 @@ import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name="Locations")
-public class Locations {
+public class LocationsModel {
 	@Id
 	@NotNull(message="[id] no puede ser nula.")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,9 +38,9 @@ public class Locations {
 	
 	// Metodos
 
-	public Locations() {}
+	public LocationsModel() {}
 	
-	public Locations( Integer id, String street, Integer number, String postal_code) {
+	public LocationsModel( Integer id, String street, Integer number, String postal_code) {
 		this.id = id;
 		this.street = street;
 		this.number = number;

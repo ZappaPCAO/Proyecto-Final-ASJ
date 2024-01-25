@@ -14,7 +14,7 @@ import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name="Providers")
-public class Providers {
+public class ProvidersModel {
 	
 	@Id
 	@NotNull(message="[id] no puede ser nula.")
@@ -63,9 +63,9 @@ public class Providers {
 	
 	// Metodos
 	
-	public Providers() {}
+	public ProvidersModel() {}
 	
-	public Providers(Integer id,String cod_provider, String business_name,
+	public ProvidersModel(Integer id,String cod_provider, String business_name,
 			String website,	String email, String phone) {
 		this.id = id;
 		this.cod_provider = cod_provider;

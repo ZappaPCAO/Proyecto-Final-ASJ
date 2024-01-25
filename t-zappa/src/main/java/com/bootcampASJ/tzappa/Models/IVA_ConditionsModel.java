@@ -11,7 +11,7 @@ import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name="IVA_Conditions")
-public class IVA_Conditions {
+public class IVA_ConditionsModel {
 	
 	@Id
 	@NotNull(message = "[id] no puede ser nula.")
@@ -25,9 +25,9 @@ public class IVA_Conditions {
 
 	// Metodos
 	
-	public IVA_Conditions() {}
+	public IVA_ConditionsModel() {}
 	
-	public IVA_Conditions(Integer id, String condition) {		
+	public IVA_ConditionsModel(Integer id, String condition) {		
 		this.id = id;
 		this.condition = condition;
 	}
