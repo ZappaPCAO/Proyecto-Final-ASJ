@@ -2,9 +2,12 @@ package com.bootcampASJ.tzappa.Models;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -12,7 +15,7 @@ import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name="Taxs_Data")
-public class Taxs_DataModel {
+public class Tax_Data {
 
 	@Id
 	@NotNull(message="[id] no puede ser nula.")
@@ -25,14 +28,19 @@ public class Taxs_DataModel {
 	@Column(unique = true)
 	private String cuit;
 	
-	// FK => Providers
-	// FK => IVA_Conditions
+	// FK 
+	
+	@OneToOne(fetch = FetchType.EAGER)
+	private Provider provider;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	private IVA_Condition iva_condition;
 	
 	// Metodos
 	
-	public Taxs_DataModel() {}
+	public Tax_Data() {}
 	
-	public Taxs_DataModel(Integer id, String cuit) {		
+	public Tax_Data(Integer id, String cuit) {		
 		this.id = id;
 		this.cuit = cuit;
 		// Si no le erro, deberian estar aca tmb las vinculaciones con las fk.

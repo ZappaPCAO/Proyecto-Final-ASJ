@@ -1,28 +1,33 @@
 package com.bootcampASJ.tzappa.Models;
 
 import java.time.LocalDateTime;
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 @Entity
-@Table(name="Categories")
-public class CategoriesModel {
-
+@Table(name="Sectors")
+public class Sector {
+	
 	@Id
 	@NotNull(message="[id] no puede ser nula.")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@NotNull(message="[category] no puede ser nula.")
-	@NotBlank(message="[category] no puede estar vacia.")
-	@Size(min = 4, max = 30, message = "[category] longitud fuera de rango 4-30.")
-	private String category;
+	@NotNull(message="[sector] no puede ser nula.")
+	@NotBlank(message="[sector] no puede estar vacia.")
+	@Size(min = 3, max = 30, message = "[sector] longitud fuera de rango 3-30.")
+	private String sector;
 	
 	@NotNull(message="[created_at] no puede ser nula.")
 	@NotBlank(message="[created_at] no puede estar vacia.")
@@ -33,27 +38,28 @@ public class CategoriesModel {
 	@NotNull(message="[is_deleted] no puede ser nula.")
 	private Boolean is_deleted;
 	
+	// Relacion bidirecc
+	
+	@OneToMany(mappedBy = "sector", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Article> providers;
+
 	// Metodos
 	
-	public CategoriesModel() {}
-	
-	public CategoriesModel(Integer id, String category) {
+	public Sector() {}
+
+	public Sector(Integer id, String sector) {		
 		this.id = id;
-		this.category = category;
+		this.sector = sector;
 		this.created_at = LocalDateTime.now();
 		this.is_deleted = false;
 	}
-	
-	public Integer getId() {
-		return id;
+
+	public String getSector() {
+		return sector;
 	}
 
-	public String getCategory() {
-		return category;
-	}
-
-	public void setCategory(String category) {
-		this.category = category;
+	public void setSector(String sector) {
+		this.sector = sector;
 	}
 
 	public LocalDateTime getUpdate_at() {
@@ -64,15 +70,23 @@ public class CategoriesModel {
 		this.update_at = update_at;
 	}
 
-	public Boolean getIs_deleted() {
-		return is_deleted;
-	}
-
-	public void delete() { // Borrado logico
-		this.is_deleted = true;
+	public Integer getId() {
+		return id;
 	}
 
 	public LocalDateTime getCreated_at() {
 		return created_at;
+	}
+
+	public void delete() {
+		this.is_deleted = true;
+	}
+	
+	public Boolean getIs_deleted() {
+		return is_deleted;
+	}
+	
+	public List<Article> getProviders() {
+		return providers;
 	}
 }

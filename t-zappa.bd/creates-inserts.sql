@@ -126,7 +126,6 @@ CREATE TABLE "Purchase_Orders"(
     FOREIGN key (id_provider) references Providers(id)
 );
 
---Quede aca
 
 CREATE TABLE "Details"(
     "id" INT NOT NULL identity(1,1) PRIMARY KEY,

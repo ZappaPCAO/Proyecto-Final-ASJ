@@ -2,9 +2,11 @@ package com.bootcampASJ.tzappa.Models;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -12,7 +14,7 @@ import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name="Contacts_Data")
-public class Contacts_DataModel {
+public class Contact_Data {
 	
 	@Id
 	@NotNull(message="[id] no puede ser nula.")
@@ -46,12 +48,16 @@ public class Contacts_DataModel {
 	@Size(min = 3, max = 30, message = "[role] longitud fuera de rango 3-30.")
 	private String role;
 	
-	// FK => Providers
+	// FK
+	
+	@OneToOne(fetch = FetchType.EAGER)
+	private Provider provider;
 	
 	// Metodos
 	
-	public Contacts_DataModel() {}
-	public Contacts_DataModel(Integer id, String name, String last_name, String phone,
+	public Contact_Data() {}
+	
+	public Contact_Data(Integer id, String name, String last_name, String phone,
 			String email, String role) {		
 		this.id = id;
 		this.name = name;
@@ -59,13 +65,16 @@ public class Contacts_DataModel {
 		this.phone = phone;
 		this.email = email;
 		this.role = role;
-		// FK irian tmb creo
 	}
+	
 	public String getName() {
 		return name;
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	public Provider getProvider() {
+		return provider;
 	}
 	public String getLast_name() {
 		return last_name;

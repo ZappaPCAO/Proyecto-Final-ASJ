@@ -1,9 +1,11 @@
 package com.bootcampASJ.tzappa.Models;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -11,7 +13,7 @@ import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name="Images")
-public class ImagesModel {
+public class Image {
 	
 	@Id
 	@NotNull(message="[id] no puede ser nula.")
@@ -23,13 +25,16 @@ public class ImagesModel {
 	@Size(min = 3, max = 50, message = "[url] longitud fuera de rango 3-50.")
 	private String url;
 	
-	// FK => Articles
+	// FK
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	private Article article;
 
 	// Metodos
 	
-	public ImagesModel() {}
+	public Image() {}
 	
-	public ImagesModel(Integer id, String url) {
+	public Image(Integer id, String url) {
 		this.id = id;
 		this.url = url;
 	}

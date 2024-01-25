@@ -1,12 +1,17 @@
 package com.bootcampASJ.tzappa.Models;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -15,7 +20,7 @@ import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name="Purchase_Orders")
-public class Purchase_OrdersModel {
+public class Purchase_Order {
 	
 	@Id
 	@NotNull(message="[id] no puede ser nula.")
@@ -58,13 +63,21 @@ public class Purchase_OrdersModel {
 	@NotNull(message="[is_deleted] no puede ser nula.")
 	private Boolean is_deleted;
 	
-	// FK => Providers
+	// FK 
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	private Provider provider;
+	
+	// Relacion bidirecc
+	
+	@OneToMany(mappedBy = "purchase_order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Detail> details;
 	
 	// Metodos
+
+	public Purchase_Order() {}
 	
-	public Purchase_OrdersModel() {}
-	
-	public Purchase_OrdersModel(Integer id, Integer nro_purchase_order, LocalDateTime send_date,
+	public Purchase_Order(Integer id, Integer nro_purchase_order, LocalDateTime send_date,
 			LocalDateTime receipt_date, String description, char estado, Double total) {
 		this.id = id;
 		this.nro_purchase_order = nro_purchase_order;
@@ -135,6 +148,12 @@ public class Purchase_OrdersModel {
 
 	public LocalDateTime getCreated_at() {
 		return created_at;
+	}
+	public List<Detail> getDetails() {
+		return details;
+	}
+	public Provider getProvider() {
+		return provider;
 	}
 
 	public Boolean getIs_deleted() {

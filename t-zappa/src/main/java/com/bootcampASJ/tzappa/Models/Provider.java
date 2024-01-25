@@ -1,12 +1,18 @@
 package com.bootcampASJ.tzappa.Models;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -14,7 +20,7 @@ import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name="Providers")
-public class ProvidersModel {
+public class Provider {
 	
 	@Id
 	@NotNull(message="[id] no puede ser nula.")
@@ -59,13 +65,33 @@ public class ProvidersModel {
 	@NotNull(message="[is_deleted] no puede ser nula.")
 	private Boolean is_deleted;
 
-	// FK => Sectors
+	// FK 
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	private Sector sector;
+	
+	// Relacion bidirecc
+	
+	@OneToMany(mappedBy = "provider", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Article> articles;
+
+	@OneToMany(mappedBy = "provider", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Purchase_Order> purchase_orders;
+    
+    @OneToOne(mappedBy = "provider", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Contact_Data contact_data;
+    
+    @OneToOne(mappedBy = "provider", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Location location;
+
+	@OneToOne(mappedBy = "provider", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Tax_Data tax_data;
 	
 	// Metodos
+
+	public Provider() {}
 	
-	public ProvidersModel() {}
-	
-	public ProvidersModel(Integer id,String cod_provider, String business_name,
+	public Provider(Integer id,String cod_provider, String business_name,
 			String website,	String email, String phone) {
 		this.id = id;
 		this.cod_provider = cod_provider;
@@ -88,6 +114,10 @@ public class ProvidersModel {
 	public String getWebsite() {
 		return website;
 	}
+	
+	public Location getLocation() {
+		return location;
+	}
 
 	public void setWebsite(String website) {
 		this.website = website;
@@ -105,6 +135,10 @@ public class ProvidersModel {
 		return phone;
 	}
 
+	public Contact_Data getContact_data() {
+		return contact_data;
+	}
+	
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
@@ -131,6 +165,22 @@ public class ProvidersModel {
 
 	public Boolean getIs_deleted() {
 		return is_deleted;
+	}
+	
+	public List<Article> getArticles() {
+		return articles;
+	}
+	
+	public Sector getSector() {
+		return sector;
+	}
+
+	public List<Purchase_Order> getPurchases_order() {
+		return purchase_orders;
+	}
+	
+	public Tax_Data getTaxs_data() {
+		return tax_data;
 	}
 	
 	public void delete() {

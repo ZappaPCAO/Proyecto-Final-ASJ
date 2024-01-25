@@ -1,9 +1,12 @@
 package com.bootcampASJ.tzappa.Models;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -13,7 +16,7 @@ import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name="Locations")
-public class LocationsModel {
+public class Location {
 	@Id
 	@NotNull(message="[id] no puede ser nula.")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,14 +36,19 @@ public class LocationsModel {
 	@Size(min = 3, max = 8, message = "[postal_code] longitud fuera de rango 3-8.")
 	private String postal_code;
 	
-	// FK => Providers 
-	// FK => Cities
+	// FK 
+	
+	@OneToOne(fetch = FetchType.EAGER)
+	private Provider provider;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	private City city;
 	
 	// Metodos
 
-	public LocationsModel() {}
+	public Location() {}
 	
-	public LocationsModel( Integer id, String street, Integer number, String postal_code) {
+	public Location( Integer id, String street, Integer number, String postal_code) {
 		this.id = id;
 		this.street = street;
 		this.number = number;
@@ -61,6 +69,14 @@ public class LocationsModel {
 
 	public void setNumber(Integer number) {
 		this.number = number;
+	}
+	
+	public Provider getProvider() {
+		return provider;
+	}
+
+	public City getCity() {
+		return city;
 	}
 
 	public String getPostal_code() {

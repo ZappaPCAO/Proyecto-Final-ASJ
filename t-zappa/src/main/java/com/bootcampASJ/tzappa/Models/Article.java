@@ -1,12 +1,17 @@
 package com.bootcampASJ.tzappa.Models;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -14,8 +19,8 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 @Entity
-@Table(name="Contacts_Data")
-public class ArticlesModel {
+@Table(name="Articles")
+public class Article {
 
 	@Id
 	@NotNull(message="[id] no puede ser nula.")
@@ -51,14 +56,27 @@ public class ArticlesModel {
 	@NotNull(message="[is_deleted] no puede ser nula.")
 	private Boolean is_deleted;
 	
-	// FK => Categories
-	// FK => Providers
+	// FK
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	private Category category;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	private Provider provider;
+	
+	// Relacion bidirecc
+	
+	@OneToMany(mappedBy = "article", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Detail> details;
+	
+	@OneToMany(mappedBy = "article", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Image> images;
 	
 	// Metodos
+
+	public Article() {}
 	
-	public ArticlesModel() {}
-	
-	public ArticlesModel(Integer id, String cod_article, String name, String description,
+	public Article(Integer id, String cod_article, String name, String description,
 			Double price) {		
 		this.id = id;
 		this.cod_article = cod_article;
@@ -93,6 +111,10 @@ public class ArticlesModel {
 		this.price = price;
 	}
 
+	public List<Image> getImages() {
+		return images;
+	}
+	
 	public LocalDateTime getUpdate_at() {
 		return update_at;
 	}
@@ -117,7 +139,18 @@ public class ArticlesModel {
 		return is_deleted;
 	}
 	
+	public Category getCategory() {
+		return category;
+	}
+
+	public Provider getProvider() {
+		return provider;
+	}
+	
 	public void delete() {
 		this.is_deleted = true;
+	}
+	public List<Detail> getDetails() {
+		return details;
 	}
 }
