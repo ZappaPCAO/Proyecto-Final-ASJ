@@ -3,6 +3,8 @@ package com.bootcampASJ.tzappa.Models;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -24,50 +26,51 @@ public class Sector {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@NotNull(message="[sector] no puede ser nula.")
-	@NotBlank(message="[sector] no puede estar vacia.")
-	@Size(min = 3, max = 30, message = "[sector] longitud fuera de rango 3-30.")
-	private String sector;
+	@NotNull(message="[sectorName] no puede ser nula.")
+	@NotBlank(message="[sectorName] no puede estar vacia.")
+	@Size(min = 3, max = 30, message = "[sectorName] longitud fuera de rango 3-30.")
+	private String sectorName;
 	
 	@NotNull(message="[created_at] no puede ser nula.")
 	@NotBlank(message="[created_at] no puede estar vacia.")
 	private LocalDateTime created_at;
 	
-	private LocalDateTime update_at;
+	private LocalDateTime updated_at;
 	
 	@NotNull(message="[is_deleted] no puede ser nula.")
 	private Boolean is_deleted;
 	
 	// Relacion bidirecc
 	
-	@OneToMany(mappedBy = "sector", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Article> providers;
+//	@OneToMany(mappedBy = "sector", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//	@JsonBackReference
+//	private List<Provider> providers;
 
 	// Metodos
 	
 	public Sector() {}
 
-	public Sector(Integer id, String sector) {		
+	public Sector(Integer id, String sectorName) {		
 		this.id = id;
-		this.sector = sector;
+		this.sectorName = sectorName;
 		this.created_at = LocalDateTime.now();
 		this.is_deleted = false;
 	}
 
 	public String getSector() {
-		return sector;
+		return sectorName;
 	}
 
-	public void setSector(String sector) {
-		this.sector = sector;
+	public void setSectorName(String sectorName) {
+		this.sectorName = sectorName;
 	}
 
 	public LocalDateTime getUpdate_at() {
-		return update_at;
+		return updated_at;
 	}
 
 	public void setUpdate_at(LocalDateTime update_at) {
-		this.update_at = update_at;
+		this.updated_at = update_at;
 	}
 
 	public Integer getId() {
@@ -86,7 +89,7 @@ public class Sector {
 		return is_deleted;
 	}
 	
-	public List<Article> getProviders() {
-		return providers;
-	}
+//	public List<Provider> getProviders() {
+//		return providers;
+//	}
 }

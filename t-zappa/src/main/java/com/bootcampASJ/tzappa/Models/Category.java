@@ -33,15 +33,15 @@ public class Category {
 	@NotBlank(message="[created_at] no puede estar vacia.")
 	private LocalDateTime created_at;
 	
-	private LocalDateTime update_at;
+	private LocalDateTime updated_at;
 	
 	@NotNull(message="[is_deleted] no puede ser nula.")
 	private Boolean is_deleted;
 	
 	// Relacion bidirecc
 	
-	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Article> articles;
+//	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    private List<Article> articles;
 
 	// Metodos
 	
@@ -67,11 +67,11 @@ public class Category {
 	}
 
 	public LocalDateTime getUpdate_at() {
-		return update_at;
+		return updated_at;
 	}
 
 	public void setUpdate_at(LocalDateTime update_at) {
-		this.update_at = update_at;
+		this.updated_at = update_at;
 	}
 
 	public Boolean getIs_deleted() {
@@ -86,7 +86,7 @@ public class Category {
 		return created_at;
 	}
 	
-	public List<Article> getArticles() {
-		return articles;
-	}
+//	public List<Article> getArticles() {
+//		return articles;
+//	}
 }

@@ -30,8 +30,8 @@ public class IVA_Condition {
 
 	// Relacion bidirecc
 	
-	@OneToMany(mappedBy = "iva_condition", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Tax_Data> taxs_data;
+//	@OneToMany(mappedBy = "iva_condition", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    private List<Tax_Data> taxs_data;
 	
 	// Metodos
 	

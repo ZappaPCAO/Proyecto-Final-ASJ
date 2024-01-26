@@ -1,5 +1,7 @@
 package com.bootcampASJ.tzappa.Models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -50,9 +52,6 @@ public class Contact_Data {
 	
 	// FK
 	
-	@OneToOne(fetch = FetchType.EAGER)
-	private Provider provider;
-	
 	// Metodos
 	
 	public Contact_Data() {}
@@ -72,9 +71,6 @@ public class Contact_Data {
 	}
 	public void setName(String name) {
 		this.name = name;
-	}
-	public Provider getProvider() {
-		return provider;
 	}
 	public String getLast_name() {
 		return last_name;

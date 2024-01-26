@@ -3,6 +3,9 @@ package com.bootcampASJ.tzappa.Models;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,6 +13,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -22,6 +26,7 @@ import jakarta.validation.constraints.Size;
 @Table(name="Purchase_Orders")
 public class Purchase_Order {
 	
+	@Column
 	@Id
 	@NotNull(message="[id] no puede ser nula.")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,10 +37,12 @@ public class Purchase_Order {
 	@Column(unique = true)
 	private Integer nro_purchase_order;
 	
+	@Column
 	@NotNull(message="[send_date] no puede ser nula.")
 	@NotBlank(message="[send_date] no puede estar vacia.")
 	private LocalDateTime send_date;
 	
+	@Column
 	@NotNull(message="[receipt_date] no puede ser nula.")
 	@NotBlank(message="[receipt_date] no puede estar vacia.")
 	private LocalDateTime receipt_date;
@@ -45,33 +52,40 @@ public class Purchase_Order {
 	@Column(columnDefinition = "text")
 	private String description;
 	
+	@Column
 	@NotNull(message="[estado] no puede ser nula.")
 	@NotBlank(message="[estado] no puede estar vacia.")
 	@Size(min = 1, max = 1, message = "[estado] tiene que ser solo un caracter.")
 	private char estado;
 	
+	@Column
 	@NotNull(message="[total] no puede ser nula.")
 	@Min(value = 1, message = "[total] debe ser un numero positivo.")
 	private Double total;
 	
+	@Column
 	@NotNull(message="[created_at] no puede ser nula.")
 	@NotBlank(message="[created_at] no puede estar vacia.")
 	private LocalDateTime created_at;
 	
-	private LocalDateTime update_at;
+	@Column
+	private LocalDateTime updated_at;
 	
+	@Column
 	@NotNull(message="[is_deleted] no puede ser nula.")
 	private Boolean is_deleted;
 	
 	// FK 
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER)	
+	@JoinColumn(name = "provider", referencedColumnName = "id", nullable = false)
 	private Provider provider;
 	
 	// Relacion bidirecc
 	
-	@OneToMany(mappedBy = "purchase_order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Detail> details;
+	@OneToMany
+	@JoinColumn(name = "details", referencedColumnName = "id", nullable = false)
+	private List<Detail> details;
 	
 	// Metodos
 
@@ -131,11 +145,11 @@ public class Purchase_Order {
 	}
 
 	public LocalDateTime getUpdate_at() {
-		return update_at;
+		return updated_at;
 	}
 
 	public void setUpdate_at(LocalDateTime update_at) {
-		this.update_at = update_at;
+		this.updated_at = update_at;
 	}
 
 	public Integer getId() {

@@ -1,11 +1,14 @@
 package com.bootcampASJ.tzappa.Models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -30,10 +33,8 @@ public class Tax_Data {
 	
 	// FK 
 	
-	@OneToOne(fetch = FetchType.EAGER)
-	private Provider provider;
-	
 	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "iva_condition", referencedColumnName = "id", nullable = false)
 	private IVA_Condition iva_condition;
 	
 	// Metodos
@@ -42,8 +43,7 @@ public class Tax_Data {
 	
 	public Tax_Data(Integer id, String cuit) {		
 		this.id = id;
-		this.cuit = cuit;
-		// Si no le erro, deberian estar aca tmb las vinculaciones con las fk.
+		this.cuit = cuit;		
 	}
 
 	public Integer getId() {

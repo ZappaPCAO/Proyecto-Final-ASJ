@@ -1,10 +1,13 @@
 package com.bootcampASJ.tzappa.Models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -37,11 +40,9 @@ public class Location {
 	private String postal_code;
 	
 	// FK 
-	
-	@OneToOne(fetch = FetchType.EAGER)
-	private Provider provider;
 
 	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "city", referencedColumnName = "id", nullable = false)
 	private City city;
 	
 	// Metodos
@@ -69,10 +70,6 @@ public class Location {
 
 	public void setNumber(Integer number) {
 		this.number = number;
-	}
-	
-	public Provider getProvider() {
-		return provider;
 	}
 
 	public City getCity() {

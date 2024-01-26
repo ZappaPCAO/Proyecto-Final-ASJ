@@ -8,6 +8,7 @@ public class TZappaApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(TZappaApplication.class, args);
+		System.out.println("\nServer ON");
 	}
 
 }

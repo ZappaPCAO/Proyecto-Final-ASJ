@@ -138,7 +138,7 @@ CREATE TABLE "Details"(
 );
 
 -- Insercion de datos --
-INSERT INTO Categories ("category", "created_at", "updated_at", "is_deleted") VALUES
+INSERT INTO Categories (category, created_at, updated_at, is_deleted) VALUES
     ('Electrónicos', '2023-01-15T10:30:00', null, 0),
     ('Electrónicos', '2023-01-15T10:30:00', null, 0),
     ('Ropa', '2023-02-20T14:45:00', null, 0),
@@ -151,7 +151,7 @@ INSERT INTO Categories ("category", "created_at", "updated_at", "is_deleted") VA
     ('Alimentos', '2023-09-18T17:30:00', null, 0),
     ('Música', '2023-10-05T08:40:00', null, 0);
 
-INSERT INTO Countries ("name") VALUES ('Estados Unidos'),
+INSERT INTO Countries (name) VALUES ('Estados Unidos'),
     ('Canadá'),
     ('México'),
     ('Brasil'),
@@ -162,7 +162,7 @@ INSERT INTO Countries ("name") VALUES ('Estados Unidos'),
     ('Venezuela'),
     ('Ecuador');
 
-INSERT INTO States ("name", "id_country") VALUES 
+INSERT INTO States (name, country_id) VALUES 
     ('California', 1), ('Texas', 1), ('Florida', 1), ('New York', 1), ('Illinois', 1), -- Estados Unidos
     ('Ontario', 2), ('Quebec', 2), ('Alberta', 2), ('British Columbia', 2), ('Manitoba', 2), -- Canadá
     ('Ciudad de México', 3), ('Jalisco', 3), ('Nuevo León', 3), ('Veracruz', 3), ('Puebla', 3), -- México
@@ -175,7 +175,7 @@ INSERT INTO States ("name", "id_country") VALUES
     ('Quito', 10), ('Guayas', 10), ('Pichincha', 10), ('Azuay', 10), ('Manabí', 10); -- Ecuador
 
 
-INSERT INTO Cities ("name", "id_state") VALUES --Por ahora solo agrego de Argentina
+INSERT INTO Cities (name, state_id) VALUES --Por ahora solo agrego de Argentina
     ('La Plata', 21),
     ('Mar del Plata', 21),
     ('Quilmes', 21),
@@ -206,7 +206,7 @@ INSERT INTO Cities ("name", "id_state") VALUES --Por ahora solo agrego de Argent
     ('Banda del Río Salí', 25),
     ('Alderetes', 25);
 
-INSERT INTO IVA_conditions ("condition") VALUES
+INSERT INTO IVA_conditions (condition) VALUES
     ('IVA Responsable Inscripto'),
     ('IVA Responsable no Inscripto'),
     ('IVA no Responsable'),
@@ -222,7 +222,7 @@ INSERT INTO IVA_conditions ("condition") VALUES
     ('Monotributista Social'),
     ('Pequeño Contribuyente Eventual Social');
 
-INSERT INTO Sectors ("sector", "created_at", "updated_at", "is_deleted") VALUES
+INSERT INTO Sectors (sector_name, created_at, updated_at, is_deleted) VALUES
     ('Tecnología', '2024-01-10T12:30:00', NULL, 0),
     ('Salud', '2023-11-10T13:15:00', NULL, 0),
     ('Finanzas', '2023-06-10T14:00:00', NULL, 0),
@@ -235,92 +235,92 @@ INSERT INTO Sectors ("sector", "created_at", "updated_at", "is_deleted") VALUES
     ('Transporte', '2024-01-06T20:15:00', NULL, 0);
 
 -- Inserciones para la tabla Providers con nombres ficticios de empresas en Argentina
-INSERT INTO Providers ("cod_provider", "business_name", "website", "email", "phone", "created_at", "updated_at", "is_deleted", "id_sector") VALUES
-    ('ARTECH123', 'Artech S.A.', 'https://www.artech.com.ar', 'info@artech.com.ar', 54351345678, '2024-01-09T12:30:00', NULL, 0, 1),
-    ('TECNOPLUS', 'TecnoPlus Tech Solutions', 'https://www.tecnoplus.com.ar', 'info@tecnoplus.com.ar', 54351356789, '2024-01-09T13:15:00', NULL, 0, 1),
-    ('SALUDYA', 'SaludYa Farmacias', 'https://www.saludya.com.ar', 'info@saludya.com.ar', 54351367890, '2024-01-09T14:00:00', NULL, 0, 2),
-    ('FINANZTECH', 'FinanzTech S.R.L.', 'https://www.finanztech.com.ar', 'info@finanztech.com.ar', 54351378901, '2024-01-09T15:45:00', NULL, 0, 3),
-    ('FABRIMAC', 'Fabrimac Manufacturas', 'https://www.fabrimac.com.ar', 'info@fabrimac.com.ar', 54351389012, '2024-01-09T16:30:00', NULL, 0, 4),
-    ('EDUCARPLUS', 'EducarPlus Educación', 'https://www.educarplus.com.ar', 'info@educarplus.com.ar', 54351390123, '2024-01-09T17:15:00', NULL, 0, 5),
-    ('MODAFASH', 'ModaFash Ropa', 'https://www.modafash.com.ar', 'info@modafash.com.ar', 54351401234, '2024-01-09T18:00:00', NULL, 0, 6),
-    ('ENERGYZA', 'EnerGyza Energía', 'https://www.energyza.com.ar', 'info@energyza.com.ar', 54351412345, '2024-01-09T18:45:00', NULL, 0, 7),
-    ('HOTELEX', 'HotelEx Hotel & Resort', 'https://www.hotelex.com.ar', 'info@hotelex.com.ar', 54351423456, '2024-01-09T19:30:00', NULL, 0, 8),
-    ('TELECOMNET', 'TelecomNet Comunicaciones', 'https://www.telecomnet.com.ar', 'info@telecomnet.com.ar', 541151234567, '2024-01-09T20:15:00', NULL, 0, 9),
-    ('TRANSPORTAR', 'Transportar Logística', 'https://www.transportar.com.ar', 'info@transportar.com.ar', 541151345678, '2024-01-09T21:00:00', NULL, 0, 10),
-    ('CONSULTVET', 'ConsultVet Servicios Veterinarios', 'https://www.consultvet.com.ar', 'info@consultvet.com.ar', 541151456789, '2024-01-09T21:45:00', NULL, 0, 2),
-    ('SOLUCIONESIT', 'Soluciones IT Consultora', 'https://www.solucionesit.com.ar', 'info@solucionesit.com.ar', 541151567890, '2024-01-09T22:30:00', NULL, 0, 1),
-    ('AGROPLUS', 'AgroPlus Agroindustria', 'https://www.agroplus.com.ar', 'info@agroplus.com.ar', 541151678901, '2024-01-09T23:15:00', NULL, 0, 4),
-    ('MODATEXTIL', 'ModaTextil Textiles', 'https://www.modatextil.com.ar', 'info@modatextil.com.ar', 541151789012, '2024-01-10T00:00:00', NULL, 0, 6),
-    ('SERVHOT', 'ServiHot Servicios Hoteleros', 'https://www.servihot.com.ar', 'info@servihot.com.ar', 541151890123, '2024-01-10T00:45:00', NULL, 0, 8),
-    ('ENERGYSOLAR', 'EnergySolar Energía Renovable', 'https://www.energysolar.com.ar', 'info@energysolar.com.ar', 541151901234, '2024-01-10T01:30:00', NULL, 0, 7),
-    ('COMUNICATEC', 'ComunicaTec Soluciones de Comunicación', 'https://www.comunicatec.com.ar', 'info@comunicatec.com.ar', 541151012345, '2024-01-10T02:15:00', NULL, 0, 9),
-    ('LOGISTICA24', 'Logística24 Logística Integral', 'https://www.logistica24.com.ar', 'info@logistica24.com.ar', 541151123456, '2024-01-10T03:00:00', NULL, 0, 10);
+INSERT INTO Providers (cod_provider, business_name, website, email, phone, created_at, updated_at, is_deleted, sector_id) VALUES
+    ('ARTECH123', 'Artech S.A.', 'https://www.artech.com.ar', 'info@artech.com.ar', '543345678', '2024-01-09T12:30:00', NULL, 0, 1),
+    ('TECNOPLUS', 'TecnoPlus Tech Solutions', 'https://www.tecnoplus.com.ar', 'info@tecnoplus.com.ar', '551356789', '2024-01-09T13:15:00', NULL, 0, 1),
+    ('SALUDYA', 'SaludYa Farmacias', 'https://www.saludya.com.ar', 'info@saludya.com.ar', '543517890', '2024-01-09T14:00:00', NULL, 0, 2),
+    ('FINANZTECH', 'FinanzTech S.R.L.', 'https://www.finanztech.com.ar', 'info@finanztech.com.ar', '54351378901', '2024-01-09T15:45:00', NULL, 0, 3),
+    ('FABRIMAC', 'Fabrimac Manufacturas', 'https://www.fabrimac.com.ar', 'info@fabrimac.com.ar', '543513892', '2024-01-09T16:30:00', NULL, 0, 4),
+    ('EDUCARPLUS', 'EducarPlus Educación', 'https://www.educarplus.com.ar', 'info@educarplus.com.ar', '543513123', '2024-01-09T17:15:00', NULL, 0, 5),
+    ('MODAFASH', 'ModaFash Ropa', 'https://www.modafash.com.ar', 'info@modafash.com.ar', '543514034', '2024-01-09T18:00:00', NULL, 0, 6),
+    ('ENERGYZA', 'EnerGyza Energía', 'https://www.energyza.com.ar', 'info@energyza.com.ar', '543512345', '2024-01-09T18:45:00', NULL, 0, 7),
+    ('HOTELEX', 'HotelEx Hotel & Resort', 'https://www.hotelex.com.ar', 'info@hotelex.com.ar', '543513456', '2024-01-09T19:30:00', NULL, 0, 8),
+    ('TELECOMNET', 'TelecomNet Comunicaciones', 'https://www.telecomnet.com.ar', 'info@telecomnet.com.ar', '5411514567', '2024-01-09T20:15:00', NULL, 0, 9),
+    ('TRANSPORTAR', 'Transportar Logística', 'https://www.transportar.com.ar', 'info@transportar.com.ar', '5411513678', '2024-01-09T21:00:00', NULL, 0, 10),
+    ('CONSULTVET', 'ConsultVet Servicios Veterinarios', 'https://www.consultvet.com.ar', 'info@consultvet.com.ar', '5411456789', '2024-01-09T21:45:00', NULL, 0, 2),
+    ('SOLUCIONESIT', 'Soluciones IT Consultora', 'https://www.solucionesit.com.ar', 'info@solucionesit.com.ar', '5411515890', '2024-01-09T22:30:00', NULL, 0, 1),
+    ('AGROPLUS', 'AgroPlus Agroindustria', 'https://www.agroplus.com.ar', 'info@agroplus.com.ar', '5411516701', '2024-01-09T23:15:00', NULL, 0, 4),
+    ('MODATEXTIL', 'ModaTextil Textiles', 'https://www.modatextil.com.ar', 'info@modatextil.com.ar', '5411517892', '2024-01-10T00:00:00', NULL, 0, 6),
+    ('SERVHOT', 'ServiHot Servicios Hoteleros', 'https://www.servihot.com.ar', 'info@servihot.com.ar', '5411518123', '2024-01-10T00:45:00', NULL, 0, 8),
+    ('ENERGYSOLAR', 'EnergySolar Energía Renovable', 'https://www.energysolar.com.ar', 'info@energysolar.com.ar', '5411901234', '2024-01-10T01:30:00', NULL, 0, 7),
+    ('COMUNICATEC', 'ComunicaTec Soluciones de Comunicación', 'https://www.comunicatec.com.ar', 'info@comunicatec.com.ar', '5411512345', '2024-01-10T02:15:00', NULL, 0, 9),
+    ('LOGISTICA24', 'Logística24 Logística Integral', 'https://www.logistica24.com.ar', 'info@logistica24.com.ar', '5411513456', '2024-01-10T03:00:00', NULL, 0, 10);
 
-INSERT INTO Taxs_Data ("cuit", "id_iva_condition", "id_provider") VALUES
-    (20345678901, 1, 1),
-    (30567890123, 2, 2),
-    (40789012345, 3, 3),
-    (50901234567, 4, 4),
-    (60123456789, 5, 5),
-    (70234567890, 6, 6),
-    (80345678901, 7, 7),
-    (90456789012, 8, 8),
-    (10567890123, 9, 9),
-    (20123456789, 10, 10),
-    (30123456789, 11, 11),
-    (40123456789, 12, 12),
-    (50123456789, 13, 13),
-    (60123454789, 14, 14),
-    (80123456789, 1, 15),
-    (90123456789, 2, 16),
-    (10123456789, 3, 17),
-    (11123456789, 4, 18),
-    (11122126789, 5, 19);
+INSERT INTO Taxs_Data (cuit, iva_condition_id) VALUES
+    ('20345678901', 1),
+    ('30567890123', 2),
+    ('40789012345', 3),
+    ('50901234567', 4),
+    ('60123456789', 5),
+    ('70234567890', 6),
+    ('80345678901', 7),
+    ('90456789012', 8),
+    ('10567890123', 9),
+    ('20123456789', 10),
+    ('30123456789', 11),
+    ('40123456789', 12),
+    ('50123456789', 13),
+    ('60123454789', 14),
+    ('80123456789', 1),
+    ('90123456789', 2),
+    ('10123456789', 3),
+    ('11123456789', 4),
+    ('11122126789', 5);
 
-INSERT INTO Locations ("street", "number", "postal_code", "id_city", "id_provider") VALUES
-    ('Calle San Martín', 123, '5000', 20, 1),
-    ('Avenida Córdoba', 456, '5016', 21, 2),
-    ('Belgrano', 789, '5020', 22, 3),
-    ('Sarmiento', 1011, '5024', 23, 4),
-    ('Rivadavia', 1213, '5028', 24, 5),
-    ('Lima', 1415, '5002', 25, 6),
-    ('Mitre', 1617, '5006', 6, 7),
-    ('Pueyrredón', 1819, '5009', 7, 8),
-    ('Independencia', 2021, '5032', 8, 9),
-    ('9 de Julio', 2223, '5036', 20, 10),
-    ('Brown', 2425, '5040', 21, 11),
-    ('Alvear', 2627, '5044', 22, 12),
-    ('Moreno', 2829, '5048', 23, 13),
-    ('Urquiza', 3031, '5052', 24, 14),
-    ('General Paz', 3233, '5056', 25, 15),
-    ('Maipú', 3435, '5060', 2, 16),
-    ('Buenos Aires', 3637, '5064', 7, 17),
-    ('San Juan', 3839, '5068', 1, 18),
-    ('Santa Fe', 4041, '5072', 6, 19);
+INSERT INTO Locations (street, number, postal_code, city_id) VALUES
+    ('Calle San Martín', 123, '5000', 20),
+    ('Avenida Córdoba', 456, '5016', 21),
+    ('Belgrano', 789, '5020', 22),
+    ('Sarmiento', 1011, '5024', 23),
+    ('Rivadavia', 1213, '5028', 24),
+    ('Lima', 1415, '5002', 25),
+    ('Mitre', 1617, '5006', 6),
+    ('Pueyrredón', 1819, '5009', 7),
+    ('Independencia', 2021, '5032', 8),
+    ('9 de Julio', 2223, '5036', 20),
+    ('Brown', 2425, '5040', 21),
+    ('Alvear', 2627, '5044', 22),
+    ('Moreno', 2829, '5048', 23),
+    ('Urquiza', 3031, '5052', 24),
+    ('General Paz', 3233, '5056', 25),
+    ('Maipú', 3435, '5060', 2),
+    ('Buenos Aires', 3637, '5064', 7),
+    ('San Juan', 3839, '5068', 1),
+    ('Santa Fe', 4041, '5072', 6);
 
-INSERT INTO Contacts_Data ("name", "last_name", "phone", "email", "role", "id_provider") VALUES
-    ('Juan', 'Gómez', 1122334455, 'juan.gomez@example.com', 'Gerente de Ventas', 1),
-    ('María', 'Rodríguez', 2233445566, 'maria.rodriguez@example.com', 'Ejecutivo de Cuentas', 2),
-    ('Pablo', 'López', 3344556677, 'pablo.lopez@example.com', 'Director de Marketing', 3),
-    ('Laura', 'Martínez', 4455667788, 'laura.martinez@example.com', 'Analista de Finanzas', 4),
-    ('Carlos', 'Fernández', 5566778899, 'carlos.fernandez@example.com', 'Gerente de Recursos Humanos', 5),
-    ('Ana', 'Díaz', 6677889900, 'ana.diaz@example.com', 'Director de Tecnología', 6),
-    ('Luis', 'Sánchez', 7788990011, 'luis.sanchez@example.com', 'Gerente de Operaciones', 7),
-    ('Marta', 'Gutiérrez', 8899001122, 'marta.gutierrez@example.com', 'Especialista en Logística', 8),
-    ('Javier', 'Pérez', 9900112233, 'javier.perez@example.com', 'Coordinador de Proyectos', 9),
-    ('Lucía', 'López', 2233445566, 'lucia.lopez@example.com', 'Analista de Calidad', 10),
-    ('Roberto', 'Torres', 3344556677, 'roberto.torres@example.com', 'Gerente de Ventas', 11),
-    ('Sofía', 'Ramírez', 4455667788, 'sofia.ramirez@example.com', 'Ejecutivo de Cuentas', 12),
-    ('Diego', 'Hernández', 5566778899, 'diego.hernandez@example.com', 'Director de Marketing', 13),
-    ('Natalia', 'Gómez', 6677889900, 'natalia.gomez@example.com', 'Analista de Finanzas', 14),
-    ('Gustavo', 'Martínez', 7788990011, 'gustavo.martinez@example.com', 'Gerente de Recursos Humanos', 15),
-    ('Valentina', 'Pérez', 8899001122, 'valentina.perez@example.com', 'Director de Tecnología', 16),
-    ('Federico', 'López', 9900112233, 'federico.lopez@example.com', 'Gerente de Operaciones', 17),
-    ('Silvana', 'Sánchez', 2233445566, 'silvana.sanchez@example.com', 'Especialista en Logística', 18),
-    ('Mariano', 'Gutiérrez', 3344556677, 'mariano.gutierrez@example.com', 'Coordinador de Proyectos', 19);
+INSERT INTO Contacts_Data (name, last_name, phone, email, role) VALUES
+    ('Juan', 'Gómez', '1122334455', 'juan.gomez@example.com', 'Gerente de Ventas'),
+    ('María', 'Rodríguez', '2233445566', 'maria.rodriguez@example.com', 'Ejecutivo de Cuentas'),
+    ('Pablo', 'López', '3344556677', 'pablo.lopez@example.com', 'Director de Marketing'),
+    ('Laura', 'Martínez', '4455667788', 'laura.martinez@example.com', 'Analista de Finanzas'),
+    ('Carlos', 'Fernández', '5566778899', 'carlos.fernandez@example.com', 'Gerente de Recursos Humanos'),
+    ('Ana', 'Díaz', '6677889900', 'ana.diaz@example.com', 'Director de Tecnología'),
+    ('Luis', 'Sánchez', '7788990011', 'luis.sanchez@example.com', 'Gerente de Operaciones'),
+    ('Marta', 'Gutiérrez', '8899001122', 'marta.gutierrez@example.com', 'Especialista en Logística'),
+    ('Javier', 'Pérez', '9900112233', 'javier.perez@example.com', 'Coordinador de Proyectos'),
+    ('Lucía', 'López', '223566', 'lucia.lopez@example.com', 'Analista de Calidad'),
+    ('Roberto', 'Torres', '3344677', 'roberto.torres@example.com', 'Gerente de Ventas'),
+    ('Sofía', 'Ramírez', '4455688', 'sofia.ramirez@example.com', 'Ejecutivo de Cuentas'),
+    ('Diego', 'Hernández', '55778899', 'diego.hernandez@example.com', 'Director de Marketing'),
+    ('Natalia', 'Gómez', '6677900', 'natalia.gomez@example.com', 'Analista de Finanzas'),
+    ('Gustavo', 'Martínez', '7780011', 'gustavo.martinez@example.com', 'Gerente de Recursos Humanos'),
+    ('Valentina', 'Pérez', '8891122', 'valentina.perez@example.com', 'Director de Tecnología'),
+    ('Federico', 'López', '9900233', 'federico.lopez@example.com', 'Gerente de Operaciones'),
+    ('Silvana', 'Sánchez', '2245566', 'silvana.sanchez@example.com', 'Especialista en Logística'),
+    ('Mariano', 'Gutiérrez', '3356677', 'mariano.gutierrez@example.com', 'Coordinador de Proyectos');
 
 -- Inserts para la tabla Articles
-INSERT INTO Articles ("cod_article", "name", "description", "price", "created_at", "updated_at", "is_deleted", "id_category", "id_provider") VALUES
+INSERT INTO Articles (cod_article, name, description, price, created_at, updated_at, is_deleted, category_id, provider_id) VALUES
     ('ELEC001', 'Smartphone', 'Teléfono inteligente de última generación', 799.99,'2022-12-22T16:30:00', null, 0, 1, 1),
     ('ELEC002', 'Laptop', 'Portátil potente y ligera', 1299.99,'2023-12-22T16:30:00', null, 0, 1, 1),
     ('ELEC003', 'Auriculares Bluetooth', 'Auriculares inalámbricos con cancelación de ruido', 149.99,'2023-12-22T16:30:00', null, 0, 1, 1),
@@ -414,7 +414,7 @@ INSERT INTO Articles ("cod_article", "name", "description", "price", "created_at
     ('SPORTS008', 'Pelota de tenis', 'Pelota oficial para partidos de tenis', 8.99, '2023-07-15T22:40:00', null, 0, 6, 13),
     ('SPORTS009', 'Botella de agua deportiva', 'Botella ergonómica para mantenerse hidratado', 12.99, '2023-08-28T18:15:00', null, 0, 6, 13);
 
-    INSERT INTO Images ("url", "id_article") VALUES
+    INSERT INTO Images (url, article_id) VALUES
     ('https://example.com/image1.jpg', 1),
     ('https://example.com/image2.jpg', 2),
     ('https://example.com/image3.jpg', 3),
@@ -437,7 +437,7 @@ INSERT INTO Articles ("cod_article", "name", "description", "price", "created_at
     ('https://example.com/image20.jpg', 20);
 
  
-INSERT INTO Purchase_Orders ("nro_purchase_order", "send_date", "receipt_date", "description", "estado", "total", "created_at", "is_deleted", "id_provider") VALUES
+INSERT INTO Purchase_Orders (nro_purchase_order, send_date, receipt_date, description, estado, total, created_at, is_deleted, provider_id) VALUES
     (12345, '2023-03-10T08:00:00', '2023-03-15T12:30:00', 'Compra de artículos electrónicos', 'A', 250.75, '2023-03-01T08:00:00', 0, 1),
     (12346, '2023-04-05T09:30:00', '2023-04-10T15:45:00', 'Compra de ropa de temporada', 'A', 180.50, '2023-04-01T09:30:00', 0, 2),
     (12347, '2023-05-12T11:45:00', '2023-05-17T21:20:00', 'Compra de electrodomésticos para el hogar', 'A', 450.20, '2023-05-01T11:45:00', 0, 3),
@@ -456,7 +456,7 @@ INSERT INTO Purchase_Orders ("nro_purchase_order", "send_date", "receipt_date", 
     (12360, '2024-06-22T15:35:00', '2024-06-27T09:20:00', 'Compra de libros de ciencia ficción', 'A', 120.90, '2024-06-01T15:35:00', 0, 3),
     (12361, '2024-07-10T08:50:00', '2024-07-15T12:25:00', 'Compra de herramientas eléctricas', 'A', 180.75, '2024-07-01T08:50:00', 0, 7);
 
-INSERT INTO Details ("amount", "subtotal", "id_article", "id_purchase_order") VALUES
+INSERT INTO Details (amount, subtotal, article_id,purchase_order_id) VALUES
     (3, 104.97, 1, 1),
     (1, 69.99, 2, 1),
     (4, 239.96, 3, 1),
@@ -486,4 +486,17 @@ INSERT INTO Details ("amount", "subtotal", "id_article", "id_purchase_order") VA
 
 
 
-
+drop table articles;
+drop table categories;
+drop table cities;
+drop table contacts_data;
+drop table countries;
+drop table details;
+drop table images;
+drop table iva_conditions;
+drop table locations;
+drop table providers;
+drop table purchase_orders;
+drop table sectors;
+drop table states;
+drop table taxs_data;

@@ -8,6 +8,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -32,12 +33,13 @@ public class City {
 	// FK
 	
 	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "state", referencedColumnName = "id", nullable = false)
 	private State state;
 	
 	// Relacion bidirecc
 	
-	@OneToMany(mappedBy = "city", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Location> locations;
+//	@OneToMany(mappedBy = "city", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    private List<Location> locations;
 
 	// Metodos
 
@@ -56,9 +58,9 @@ public class City {
 		return name;
 	}
 	
-	public List<Location> getLocations() {
-		return locations;
-	}
+//	public List<Location> getLocations() {
+//		return locations;
+//	}
 	
 	public State getState() {
 		return state;

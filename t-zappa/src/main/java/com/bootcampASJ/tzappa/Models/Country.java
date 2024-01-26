@@ -30,8 +30,8 @@ public class Country {
 	
 	// Relacion bidirecc
 	
-	@OneToMany(mappedBy = "country", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<State> states;
+//	@OneToMany(mappedBy = "country", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    private List<State> states;
 
 	// Metodos
 	
@@ -46,9 +46,9 @@ public class Country {
 		return id;
 	}
 
-	public List<State> getStates() {
-		return states;
-	}
+//	public List<State> getStates() {
+//		return states;
+//	}
 
 	public String getName() {
 		return name;
