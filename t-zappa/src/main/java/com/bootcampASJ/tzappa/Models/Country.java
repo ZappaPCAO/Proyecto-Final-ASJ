@@ -3,6 +3,7 @@ package com.bootcampASJ.tzappa.Models;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -26,12 +27,8 @@ public class Country {
 	@NotNull(message="[name] no puede ser nula.")
 	@NotBlank(message="[name] no puede estar vacia.")
 	@Size(min = 3, max = 30, message = "[name] longitud fuera de rango 3-30.")
+	@Column
 	private String name;
-	
-	// Relacion bidirecc
-	
-//	@OneToMany(mappedBy = "country", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//    private List<State> states;
 
 	// Metodos
 	
@@ -42,13 +39,17 @@ public class Country {
 		this.name = name;
 	}
 
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public Integer getId() {
 		return id;
 	}
-
-//	public List<State> getStates() {
-//		return states;
-//	}
 
 	public String getName() {
 		return name;

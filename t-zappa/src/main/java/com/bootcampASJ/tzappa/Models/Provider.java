@@ -3,7 +3,7 @@ package com.bootcampASJ.tzappa.Models;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -26,50 +26,43 @@ import jakarta.validation.constraints.Size;
 public class Provider {
 	
 	@Id
-	@NotNull(message="[id] no puede ser nula.")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column
 	private Integer id;
 	
 	@NotNull(message="[cod_provider] no puede ser nula.")
-	@NotBlank(message="[cod_provider] no puede estar vacia.")
 	@Size(min = 3, max = 30, message = "[cod_provider] longitud fuera de rango 3-30.")
 	@Column(unique = true)
 	private String cod_provider;
 	
 	@NotNull(message="[business_name] no puede ser nula.")
-	@NotBlank(message="[business_name] no puede estar vacia.")
 	@Size(min = 3, max = 50, message = "[business_name] longitud fuera de rango 3-50.")
-	@Column
+	@Column(unique = true)
 	private String business_name;
 	
-	@NotNull(message="[website] no puede ser nula.")
-	@NotBlank(message="[website] no puede estar vacia.")
 	@Size(min = 3, message = "[website] longitud fuera de rango 3-inf.")
 	@Column(unique = true, columnDefinition = "text")
 	private String website;
 	
 	@NotNull(message="[email] no puede ser nula.")
-	@NotBlank(message="[email] no puede estar vacia.")
 	@Size(min = 4, max = 50, message = "[email] longitud fuera de rango 4-50.")
 	@Column(unique = true)
 	private String email;
 	
 	@NotNull(message="[phone] no puede ser nula.")
-	@NotBlank(message="[phone] no puede estar vacia.")
 	@Size(min = 8, max = 11, message = "[phone] longitud fuera de rango 8-11.")
 	@Column(unique = true)
 	private String phone;
 	
-	@NotNull(message="[created_at] no puede ser nula.")
-	@NotBlank(message="[created_at] no puede estar vacia.")
+	@JsonInclude(JsonInclude.Include.NON_NULL)
 	@Column
 	private LocalDateTime created_at;
 	
+	@JsonInclude(JsonInclude.Include.NON_NULL)
 	@Column
 	private LocalDateTime updated_at;
 	
-	@NotNull(message="[is_deleted] no puede ser nula.")
+	@JsonInclude(JsonInclude.Include.NON_NULL)
 	@Column
 	private Boolean is_deleted;
 
@@ -93,17 +86,12 @@ public class Provider {
 	// Relacion bidirecc
 	
 	@OneToMany(mappedBy = "provider", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//	@JsonManagedReference
 	private List<Article> articles;
-
-//	@OneToMany(mappedBy = "provider", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//	@JsonManagedReference
-//	private List<Purchase_Order> purchase_orders;
 	
 	// Metodos
 
 	public Provider() {}
-	
+
 	public Provider(String cod_provider, String business_name,
 			String website,	String email, String phone) {		
 		this.cod_provider = cod_provider;
@@ -114,7 +102,7 @@ public class Provider {
 		this.created_at = LocalDateTime.now();
 		this.is_deleted = false;
 	}
-
+	
 	public String getBusiness_name() {
 		return business_name;
 	}
@@ -125,10 +113,6 @@ public class Provider {
 
 	public String getWebsite() {
 		return website;
-	}
-	
-	public Location getLocation() {
-		return location;
 	}
 
 	public void setWebsite(String website) {
@@ -147,24 +131,40 @@ public class Provider {
 		return phone;
 	}
 
-	public Contact_Data getContact_data() {
-		return contact_data;
-	}
-	
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
 
-	public LocalDateTime getUpdate_at() {
+	public LocalDateTime getUpdated_at() {
 		return updated_at;
 	}
 
-	public void setUpdate_at(LocalDateTime update_at) {
-		this.updated_at = update_at;
+	public void setUpdated_at(LocalDateTime updated_at) {
+		this.updated_at = updated_at;
 	}
 
-	public Integer getId() {
-		return id;
+	public Contact_Data getContact_data() {
+		return contact_data;
+	}
+
+	public void setContact_data(Contact_Data contact_data) {
+		this.contact_data = contact_data;
+	}
+
+	public List<Article> getArticles() {
+		return articles;
+	}
+	
+	public void setIs_deleted(Boolean is_deleted) {
+		this.is_deleted = is_deleted;
+	}
+
+	public void setCreated_at(LocalDateTime created_at) {
+		this.created_at = created_at;
+	}
+
+	public void setArticles(List<Article> articles) {
+		this.articles = articles;
 	}
 
 	public String getCod_provider() {
@@ -178,23 +178,23 @@ public class Provider {
 	public Boolean getIs_deleted() {
 		return is_deleted;
 	}
-	
-	public List<Article> getArticles() {
-		return articles;
-	}
-	
+
 	public Sector getSector() {
 		return sector;
 	}
 
-//	public List<Purchase_Order> getPurchase_orders() {
-//		return purchase_orders;
-//	}
-	
+	public Location getLocation() {
+		return location;
+	}
+
 	public Tax_Data getTax_data() {
 		return tax_data;
 	}
-	
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
 	public void delete() {
 		this.is_deleted = true;
 	}

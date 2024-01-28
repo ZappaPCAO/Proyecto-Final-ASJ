@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -27,22 +28,21 @@ public class Category {
 	@NotNull(message="[category] no puede ser nula.")
 	@NotBlank(message="[category] no puede estar vacia.")
 	@Size(min = 4, max = 30, message = "[category] longitud fuera de rango 4-30.")
+	@Column
 	private String category;
 	
 	@NotNull(message="[created_at] no puede ser nula.")
 	@NotBlank(message="[created_at] no puede estar vacia.")
+	@Column
 	private LocalDateTime created_at;
 	
+	@Column
 	private LocalDateTime updated_at;
 	
+	@Column
 	@NotNull(message="[is_deleted] no puede ser nula.")
 	private Boolean is_deleted;
 	
-	// Relacion bidirecc
-	
-//	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//    private List<Article> articles;
-
 	// Metodos
 	
 	public Category() {}
@@ -54,6 +54,26 @@ public class Category {
 		this.is_deleted = false;
 	}
 	
+	public LocalDateTime getUpdated_at() {
+		return updated_at;
+	}
+
+	public void setUpdated_at(LocalDateTime updated_at) {
+		this.updated_at = updated_at;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public void setCreated_at(LocalDateTime created_at) {
+		this.created_at = created_at;
+	}
+
+	public void setIs_deleted(Boolean is_deleted) {
+		this.is_deleted = is_deleted;
+	}
+
 	public Integer getId() {
 		return id;
 	}
@@ -78,15 +98,11 @@ public class Category {
 		return is_deleted;
 	}
 
-	public void delete() { // Borrado logico
+	public void delete() {
 		this.is_deleted = true;
 	}
 
 	public LocalDateTime getCreated_at() {
 		return created_at;
 	}
-	
-//	public List<Article> getArticles() {
-//		return articles;
-//	}
 }

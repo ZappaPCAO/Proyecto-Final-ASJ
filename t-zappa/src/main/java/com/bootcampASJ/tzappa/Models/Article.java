@@ -55,6 +55,9 @@ public class Article {
 	private Double price;
 	
 	@Column
+	private String image;
+	
+	@Column
 	@NotNull(message="[created_at] no puede ser nula.")
 	@NotBlank(message="[created_at] no puede estar vacia.")
 	private LocalDateTime created_at;
@@ -66,32 +69,16 @@ public class Article {
 	@NotNull(message="[is_deleted] no puede ser nula.")
 	private Boolean is_deleted;
 	
-	@Column
-	private String image;
-	
 	// FK
-	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "category", referencedColumnName = "id", nullable = false)
 	private Category category;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "provider", referencedColumnName = "id", nullable = false)
-//	@JsonBackReference
 	private Provider provider;
 	
-	// Relacion bidirecc
-	
-//	@OneToMany(mappedBy = "article", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//    @JsonManagedReference
-//	private List<Detail> details;
-	
-//	@OneToMany(mappedBy = "article", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//	@JoinColumn(name = "images", referencedColumnName = "id", nullable = false)
-//	private List<Image> images;
-	
 	// Metodos
-
 	public String getImage() {
 		return image;
 	}
@@ -112,6 +99,38 @@ public class Article {
 		this.created_at = LocalDateTime.now();
 		this.is_deleted = false;
 		this.image = image;
+	}
+
+	public LocalDateTime getUpdated_at() {
+		return updated_at;
+	}
+
+	public void setUpdated_at(LocalDateTime updated_at) {
+		this.updated_at = updated_at;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public void setCod_article(String cod_article) {
+		this.cod_article = cod_article;
+	}
+
+	public void setCreated_at(LocalDateTime created_at) {
+		this.created_at = created_at;
+	}
+
+	public void setIs_deleted(Boolean is_deleted) {
+		this.is_deleted = is_deleted;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+
+	public void setProvider(Provider provider) {
+		this.provider = provider;
 	}
 
 	public String getName() {
@@ -137,10 +156,6 @@ public class Article {
 	public void setPrice(Double price) {
 		this.price = price;
 	}
-
-//	public List<Image> getImages() {
-//		return images;
-//	}
 	
 	public LocalDateTime getUpdate_at() {
 		return updated_at;
@@ -177,7 +192,4 @@ public class Article {
 	public void delete() {
 		this.is_deleted = true;
 	}
-//	public List<Detail> getDetails() {
-//		return details;
-//	}
 }

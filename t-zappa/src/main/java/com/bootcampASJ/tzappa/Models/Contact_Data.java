@@ -26,11 +26,13 @@ public class Contact_Data {
 	@NotNull(message="[name] no puede ser nula.")
 	@NotBlank(message="[name] no puede estar vacia.")
 	@Size(min = 3, max = 30, message = "[name] longitud fuera de rango 3-30.")
+	@Column
 	private String name;
 	
 	@NotNull(message="[last_name] no puede ser nula.")
 	@NotBlank(message="[last_name] no puede estar vacia.")
 	@Size(min = 3, max = 30, message = "[last_name] longitud fuera de rango 3-30.")
+	@Column
 	private String last_name;
 	
 	@NotNull(message="[phone] no puede ser nula.")
@@ -48,14 +50,13 @@ public class Contact_Data {
 	@NotNull(message="[role] no puede ser nula.")
 	@NotBlank(message="[role] no puede estar vacia.")
 	@Size(min = 3, max = 30, message = "[role] longitud fuera de rango 3-30.")
+	@Column
 	private String role;
-	
-	// FK
-	
+
 	// Metodos
 	
 	public Contact_Data() {}
-	
+
 	public Contact_Data(Integer id, String name, String last_name, String phone,
 			String email, String role) {		
 		this.id = id;
@@ -64,6 +65,10 @@ public class Contact_Data {
 		this.phone = phone;
 		this.email = email;
 		this.role = role;
+	}
+	
+	public void setId(Integer id) {
+		this.id = id;
 	}
 	
 	public String getName() {

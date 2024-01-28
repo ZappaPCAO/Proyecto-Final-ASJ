@@ -1,6 +1,8 @@
 package com.bootcampASJ.tzappa.Controller;
 
+import java.util.Collections;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,22 +38,21 @@ public class ProviderController {
 	public ResponseEntity<Object> getProviderById(@PathVariable Integer id) {
 		return ResponseEntity.ok(this.providerService.getProviderById(id));
 	}
+	@PostMapping
+	public ResponseEntity<Object> newProvider(@Valid @RequestBody Provider provider, BindingResult bindingResult) {
+		
+		 if (bindingResult.hasErrors()) {
+		        Map<String, String> errors = new ErrorHandler().inputValidate(bindingResult);
+		        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+		    }
 	
-	@PostMapping(path = "", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE} ) // [POST] localhost:8080/proveedores
-//	@PostMapping()
-	public Object newProvider(@RequestBody Provider provider) {
-		
-		System.out.println("prueba");
-//		if(bindingResult.hasErrors()) {
-//			Map<String, String> errors = new ErrorHandler().inputValidate(bindingResult) ;
-//			
-//			System.out.println(errors); 
-//			
-//			return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
-//		}
-		
-		return provider;
-		
-//		return new ResponseEntity<Object>(this.providerService.newProvider(provider) , HttpStatus.OK);
-	}
+		 Optional<Provider> result = this.providerService.newProvider(provider);
+
+	    if (result.isPresent()) {
+	        return new ResponseEntity<>(result.get(), HttpStatus.OK);
+	    } else {
+	        Map<String, String> error = Collections.singletonMap("Error", "Error en la integridad de datos. (Ej. Campo Unique)");
+	        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+	    }
+	}	 
 }

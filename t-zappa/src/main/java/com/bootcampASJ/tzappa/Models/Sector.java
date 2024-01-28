@@ -6,6 +6,7 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -29,26 +30,48 @@ public class Sector {
 	@NotNull(message="[sectorName] no puede ser nula.")
 	@NotBlank(message="[sectorName] no puede estar vacia.")
 	@Size(min = 3, max = 30, message = "[sectorName] longitud fuera de rango 3-30.")
+	@Column
 	private String sectorName;
 	
 	@NotNull(message="[created_at] no puede ser nula.")
 	@NotBlank(message="[created_at] no puede estar vacia.")
+	@Column
 	private LocalDateTime created_at;
 	
+	@Column
 	private LocalDateTime updated_at;
 	
 	@NotNull(message="[is_deleted] no puede ser nula.")
+	@Column
 	private Boolean is_deleted;
-	
-	// Relacion bidirecc
-	
-//	@OneToMany(mappedBy = "sector", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//	@JsonBackReference
-//	private List<Provider> providers;
 
 	// Metodos
 	
 	public Sector() {}
+
+	public LocalDateTime getUpdated_at() {
+		return updated_at;
+	}
+
+	public void setUpdated_at(LocalDateTime updated_at) {
+		this.updated_at = updated_at;
+	}
+
+	public String getSectorName() {
+		return sectorName;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public void setCreated_at(LocalDateTime created_at) {
+		this.created_at = created_at;
+	}
+
+	public void setIs_deleted(Boolean is_deleted) {
+		this.is_deleted = is_deleted;
+	}
 
 	public Sector(Integer id, String sectorName) {		
 		this.id = id;
@@ -88,8 +111,4 @@ public class Sector {
 	public Boolean getIs_deleted() {
 		return is_deleted;
 	}
-	
-//	public List<Provider> getProviders() {
-//		return providers;
-//	}
 }

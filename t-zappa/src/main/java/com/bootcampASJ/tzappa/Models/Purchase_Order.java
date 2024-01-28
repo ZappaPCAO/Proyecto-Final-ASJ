@@ -37,14 +37,14 @@ public class Purchase_Order {
 	@Column(unique = true)
 	private Integer nro_purchase_order;
 	
-	@Column
 	@NotNull(message="[send_date] no puede ser nula.")
 	@NotBlank(message="[send_date] no puede estar vacia.")
+	@Column
 	private LocalDateTime send_date;
 	
-	@Column
 	@NotNull(message="[receipt_date] no puede ser nula.")
 	@NotBlank(message="[receipt_date] no puede estar vacia.")
+	@Column
 	private LocalDateTime receipt_date;
 	
 	@NotBlank(message="[description] no puede estar vacia.")
@@ -58,21 +58,21 @@ public class Purchase_Order {
 	@Size(min = 1, max = 1, message = "[estado] tiene que ser solo un caracter.")
 	private char estado;
 	
-	@Column
 	@NotNull(message="[total] no puede ser nula.")
 	@Min(value = 1, message = "[total] debe ser un numero positivo.")
+	@Column
 	private Double total;
 	
-	@Column
 	@NotNull(message="[created_at] no puede ser nula.")
 	@NotBlank(message="[created_at] no puede estar vacia.")
+	@Column
 	private LocalDateTime created_at;
 	
 	@Column
 	private LocalDateTime updated_at;
 	
-	@Column
 	@NotNull(message="[is_deleted] no puede ser nula.")
+	@Column
 	private Boolean is_deleted;
 	
 	// FK 
@@ -88,6 +88,38 @@ public class Purchase_Order {
 	private List<Detail> details;
 	
 	// Metodos
+
+	public LocalDateTime getUpdated_at() {
+		return updated_at;
+	}
+
+	public void setUpdated_at(LocalDateTime updated_at) {
+		this.updated_at = updated_at;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public void setNro_purchase_order(Integer nro_purchase_order) {
+		this.nro_purchase_order = nro_purchase_order;
+	}
+
+	public void setCreated_at(LocalDateTime created_at) {
+		this.created_at = created_at;
+	}
+
+	public void setIs_deleted(Boolean is_deleted) {
+		this.is_deleted = is_deleted;
+	}
+
+	public void setProvider(Provider provider) {
+		this.provider = provider;
+	}
+
+	public void setDetails(List<Detail> details) {
+		this.details = details;
+	}
 
 	public Purchase_Order() {}
 	

@@ -3,6 +3,7 @@ package com.bootcampASJ.tzappa.Models;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -26,13 +27,9 @@ public class IVA_Condition {
 	@NotNull(message = "[condition] no puede ser nula.")
 	@NotBlank(message = "[condition] no puede estar vacia.")
 	@Size(min = 3, max = 50, message = "[condition] longitud fuera de rango 3-50.")
+	@Column
 	private String condition;
 
-	// Relacion bidirecc
-	
-//	@OneToMany(mappedBy = "iva_condition", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//    private List<Tax_Data> taxs_data;
-	
 	// Metodos
 	
 	public IVA_Condition() {}
@@ -44,6 +41,14 @@ public class IVA_Condition {
 
 	public Integer getId() {
 		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public void setCondition(String condition) {
+		this.condition = condition;
 	}
 
 	public String getCondition() {

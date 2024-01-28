@@ -1,7 +1,5 @@
 package com.bootcampASJ.tzappa.Models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -18,20 +16,20 @@ import jakarta.validation.constraints.NotNull;
 @Table(name="Details")
 public class Detail {
 	
-	@Column
 	@Id
 	@NotNull(message="[id] no puede ser nula.")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
-	
 	@Column
+	private Integer id;
+
 	@NotNull(message="[amount] no puede ser nula.")
 	@Min(value = 1, message = "[amount] debe ser un numero positivo.")
+	@Column
 	private Integer amount;
 	
-	@Column
 	@NotNull(message="[subtotal] no puede ser nula.")
 	@Min(value = 1, message = "[subtotal] debe ser un numero positivo.")
+	@Column
 	private Double subtotal;
 
 	// FK
@@ -39,9 +37,10 @@ public class Detail {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "article", referencedColumnName = "id", nullable = false)
 	private Article article;
-
+	
+	// Esto iria, lo comento por ahora
 //	@ManyToOne(fetch = FetchType.EAGER)
-//	@JsonBackReference
+//	@JoinColumn(name = "article", referencedColumnName = "id", nullable = false)
 //	private Purchase_Order purchase_order;
 	
 	// Metodos
@@ -52,6 +51,18 @@ public class Detail {
 		this.id = id;
 		this.amount = amount;
 		this.subtotal = subtotal;
+	}
+	
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public void setAmount(Integer amount) {
+		this.amount = amount;
+	}
+
+	public void setArticle(Article article) {
+		this.article = article;
 	}
 
 	public Double getSubtotal() {

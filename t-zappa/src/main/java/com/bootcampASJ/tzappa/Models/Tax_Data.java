@@ -41,6 +41,22 @@ public class Tax_Data {
 	
 	public Tax_Data() {}
 	
+	public IVA_Condition getIva_condition() {
+		return iva_condition;
+	}
+
+	public void setIva_condition(IVA_Condition iva_condition) {
+		this.iva_condition = iva_condition;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public void setCuit(String cuit) {
+		this.cuit = cuit;
+	}
+
 	public Tax_Data(Integer id, String cuit) {		
 		this.id = id;
 		this.cuit = cuit;		

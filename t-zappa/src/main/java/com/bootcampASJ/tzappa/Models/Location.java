@@ -2,6 +2,7 @@ package com.bootcampASJ.tzappa.Models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -28,15 +29,18 @@ public class Location {
 	@NotNull(message="[street] no puede ser nula.")
 	@NotBlank(message="[street] no puede estar vacia.")
 	@Size(min = 3, max = 30, message = "[street] longitud fuera de rango 3-30.")
+	@Column
 	private String street;
 	
 	@Min(value = 1, message = "[number] debe ser mayor o igual a 1.")
     @Max(value = 10000, message = "[number] debe ser menor o igual a 10.000 .")
+	@Column
 	private Integer number;
 	
 	@NotNull(message="[postal_code] no puede ser nula.")
 	@NotBlank(message="[postal_code] no puede estar vacia.")
 	@Size(min = 3, max = 8, message = "[postal_code] longitud fuera de rango 3-8.")
+	@Column
 	private String postal_code;
 	
 	// FK 
@@ -74,6 +78,14 @@ public class Location {
 
 	public City getCity() {
 		return city;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public void setCity(City city) {
+		this.city = city;
 	}
 
 	public String getPostal_code() {
