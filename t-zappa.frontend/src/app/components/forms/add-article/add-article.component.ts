@@ -18,30 +18,48 @@ export class AddArticleComponent implements OnInit {
     id: 0,
     proveedor: {
       id: 0,
-      cod: '',
-      razSocial: '',
-      rubro: '',
-      sitioWeb: '',
+      codProvider: '',
+      businessName: '',
+      website: '',
       email: '',
-      telefono: 0,
-      direccion: {
-        calle: '',
-        nro: 0,
-        cp: '',
-        localidad: '',
-        provincia: '',
-        pais: '',
+      phone: '',
+      sector:{
+        id: 0,
+        sector: ''
       },
-      datosFiscales: {
+      location: {
+        id: 0,
+        street: '',
+        number: 0,
+        postalCode: '',
+        city: {
+          id: 0,
+          name: '',
+          state:{
+            id: 0,
+            name: '',
+            country: {
+              id: 0,
+              name: ''
+            }
+          }
+        }      
+      },
+      taxData: {
+        id: 0,
         cuit: '',
-        condIva: '',
+        ivaCondition: {
+          id: 0,
+          condition: ''
+        },
       },
-      datosContacto: {
-        nombre: '',
-        apellido: '',
-        telefono: 0,
+      contactData: {
+        id: 0,
+        name: '',
+        lastName: '',
+        phone: '',
         email: '',
-        rol: '',
+        role: '',
       }
     },
     codArt: '',
@@ -110,7 +128,7 @@ export class AddArticleComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
       this.idArticle = params['id'] || 0;      
-      this.arrProviders = this.providerService.get(); //get
+      // this.arrProviders = this.providerService.get(); //get
 
       this.verificarUpdate();
     });

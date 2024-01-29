@@ -34,25 +34,25 @@
               <tr (mouseup)="detectRightMouseClick($event, el)" scope="row" class="text-uppercase text-center" *ngFor="let el of this.tbody; let i = index">
                 <ng-container *ngFor="let key of thead">
                   <ng-container [ngSwitch]="key">
-                    <ng-container *ngSwitchCase="'datosContacto'">
+                    <ng-container *ngSwitchCase="'contactData'">
                       <td>
                         <span class="p-0 m-0 text-center">
-                          <p>{{el[key].nombre}}<strong> - </strong>{{el[key].apellido}}</p>
+                          <p>{{el[key].name}}<strong> - </strong>{{el[key].lastName}}</p>
                         </span>
                       </td>
                       <td>
                         <span class="p-0 m-0 text-start">
-                          <p class="p-0 m-0"><strong>Sitio: </strong> {{el['sitioWeb']}}</p>
+                          <p class="p-0 m-0"><strong>Sitio: </strong> {{el['website']}}</p>
                           <p class="p-0 m-0"><strong>Email: </strong> {{el[key].email}}</p>
-                          <p class="p-0 m-0"><strong>Telefono: </strong> {{el[key].telefono}}</p>
+                          <p class="p-0 m-0"><strong>Telefono: </strong> {{el[key].phone}}</p>
                         </span>           
                       </td>                      
                     </ng-container>
                     <ng-container *ngSwitchCase="'proveedor'">
-                      <td>{{el[key].razSocial}}</td>
+                      <td>{{el[key].businessName}}</td>
                     </ng-container>
                     <ng-container *ngSwitchCase="'detalle'">
-                      <td>{{el[key][0].proveedor.razSocial}}</td>
+                      <td>{{el[key][0].proveedor.businessName}}</td>
                     </ng-container>
                     <ng-container *ngSwitchCase="'precio'">
                       <td>{{el[key] | currency:'USD':'symbol':'1.2-2'}}</td>

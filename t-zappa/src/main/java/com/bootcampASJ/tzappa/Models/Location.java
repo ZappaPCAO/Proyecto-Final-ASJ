@@ -1,7 +1,5 @@
 package com.bootcampASJ.tzappa.Models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -10,24 +8,21 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 @Entity
-@Table(name="Locations")
+@Table(name="locations")
 public class Location {
+	
 	@Id
-	@NotNull(message="[id] no puede ser nula.")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
 	@NotNull(message="[street] no puede ser nula.")
-	@NotBlank(message="[street] no puede estar vacia.")
 	@Size(min = 3, max = 30, message = "[street] longitud fuera de rango 3-30.")
 	@Column
 	private String street;
@@ -38,26 +33,26 @@ public class Location {
 	private Integer number;
 	
 	@NotNull(message="[postal_code] no puede ser nula.")
-	@NotBlank(message="[postal_code] no puede estar vacia.")
 	@Size(min = 3, max = 8, message = "[postal_code] longitud fuera de rango 3-8.")
-	@Column
-	private String postal_code;
+	@Column(name = "postal_code")
+	private String postalCode;
 	
 	// FK 
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "city", referencedColumnName = "id", nullable = false)
+	@JoinColumn(name = "city_id", referencedColumnName = "id", nullable = false)
 	private City city;
 	
 	// Metodos
 
 	public Location() {}
-	
-	public Location( Integer id, String street, Integer number, String postal_code) {
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
 		this.id = id;
-		this.street = street;
-		this.number = number;
-		this.postal_code = postal_code;
 	}
 
 	public String getStreet() {
@@ -76,27 +71,25 @@ public class Location {
 		this.number = number;
 	}
 
-	public City getCity() {
-		return city;
+	public String getPostalCode() {
+		return postalCode;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setPostalCode(String postalCode) {
+		this.postalCode = postalCode;
+	}
+
+	public City getCity() {
+		return city;
 	}
 
 	public void setCity(City city) {
 		this.city = city;
 	}
 
-	public String getPostal_code() {
-		return postal_code;
-	}
-
-	public void setPostal_code(String postal_code) {
-		this.postal_code = postal_code;
-	}
-
-	public Integer getId() {
-		return id;
+	@Override
+	public String toString() {
+		return "Location [id=" + id + ", street=" + street + ", number=" + number + ", postalCode=" + postalCode
+				+ ", city=" + city + "]";
 	}
 }

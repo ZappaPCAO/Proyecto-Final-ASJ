@@ -2,59 +2,47 @@ import { obtenerObjetoByTipo } from "../utils/localStorage";
 
 export interface Provider {
   id: number;
-  cod: string;
-  razSocial: string;
-  rubro: string;
-  sitioWeb: string;
+  codProvider: string;
+  businessName: string;
+  website?: string;
   email: string;  
-  telefono: number;
-  direccion:{
-    calle: string;
-    nro: number;
-    cp: string;
-    localidad: string;
-    provincia: string;
-    pais: string;
+  phone: string;
+  location:{
+    id: number;
+    street: string;
+    number?: number;
+    postalCode: string;
+    city:{
+      id: number;
+      name: string;
+      state:{
+        id: number;
+        name: string;
+        country:{
+          id: number;
+          name: string;
+        }
+      }
+    }
+  };
+  sector:{
+    id: number;
+    sector: string;
   }
-  datosFiscales:{
+  taxData:{
+    id: number;
     cuit: string;
-    condIva: string;
-  }
-  datosContacto:{
-    nombre: string;
-    apellido: string;
-    telefono: number;
+    ivaCondition: {
+      id: number;
+      condition: string;
+    }
+  };  
+  contactData:{
+    id: number;
+    name: string;
+    lastName: string;
+    phone: string;
     email: string;
-    rol: string;
-  } 
+    role: string;
+  }
 }
-
-export const providers: Provider[] = obtenerObjetoByTipo("provider");
-// Array.from({ length: 20 }, (_, index) => ({
-//   id: index + 1,
-//   cod: `cod${index + 1}`,
-//   razSocial: `Razón Social ${index + 1}`,
-//   rubro: `Rubro ${index + 1}`,
-//   sitioWeb: `http://sitio${index + 1}.com`,
-//   email: `email${index + 1}@example.com`,
-//   telefono: 123456789 + index,
-//   direccion: {
-//     calle: `Calle ${index + 1}`,
-//     nro: index + 1,
-//     cp: `E310 ${index + 1}`,
-//     localidad: `Localidad ${index + 1}`,
-//     provincia: `Provincia ${index + 1}`,
-//     pais: `País ${index + 1}`,
-//   },
-//   datosFiscales: {
-//     cuit: `CUIT${index + 1}`,
-//     condIva: `Condición IVA ${index + 1}`,
-//   },
-//   datosContacto: {
-//     nombre: `Nombre ${index + 1}`,
-//     apellido: `Apellido ${index + 1}`,
-//     telefono: 987654321 + index,
-//     email: `empresa${index + 1}@example.com`,
-//     rol: `Rol ${index + 1}`,
-//   },
-// }));

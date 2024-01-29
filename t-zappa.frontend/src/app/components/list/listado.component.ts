@@ -60,14 +60,17 @@ export class ListadoComponent implements OnInit{
 
 
   generarArreglos(){
-    this.tbody = this.serivicioAdm.get(this.condicion);
-
-    if(this.tbody && this.tbody.length > 0){
-
-      this.thead = (this.condicion === 'article')  ? ['producto','categoria','proveedor', 'precio'] :
-                   (this.condicion === 'provider') ? ['cod','razSocial','datosContacto'] : 
-                                                     ['nroOC','fecEmision','fecEntrega','detalle','estado', 'total'];
-    }
+    this.serivicioAdm.get(this.condicion).subscribe( (data: Provider[] | Article[] | PurchaseOrder[]) => {
+      this.tbody = data;
+      
+      if(this.tbody && this.tbody.length > 0){
+      
+        this.thead = (this.condicion === 'article')  ? ['producto','categoria','proveedor', 'precio'] :
+                     (this.condicion === 'provider') ? ['codProvider','businessName','contactData'] : 
+                                                       ['nroOC','fecEmision','fecEntrega','detalle','estado', 'total'];
+      }
+      console.log(JSON.stringify(this.tbody) + "<== datos q recibo del back.")
+    });
   }                                                                        
   
   onEdit(){

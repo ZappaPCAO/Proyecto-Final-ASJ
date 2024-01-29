@@ -57,7 +57,7 @@
                                     <div class="form-floating">                                                 
                                         <select (change)="updateArticles()" [title]="purchaseOrder.detalle.length > 0 ? 'No puedes modificar el proveedor, una ves iniciado el detalle' : 'Proveedores'" [disabled]="purchaseOrder.detalle.length > 0" class="form-control" name="proveedor" [(ngModel)]="idProveedor">
                                             <option *ngFor="let provider of arrProviders" value="{{provider.id}}">
-                                                {{provider.razSocial| uppercase}}
+                                                {{provider.businessName| uppercase}}
                                             </option>                                                           
                                         </select>
                                         <label for="SelProvedores">Provedor:</label>
@@ -102,7 +102,7 @@
                                         </thead>
                                         <tbody>
                                           <tr *ngFor="let detalle of purchaseOrder.detalle">
-                                            <td>{{ detalle.proveedor.razSocial }}</td>
+                                            <td>{{ detalle.proveedor.businessName }}</td>
                                             <td>{{ detalle.articulo.producto }}</td>
                                             <td>{{ detalle.cantidad }}</td>
                                             <td>{{ detalle.subtotal | currency:'USD':'symbol':'1.2-2' }}</td>

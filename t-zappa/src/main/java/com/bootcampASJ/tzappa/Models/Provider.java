@@ -17,12 +17,11 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 @Entity
-@Table(name="Providers")
+@Table(name="providers")
 public class Provider {
 	
 	@Id
@@ -32,13 +31,13 @@ public class Provider {
 	
 	@NotNull(message="[cod_provider] no puede ser nula.")
 	@Size(min = 3, max = 30, message = "[cod_provider] longitud fuera de rango 3-30.")
-	@Column(unique = true)
-	private String cod_provider;
+	@Column(name = "cod_provider", unique = true)
+	private String codProvider;
 	
 	@NotNull(message="[business_name] no puede ser nula.")
 	@Size(min = 3, max = 50, message = "[business_name] longitud fuera de rango 3-50.")
-	@Column(unique = true)
-	private String business_name;
+	@Column(name = "business_name", unique = true)
+	private String businessName;
 	
 	@Size(min = 3, message = "[website] longitud fuera de rango 3-inf.")
 	@Column(unique = true, columnDefinition = "text")
@@ -55,33 +54,33 @@ public class Provider {
 	private String phone;
 	
 	@JsonInclude(JsonInclude.Include.NON_NULL)
-	@Column
-	private LocalDateTime created_at;
+	@Column(name="created_at")
+	private LocalDateTime createdAt;
 	
 	@JsonInclude(JsonInclude.Include.NON_NULL)
-	@Column
-	private LocalDateTime updated_at;
+	@Column(name="updated_at")
+	private LocalDateTime updatedAt;
 	
 	@JsonInclude(JsonInclude.Include.NON_NULL)
-	@Column
-	private Boolean is_deleted;
+	@Column(name="is_deleted")
+	private Boolean isDeleted;
 
 	// FK 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "sector", referencedColumnName = "id", nullable = false)
+	@JoinColumn(name = "sector_id", referencedColumnName = "id", nullable = false)
 	private Sector sector;
 	
 	@OneToOne
-	@JoinColumn(name = "contact_data", referencedColumnName = "id", nullable = false)
-    private Contact_Data contact_data;
+	@JoinColumn(name = "contact_data_id", referencedColumnName = "id", nullable = false)
+    private ContactData contactData;
 	
 	@OneToOne
-	@JoinColumn(name = "location", referencedColumnName = "id", nullable = false)
+	@JoinColumn(name = "location_id", referencedColumnName = "id", nullable = false)
 	private Location location;
 
 	@OneToOne
-	@JoinColumn(name = "tax_data", referencedColumnName = "id", nullable = false)
-	private Tax_Data tax_data;
+	@JoinColumn(name = "tax_data_id", referencedColumnName = "id", nullable = false)
+	private TaxData taxData;
 	
 	// Relacion bidirecc
 	
@@ -92,23 +91,28 @@ public class Provider {
 
 	public Provider() {}
 
-	public Provider(String cod_provider, String business_name,
-			String website,	String email, String phone) {		
-		this.cod_provider = cod_provider;
-		this.business_name = business_name;
-		this.website = website;
-		this.email = email;
-		this.phone = phone;
-		this.created_at = LocalDateTime.now();
-		this.is_deleted = false;
-	}
-	
-	public String getBusiness_name() {
-		return business_name;
+	public Integer getId() {
+		return id;
 	}
 
-	public void setBusiness_name(String business_name) {
-		this.business_name = business_name;
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getCodProvider() {
+		return codProvider;
+	}
+
+	public void setCodProvider(String codProvider) {
+		this.codProvider = codProvider;
+	}
+
+	public String getBusinessName() {
+		return businessName;
+	}
+
+	public void setBusinessName(String businessName) {
+		this.businessName = businessName;
 	}
 
 	public String getWebsite() {
@@ -135,67 +139,75 @@ public class Provider {
 		this.phone = phone;
 	}
 
-	public LocalDateTime getUpdated_at() {
-		return updated_at;
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
 	}
 
-	public void setUpdated_at(LocalDateTime updated_at) {
-		this.updated_at = updated_at;
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
 	}
 
-	public Contact_Data getContact_data() {
-		return contact_data;
+	public LocalDateTime getUpdatedAt() {
+		return updatedAt;
 	}
 
-	public void setContact_data(Contact_Data contact_data) {
-		this.contact_data = contact_data;
+	public void setUpdatedAt(LocalDateTime updatedAt) {
+		this.updatedAt = updatedAt;
 	}
 
-	public List<Article> getArticles() {
-		return articles;
-	}
-	
-	public void setIs_deleted(Boolean is_deleted) {
-		this.is_deleted = is_deleted;
+	public Boolean getIsDeleted() {
+		return isDeleted;
 	}
 
-	public void setCreated_at(LocalDateTime created_at) {
-		this.created_at = created_at;
-	}
-
-	public void setArticles(List<Article> articles) {
-		this.articles = articles;
-	}
-
-	public String getCod_provider() {
-		return cod_provider;
-	}
-
-	public LocalDateTime getCreated_at() {
-		return created_at;
-	}
-
-	public Boolean getIs_deleted() {
-		return is_deleted;
+	public void setIsDeleted(Boolean isDeleted) {
+		this.isDeleted = isDeleted;
 	}
 
 	public Sector getSector() {
 		return sector;
 	}
 
+	public void setSector(Sector sector) {
+		this.sector = sector;
+	}
+
+	public ContactData getContactData() {
+		return contactData;
+	}
+
+	public void setContactData(ContactData contactData) {
+		this.contactData = contactData;
+	}
+
 	public Location getLocation() {
 		return location;
 	}
 
-	public Tax_Data getTax_data() {
-		return tax_data;
+	public void setLocation(Location location) {
+		this.location = location;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public TaxData getTaxData() {
+		return taxData;
 	}
 
-	public void delete() {
-		this.is_deleted = true;
+	public void setTaxData(TaxData taxData) {
+		this.taxData = taxData;
+	}
+
+	public List<Article> getArticles() {
+		return articles;
+	}
+
+	public void setArticles(List<Article> articles) {
+		this.articles = articles;
+	}
+
+	@Override
+	public String toString() {
+		return "Provider [id=" + id + ", codProvider=" + codProvider + ", businessName=" + businessName + ", website="
+				+ website + ", email=" + email + ", phone=" + phone + ", createdAt=" + createdAt + ", updatedAt="
+				+ updatedAt + ", isDeleted=" + isDeleted + ", sector=" + sector + ", contactData=" + contactData
+				+ ", location=" + location + ", taxData=" + taxData + ", articles=" + articles + "]";
 	}
 }

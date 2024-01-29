@@ -13,7 +13,7 @@
                                         #provedor="ngModel" [ngClass]="!provedor.value ? 'mi-requerido': provedor.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'"
                                         >
                                             <option *ngFor="let provider of this.arrProviders" value="{{provider.id}}">
-                                                {{provider.razSocial | uppercase}}
+                                                {{provider.businessName| uppercase}}
                                             </option>
                                         </select>
                                         <label for="SelProvedor">Provedor:</label>

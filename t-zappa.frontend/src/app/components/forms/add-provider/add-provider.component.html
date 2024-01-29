@@ -16,13 +16,13 @@
                                 <p class="h6">Datos de la Empresa: </p>  
                                 <div class="col-md-4">
                                     <div class=" form-floating mb-3 mb-md-0">
-                                        <input #cod="ngModel" [ngClass]="!cod.value ? 'mi-requerido': cod.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'" minlength="3" maxlength="25" required class="form-control form-control-sm" name="cod" [(ngModel)]="provider.cod" type="text" minlength="4" placeholder="" />
+                                        <input #codProvider="ngModel" [ngClass]="!codProvider.value ? 'mi-requerido': codProvider.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'" minlength="3" maxlength="25" required class="form-control form-control-sm" name="codProvider" [(ngModel)]="provider.codProvider" type="text" minlength="4" placeholder="" />
                                         <label id="labelCode" for="inputCode">Codigo proveedor:</label>
-                                        <ng-container *ngIf="cod.value">
-                                            <span *ngIf="cod.errors?.['minlength']" class="mi-invalid-feedback">
+                                        <ng-container *ngIf="codProvider.value">
+                                            <span *ngIf="codProvider.errors?.['minlength']" class="mi-invalid-feedback">
                                                 Longitud minima 3
                                             </span>
-                                            <span *ngIf="cod.errors?.['maxlength']" class="mi-invalid-feedback">
+                                            <span *ngIf="codProvider.errors?.['maxlength']" class="mi-invalid-feedback">
                                                 Longitud maxima 25
                                             </span>                                             
                                         </ng-container>
@@ -30,15 +30,15 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class=" form-floating">
-                                        <input #razSoc="ngModel"  class="form-control form-control-sm" name="razSocial" [(ngModel)]="provider.razSocial" type="text" placeholder=""
-                                        [ngClass]="!razSoc.value ? 'mi-requerido': razSoc.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'"
+                                        <input #bussName="ngModel"  class="form-control form-control-sm" name="bussName" [(ngModel)]="provider.businessName" type="text" placeholder=""
+                                        [ngClass]="!bussName.value ? 'mi-requerido': bussName.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'"
                                         required minlength="3" maxlength="25" >
                                         <label for="inputRazonSocial">Razon Social:</label>
-                                        <ng-container *ngIf="razSoc.value">
-                                            <span *ngIf="razSoc.errors?.['minlength']" class="mi-invalid-feedback">
+                                        <ng-container *ngIf="bussName.value">
+                                            <span *ngIf="bussName.errors?.['minlength']" class="mi-invalid-feedback">
                                                 Longitud minima 3
                                             </span>
-                                            <span *ngIf="razSoc.errors?.['maxlength']" class="mi-invalid-feedback">
+                                            <span *ngIf="bussName.errors?.['maxlength']" class="mi-invalid-feedback">
                                                 Longitud maxima 25
                                             </span>                                             
                                         </ng-container>
@@ -46,15 +46,15 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class=" form-floating mb-3 mb-md-0">
-                                        <input required minlength="3" maxlength="25" class="form-control form-control-sm" name="rubro" [(ngModel)]="provider.rubro" type="text"
-                                        #rubro="ngModel" [ngClass]="!rubro.value ? 'mi-requerido': rubro.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'"
+                                        <input required minlength="3" maxlength="25" class="form-control form-control-sm" name="sector" [(ngModel)]="provider.sector.sector" type="text"
+                                        #sector="ngModel" [ngClass]="!sector.value ? 'mi-requerido': sector.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'"
                                         placeholder="" />
                                         <label id="labelRubro" for="inputRubro">Rubro:</label>
-                                        <ng-container *ngIf="rubro.value">
-                                            <span *ngIf="rubro.errors?.['minlength']" class="mi-invalid-feedback">
+                                        <ng-container *ngIf="sector.value">
+                                            <span *ngIf="sector.errors?.['minlength']" class="mi-invalid-feedback">
                                                 Longitud minima 3
                                             </span>
-                                            <span *ngIf="rubro.errors?.['maxlength']" class="mi-invalid-feedback">
+                                            <span *ngIf="sector.errors?.['maxlength']" class="mi-invalid-feedback">
                                                 Longitud maxima 25
                                             </span>                                             
                                         </ng-container>
@@ -64,15 +64,15 @@
                             <div class="row  mb-4">                                
                                 <div class="col-md-4">
                                     <div class=" form-floating mb-3">
-                                        <input required minlength="3" class="form-control form-control-sm" name="sitioWeb" [(ngModel)]="provider.sitioWeb" 
-                                        #sitioWeb="ngModel" [ngClass]="!sitioWeb.value ? 'mi-requerido': sitioWeb.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'"
+                                        <input required minlength="3" class="form-control form-control-sm" name="website" [(ngModel)]="provider.website" 
+                                        #website="ngModel" [ngClass]="!website.value ? 'mi-requerido': website.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'"
                                         type="url" placeholder="" />
                                         <label for="inputSitioWeb">Sitio Web:</label>
-                                        <ng-container *ngIf="sitioWeb.value">
-                                            <span *ngIf="sitioWeb.errors?.['minlength']" class="mi-invalid-feedback">
+                                        <ng-container *ngIf="website.value">
+                                            <span *ngIf="website.errors?.['minlength']" class="mi-invalid-feedback">
                                                 Longitud minima 3
                                             </span>
-                                            <span *ngIf="sitioWeb.errors?.['maxlength']" class="mi-invalid-feedback">
+                                            <span *ngIf="website.errors?.['maxlength']" class="mi-invalid-feedback">
                                                 Longitud maxima 50
                                             </span>                                             
                                         </ng-container> 
@@ -80,15 +80,15 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class=" form-floating mb-3 mb-md-0">
-                                        <input required class="form-control form-control-sm" name="emailEmpresa" [(ngModel)]="provider.email" type="email" minlength="4" placeholder=""
-                                        #emailUno="ngModel" [ngClass]="!emailUno.value ? 'mi-requerido': emailUno.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'"
+                                        <input required class="form-control form-control-sm" name="emailOne" [(ngModel)]="provider.email" type="email" minlength="4" placeholder=""
+                                        #emailOne="ngModel" [ngClass]="!emailOne.value ? 'mi-requerido': emailOne.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'"
                                         />
                                         <label id="labelCode" for="inputCode">E-mail:</label>
-                                        <ng-container *ngIf="emailUno.value">
-                                            <span *ngIf="emailUno.errors?.['minlength']" class="mi-invalid-feedback">
+                                        <ng-container *ngIf="emailOne.value">
+                                            <span *ngIf="emailOne.errors?.['minlength']" class="mi-invalid-feedback">
                                                 Longitud minima 4
                                             </span>
-                                            <span *ngIf="emailUno.errors?.['maxlength']" class="mi-invalid-feedback">
+                                            <span *ngIf="emailOne.errors?.['maxlength']" class="mi-invalid-feedback">
                                                 Longitud maxima 50
                                             </span>                                             
                                         </ng-container> 
@@ -96,11 +96,11 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class=" form-floating">
-                                        <input required min="99999999" max="99999999999" class="form-control form-control-sm" name="telefonoEmpresa" [(ngModel)]="provider.telefono" type="number" placeholder=""
-                                        #telefonoUno="ngModel" [ngClass]="!telefonoUno.value ? 'mi-requerido': telefonoUno.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'"
+                                        <input required maxlength="12" class="form-control form-control-sm" name="telefonoEmpresa" [(ngModel)]="provider.phone" type="text" placeholder=""
+                                        #phoneOne="ngModel" [ngClass]="!phoneOne.value ? 'mi-requerido': phoneOne.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'"
                                         />
                                         <label for="inputRazonSocial">Telefono: </label>
-                                        <ng-container *ngIf="telefonoUno.value">
+                                        <ng-container *ngIf="phoneOne.value">
                                             <span class="invalid-feedback mi-invalid-feedback">
                                                 Formato invalido
                                             </span>
@@ -113,14 +113,14 @@
                                 <div class="col-md-4">                                                                                                       
                                     <div class=" form-floating">                                                                                                               
                                         <input required minlength="3" maxlength="30" type="text" class="form-control form-control-sm" 
-                                         name="calle" [(ngModel)]="provider.direccion.calle" placeholder=""
-                                         #calle="ngModel" [ngClass]="!calle.value ? 'mi-requerido': calle.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'">
+                                         name="street" [(ngModel)]="provider.location.street" placeholder=""
+                                         #street="ngModel" [ngClass]="!street.value ? 'mi-requerido': street.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'">
                                         <label for="inputCalle">Calle: </label>
-                                        <ng-container *ngIf="calle.value">
-                                            <span *ngIf="calle.errors?.['minlength']" class="mi-invalid-feedback">
+                                        <ng-container *ngIf="street.value">
+                                            <span *ngIf="street.errors?.['minlength']" class="mi-invalid-feedback">
                                                 Longitud maxima 30
                                             </span>
-                                            <span *ngIf="calle.errors?.['maxlength']" class="mi-invalid-feedback">
+                                            <span *ngIf="street.errors?.['maxlength']" class="mi-invalid-feedback">
                                                 Longitud minima 3
                                             </span>                                                                                         
                                         </ng-container>
@@ -128,14 +128,14 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class=" form-floating">                                                        
-                                        <input required min="1" max="99999" type="number" class="form-control form-control-sm" name="nroCalle" [(ngModel)]="provider.direccion.nro" placeholder=""
-                                        #nroCalle="ngModel" [ngClass]="!nroCalle.value ? 'mi-requerido': nroCalle.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'">
+                                        <input required min="1" max="99999" type="number" class="form-control form-control-sm" name="nroCalle" [(ngModel)]="provider.location.number" placeholder=""
+                                        #streetNumber="ngModel" [ngClass]="!streetNumber.value ? 'mi-requerido': streetNumber.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'">
                                         <label for="inputCalleNro">Numero: </label>
-                                        <ng-container *ngIf="nroCalle.value">
-                                            <span *ngIf="nroCalle.errors?.['max']" class="mi-invalid-feedback">
+                                        <ng-container *ngIf="streetNumber.value">
+                                            <span *ngIf="streetNumber.errors?.['max']" class="mi-invalid-feedback">
                                                 Longitud maxima 5
                                             </span>
-                                            <span *ngIf="nroCalle.errors?.['min']" class="mi-invalid-feedback">
+                                            <span *ngIf="streetNumber.errors?.['min']" class="mi-invalid-feedback">
                                                 Valor positivo
                                             </span>                                                                                         
                                         </ng-container> 
@@ -143,14 +143,14 @@
                                 </div>
                                 <div class="col-md-4">                                                                                                       
                                     <div class=" form-floating">                                                                                                               
-                                        <input required type="text" maxlength="8" minlength="3" class="form-control form-control-sm" name="codigo-postal" [(ngModel)]="provider.direccion.cp" placeholder=""
-                                        #cp="ngModel" [ngClass]="!cp.value ? 'mi-requerido': cp.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'">
+                                        <input required type="text" maxlength="8" minlength="3" class="form-control form-control-sm" name="postalCode" [(ngModel)]="provider.location.postalCode" placeholder=""
+                                        #postalCode="ngModel" [ngClass]="!postalCode.value ? 'mi-requerido': postalCode.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'">
                                         <label for="inputCalle">Cod. Postal: </label>
-                                        <ng-container *ngIf="cp.value">
-                                            <span *ngIf="cp.errors?.['minlength']" class="mi-invalid-feedback">
+                                        <ng-container *ngIf="postalCode.value">
+                                            <span *ngIf="postalCode.errors?.['minlength']" class="mi-invalid-feedback">
                                                 Longitud minima 3
                                             </span>
-                                            <span *ngIf="cp.errors?.['maxlength']" class="mi-invalid-feedback">
+                                            <span *ngIf="postalCode.errors?.['maxlength']" class="mi-invalid-feedback">
                                                 Longitud maxima 8
                                             </span>                                             
                                         </ng-container> 
@@ -160,15 +160,15 @@
                             <div class="row mb-5">
                                 <div class="col-md-4">  
                                     <div class=" form-floating">                                                 
-                                        <select required class="form-control form-control-sm" name="pais" [(ngModel)]="provider.direccion.pais"
-                                        #pais="ngModel" [ngClass]="!pais.value ? 'mi-requerido': pais.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'"
+                                        <select required class="form-control form-control-sm" name="country" [(ngModel)]="provider.location.city.state.country.name"
+                                        #country="ngModel" [ngClass]="!country.value ? 'mi-requerido': country.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'"
                                         >
                                             <option value="argentina">Argentina</option>
                                             <option value="espana">España</option>
                                             <!-- Mas opc -->
                                         </select>
                                         <label for="SelPais">País:</label>
-                                        <ng-container *ngIf="pais.value">
+                                        <ng-container *ngIf="country.value">
                                             <span class="invalid-feedback mi-invalid-feedback">
                                                 Requerido
                                             </span>
@@ -177,13 +177,13 @@
                                 </div>
                                 <div class="col-md-4">  
                                     <div class=" form-floating">                                                 
-                                        <select required class="form-control form-control-sm" name="provincia" [(ngModel)]="provider.direccion.provincia" (change)="updateLocalidades()"
-                                        #provincia="ngModel" [ngClass]="!provincia.value ? 'mi-requerido': provincia.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'"
+                                        <select required class="form-control form-control-sm" name="state" [(ngModel)]="provider.location.city.state.name" (change)="updateLocalidades()"
+                                        #state="ngModel" [ngClass]="!state.value ? 'mi-requerido': state.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'"
                                         >
-                                            <option *ngFor="let provincia of provincias" value="{{ provincia.nombre }}">{{ provincia.nombre }}</option>
+                                            <option *ngFor="let state of states" value="{{ state.nombre }}">{{ state.nombre }}</option>
                                         </select>
                                         <label for="SelPais">Provincia:</label>
-                                        <ng-container *ngIf="provincia.value">
+                                        <ng-container *ngIf="state.value">
                                             <span class="invalid-feedback mi-invalid-feedback">
                                                 Requerido
                                             </span>
@@ -192,13 +192,13 @@
                                 </div>
                                 <div class="col-md-4">  
                                     <div class=" form-floating">                                                 
-                                        <select required class="form-control form-control-sm" name="localidad" [(ngModel)]="provider.direccion.localidad"
-                                        #localidad="ngModel" [ngClass]="!localidad.value ? 'mi-requerido': localidad.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'"
+                                        <select required class="form-control form-control-sm" name="city" [(ngModel)]="provider.location.city.name"
+                                        #city="ngModel" [ngClass]="!city.value ? 'mi-requerido': city.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'"
                                         >
-                                            <option  *ngFor="let localidad of provincias[this.indexProv].localidades" value="{{ localidad.nombre }}">{{ localidad.nombre }}</option>
+                                            <option  *ngFor="let city of states[this.indexProv].localidades" value="{{ city.nombre }}">{{ city.nombre }}</option>
                                         </select>
                                         <label for="SelLocalidad">Localidad:</label>
-                                        <ng-container *ngIf="localidad.value">
+                                        <ng-container *ngIf="city.value">
                                             <span class="invalid-feedback mi-invalid-feedback">
                                                 Requerido
                                             </span>
@@ -212,7 +212,7 @@
                                         <p class="h6">Datos Fiscales: </p>
                                         <div class="col-md-12">                                                                                                       
                                             <div class=" form-floating">                                                                                                               
-                                                <input required maxlength="13" minlength="10"  type="text" class="form-control form-control-sm" name="cuit" [(ngModel)]="provider.datosFiscales.cuit" placeholder=""
+                                                <input required maxlength="13" minlength="10"  type="text" class="form-control form-control-sm" name="cuit" [(ngModel)]="provider.taxData.cuit" placeholder=""
                                                 #cuit="ngModel" [ngClass]="!cuit.value ? 'mi-requerido': cuit.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'"
                                                 >
                                                 <label for="inputCuit">CUIT: </label>
@@ -230,11 +230,11 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class=" form-floating">                                                        
-                                                <input required type="text" class="form-control form-control-sm" name="condIva" [(ngModel)]="provider.datosFiscales.condIva" placeholder=""
-                                                #condIva="ngModel" [ngClass]="!condIva.value ? 'mi-requerido': condIva.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'"
+                                                <input required type="text" class="form-control form-control-sm" name="ivaCondition" [(ngModel)]="provider.taxData.ivaCondition.condition" placeholder=""
+                                                #ivaCondition="ngModel" [ngClass]="!ivaCondition.value ? 'mi-requerido': ivaCondition.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'"
                                                 >
                                                 <label for="inputCondIva">Cond. iva: </label>
-                                                <ng-container *ngIf="condIva.value">
+                                                <ng-container *ngIf="ivaCondition.value">
                                                     <span class="invalid-feedback mi-invalid-feedback">
                                                         Requerido
                                                     </span>
@@ -248,15 +248,15 @@
                                         <p class="h6">Datos de Contacto: </p>
                                         <div class="col-md-6">                                                                                                       
                                             <div class=" form-floating">                                                                                                               
-                                                <input required minlength="3" maxlength="25" type="text" class="form-control form-control-sm" name="nombre" [(ngModel)]="provider.datosContacto.nombre" placeholder=""
-                                                #nombre="ngModel" [ngClass]="!nombre.value ? 'mi-requerido': nombre.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'"
+                                                <input required minlength="3" maxlength="25" type="text" class="form-control form-control-sm" name="name" [(ngModel)]="provider.contactData.name" placeholder=""
+                                                #name="ngModel" [ngClass]="!name.value ? 'mi-requerido': name.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'"
                                                 >
                                                 <label for="inputNombre">Nombre: </label>
-                                                <ng-container *ngIf="nombre.value">
-                                                    <span *ngIf="nombre.errors?.['minlength']" class="mi-invalid-feedback">
+                                                <ng-container *ngIf="name.value">
+                                                    <span *ngIf="name.errors?.['minlength']" class="mi-invalid-feedback">
                                                         Longitud minima 3
                                                     </span>
-                                                    <span *ngIf="nombre.errors?.['maxlength']" class="mi-invalid-feedback">
+                                                    <span *ngIf="name.errors?.['maxlength']" class="mi-invalid-feedback">
                                                         Longitud maxima 25
                                                     </span>                                             
                                                 </ng-container> 
@@ -264,15 +264,15 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class=" form-floating">                                                        
-                                                <input required minlength="3" maxlength="30" type="text" class="form-control form-control-sm" name="apellido" [(ngModel)]="provider.datosContacto.apellido" placeholder=""
-                                                #apellido="ngModel" [ngClass]="!apellido.value ? 'mi-requerido': apellido.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'"
+                                                <input required minlength="3" maxlength="30" type="text" class="form-control form-control-sm" name="lastName" [(ngModel)]="provider.contactData.lastName" placeholder=""
+                                                #lastName="ngModel" [ngClass]="!lastName.value ? 'mi-requerido': lastName.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'"
                                                 >
                                                 <label for="inputApellido">Apellido: </label>
-                                                <ng-container *ngIf="apellido.value">
-                                                    <span *ngIf="apellido.errors?.['minlength']" class="mi-invalid-feedback">
+                                                <ng-container *ngIf="lastName.value">
+                                                    <span *ngIf="lastName.errors?.['minlength']" class="mi-invalid-feedback">
                                                         Longitud minima 3
                                                     </span>
-                                                    <span *ngIf="apellido.errors?.['maxlength']" class="mi-invalid-feedback">
+                                                    <span *ngIf="lastName.errors?.['maxlength']" class="mi-invalid-feedback">
                                                         Longitud maxima 30
                                                     </span>                                             
                                                 </ng-container> 
@@ -282,15 +282,15 @@
                                     <div class="row mb-3">                                            
                                         <div class="col-md-6">
                                             <div class=" form-floating mb-3">
-                                                <input required minlength="4" maxlength="50" class="form-control form-control-sm" name="email" [(ngModel)]="provider.datosContacto.email" type="email" placeholder="name@example.com" 
-                                                #emailDos="ngModel" [ngClass]="!emailDos.value ? 'mi-requerido': emailDos.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'"
+                                                <input required minlength="4" maxlength="50" class="form-control form-control-sm" name="emailTwo" [(ngModel)]="provider.contactData.email" type="email" placeholder="name@example.com" 
+                                                #emailTwo="ngModel" [ngClass]="!emailTwo.value ? 'mi-requerido': emailTwo.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'"
                                                 >
                                                 <label for="inputEmail">Email:</label>
-                                                <ng-container *ngIf="emailDos.value">
-                                                    <span *ngIf="emailDos.errors?.['minlength']" class="mi-invalid-feedback">
+                                                <ng-container *ngIf="emailTwo.value">
+                                                    <span *ngIf="emailTwo.errors?.['minlength']" class="mi-invalid-feedback">
                                                         Longitud minima 4
                                                     </span>
-                                                    <span *ngIf="emailDos.errors?.['maxlength']" class="mi-invalid-feedback">
+                                                    <span *ngIf="emailTwo.errors?.['maxlength']" class="mi-invalid-feedback">
                                                         Longitud maxima 50
                                                     </span>                                             
                                                 </ng-container> 
@@ -298,11 +298,11 @@
                                         </div>                                                                        
                                         <div class="col-md-3">
                                             <div class=" form-floating">                                                        
-                                                <input required min="99999999" max="99999999999" type="number" class="form-control form-control-sm" name="telefono" [(ngModel)]="provider.datosContacto.telefono" placeholder=""
-                                                #telefonoDos="ngModel" [ngClass]="!telefonoDos.value ? 'mi-requerido': telefonoDos.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'"
+                                                <input required maxlength="12" type="number" class="form-control form-control-sm" name="phoneTwo" [(ngModel)]="provider.contactData.phone" placeholder=""
+                                                #phoneTwo="ngModel" [ngClass]="!phoneTwo.value ? 'mi-requerido': phoneTwo.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'"
                                                 >
                                                 <label for="inputTelefono">Telefono: </label>
-                                                <ng-container *ngIf="telefonoDos.value">
+                                                <ng-container *ngIf="phoneTwo.value">
                                                     <span class="invalid-feedback mi-invalid-feedback">
                                                         Formato invalido
                                                     </span>
@@ -311,22 +311,22 @@
                                         </div>
                                         <div class="col-md-3">
                                             <div class=" form-floating">                                                        
-                                                <input required minlength="3" maxlength="30" type="text" class="form-control form-control-sm" name="rol" [(ngModel)]="provider.datosContacto.rol" placeholder=""
-                                                #rol="ngModel" [ngClass]="!rol.value ? 'mi-requerido': rol.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'"
+                                                <input required minlength="3" maxlength="30" type="text" class="form-control form-control-sm" name="role" [(ngModel)]="provider.contactData.role" placeholder=""
+                                                #role="ngModel" [ngClass]="!role.value ? 'mi-requerido': role.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'"
                                                 >
                                                 <label for="inputRol">Rol: </label>
-                                                <ng-container *ngIf="rol.value">
-                                                    <span *ngIf="rol.errors?.['minlength']" class="mi-invalid-feedback">
+                                                <ng-container *ngIf="role.value">
+                                                    <span *ngIf="role.errors?.['minlength']" class="mi-invalid-feedback">
                                                         Longitud minima 3
                                                     </span>
-                                                    <span *ngIf="rol.errors?.['maxlength']" class="mi-invalid-feedback">
+                                                    <span *ngIf="role.errors?.['maxlength']" class="mi-invalid-feedback">
                                                         Longitud maxima 30
                                                     </span>                                             
                                                 </ng-container>                                        
                                             </div>
                                         </div>                                                        
-                                    </div>    
-                                </div>                                            
+                                    </div>                                    
+                                </div>                                                                            
                             </div>                                                                                                          
                             <div class="mt-4 mb-0">
                                 <div class="d-grid">

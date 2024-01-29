@@ -15,35 +15,53 @@ import Swal from 'sweetalert2';
   styleUrl: './add-provider.component.css'
 })
 export class AddProviderComponent implements OnInit {
-  indexProv = 0; provincias!: Provincia[];
+  indexProv = 0; states!: Provincia[];
 
   provider: Provider = {
     id: 0,
-    cod: '',
-    razSocial: '',
-    rubro: '',
-    sitioWeb: '',
+    codProvider: '',
+    businessName: '',
+    website: '',
     email: '',
-    telefono: 0,
-    direccion: {
-      calle: '',
-      nro: 0,
-      cp: '',
-      localidad: '',
-      provincia: '',
-      pais: '',
+    phone: '',
+    sector:{
+      id: 0,
+      sector: ''
     },
-    datosFiscales: {
+    location: {
+      id: 0,
+      street: '',
+      number: 0,
+      postalCode: '',
+      city: {
+        id: 20,
+        name: '',
+        state:{
+          id: 24,
+          name: '',
+          country: {
+            id: 2,
+            name: ''
+          }
+        }
+      }      
+    },
+    taxData: {
+      id: 0,
       cuit: '',
-      condIva: '',
+      ivaCondition: {
+        id: 2,
+        condition: ''
+      },
     },
-    datosContacto: {
-      nombre: '',
-      apellido: '',
-      telefono: 0,
+    contactData: {
+      id: 0,
+      name: '',
+      lastName: '',
+      phone: '',
       email: '',
-      rol: '',
-    },
+      role: '',
+    }
   };
   
   idProvider: any;
@@ -53,7 +71,7 @@ export class AddProviderComponent implements OnInit {
     private provService: ProvLocArgentinasService){}
   
   updateLocalidades(){ // para el change de la provincia
-    this.indexProv = this.provincias.findIndex(provincia => provincia.nombre === this.provider.direccion.provincia); 
+     this.indexProv = this.states.findIndex(provincia => provincia.nombre === this.provider.location.city.state.name); 
   }
 
   verificarUpdate(){
@@ -70,7 +88,9 @@ export class AddProviderComponent implements OnInit {
         verificarLongitudes(this.provider) && // que los largos sean los que quiero
         verificarCamposEspeciales(this.provider) ) ){ // controlo campos especificos
         if(this.idProvider === 0){ // 0 => Nuevo ; >0 => Edito
-          this.providerService.post(this.provider);
+          this.providerService.post(this.provider).subscribe(data =>{
+            this.provider = data;
+          } );
         }else{
           this.providerService.put(this.provider);
         }
@@ -98,7 +118,7 @@ export class AddProviderComponent implements OnInit {
   ngOnInit(): void {   
     this.route.params.subscribe((params) => {
       this.idProvider = params['id'] || 0;      
-      this.provincias = this.provService.provincias; // get
+      this.states = this.provService.provincias; // get
       
       this.verificarUpdate();
     });  

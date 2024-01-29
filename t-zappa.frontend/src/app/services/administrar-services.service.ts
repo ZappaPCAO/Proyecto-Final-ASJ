@@ -5,6 +5,7 @@ import { PurchaseOrderService } from './purchase-order.service';
 import { Provider } from '../models/provider';
 import { Article } from '../models/article';
 import { PurchaseOrder } from '../models/purchase-order';
+import { Observable, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -16,24 +17,23 @@ export class AdministrarServicesService {
     private servicePurchaseOrder: PurchaseOrderService) { }
 
     // Administro los get por medio de parametros.
-    get(tipo: string){
-      let datos!: Provider[] | Article[] | PurchaseOrder[];
+    get(tipo: string) : Observable<Provider[] | Article[] | PurchaseOrder[]>{
 
       switch (tipo) {        
         case 'article':
-          datos = this.serviceArticle.get();
+          // return <Article[]>this.serviceArticle.get();
           break;
         case 'provider':
-          datos = this.serviceProvider.get()
+          return this.serviceProvider.get();
           break;
         case 'purchase-order':
-          datos = this.servicePurchaseOrder.get()
+          // datos = this.servicePurchaseOrder.get();
           break;
 
         default:
           break;
       }
-      return datos;
+      return new Observable();
     }
 
     delete(dato:any, tipo:string){

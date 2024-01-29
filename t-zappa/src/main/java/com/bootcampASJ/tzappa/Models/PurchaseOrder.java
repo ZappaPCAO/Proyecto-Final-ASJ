@@ -1,6 +1,7 @@
 package com.bootcampASJ.tzappa.Models;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
@@ -12,41 +13,47 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 @Entity
-@Table(name="articles")
-public class Article {
-
+@Table(name="purchase_orders")
+public class PurchaseOrder {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column
 	private Integer id;
 	
-	@NotNull(message="[cod_article] no puede ser nula.")
-	@Size(min = 3, max = 30, message = "[cod_article] longitud fuera de rango 3-30.")
-	@Column(name = "cod_article", unique = true)
-	private String codArticle;
+	@NotNull(message="[num_purchase_order] no puede ser nula.")
+	@Min(value = 1, message = "[num_purchase_order] debe ser un numero positivo.")
+	@Column(name = "num_purchase_order", unique = true)
+	private Integer numPurchaseOrder;
 	
-	@Column
-	@NotNull(message="[name] no puede ser nula.")
-	@Size(min = 3, max = 50, message = "[name] longitud fuera de rango 3-50.")
-	private String name;
+	@NotNull(message="[send_date] no puede ser nula.")
+	@Column(name = "send_date")
+	private LocalDateTime sendDate;
+	
+	@NotNull(message="[receipt_date] no puede ser nula.")
+	@Column(name = "receipt_date")
+	private LocalDateTime receiptDate;
 	
 	@Size(min = 3, message = "[description] longitud fuera de rango 3-inf.")
 	@Column(columnDefinition = "text")
 	private String description;
 	
 	@Column
-	@NotNull(message="[name] no puede ser nula.")
-	@Min(value = 1, message = "[number] debe ser un numero positivo.")
-	private Double price;
+	@NotNull(message="[estado] no puede ser nula.")
+	@Size(min = 1, max = 1, message = "[estado] tiene que ser solo un caracter.")
+	private char estado;
 	
+	@NotNull(message="[total] no puede ser nula.")
+	@Min(value = 1, message = "[total] debe ser un numero positivo.")
 	@Column
-	private String image;
+	private Double total;
 	
 	@JsonInclude(JsonInclude.Include.NON_NULL)
 	@Column(name="created_at")
@@ -60,18 +67,21 @@ public class Article {
 	@Column(name="is_deleted")
 	private Boolean isDeleted;
 	
-	// FK
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "category_id", referencedColumnName = "id", nullable = false)
-	private Category category;
-
-	@ManyToOne(fetch = FetchType.EAGER)
+	// FK 
+	
+	@ManyToOne(fetch = FetchType.EAGER)	
 	@JoinColumn(name = "provider_id", referencedColumnName = "id", nullable = false)
 	private Provider provider;
 	
+//	// Relacion bidirecc
+//	
+//	@OneToMany
+//	@JoinColumn(name = "details", referencedColumnName = "id", nullable = false)
+//	private List<Detail> details;
+	
 	// Metodos
 
-	public Article() {}
+	public PurchaseOrder() {}
 
 	public Integer getId() {
 		return id;
@@ -81,20 +91,28 @@ public class Article {
 		this.id = id;
 	}
 
-	public String getCodArticle() {
-		return codArticle;
+	public Integer getNumPurchaseOrder() {
+		return numPurchaseOrder;
 	}
 
-	public void setCodArticle(String codArticle) {
-		this.codArticle = codArticle;
+	public void setNumPurchaseOrder(Integer numPurchaseOrder) {
+		this.numPurchaseOrder = numPurchaseOrder;
 	}
 
-	public String getName() {
-		return name;
+	public LocalDateTime getSendDate() {
+		return sendDate;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setSendDate(LocalDateTime sendDate) {
+		this.sendDate = sendDate;
+	}
+
+	public LocalDateTime getReceiptDate() {
+		return receiptDate;
+	}
+
+	public void setReceiptDate(LocalDateTime receiptDate) {
+		this.receiptDate = receiptDate;
 	}
 
 	public String getDescription() {
@@ -105,20 +123,20 @@ public class Article {
 		this.description = description;
 	}
 
-	public Double getPrice() {
-		return price;
+	public char getEstado() {
+		return estado;
 	}
 
-	public void setPrice(Double price) {
-		this.price = price;
+	public void setEstado(char estado) {
+		this.estado = estado;
 	}
 
-	public String getImage() {
-		return image;
+	public Double getTotal() {
+		return total;
 	}
 
-	public void setImage(String image) {
-		this.image = image;
+	public void setTotal(Double total) {
+		this.total = total;
 	}
 
 	public LocalDateTime getCreatedAt() {
@@ -145,14 +163,6 @@ public class Article {
 		this.isDeleted = isDeleted;
 	}
 
-	public Category getCategory() {
-		return category;
-	}
-
-	public void setCategory(Category category) {
-		this.category = category;
-	}
-
 	public Provider getProvider() {
 		return provider;
 	}
@@ -163,8 +173,9 @@ public class Article {
 
 	@Override
 	public String toString() {
-		return "Article [id=" + id + ", codArticle=" + codArticle + ", name=" + name + ", description=" + description
-				+ ", price=" + price + ", image=" + image + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt
-				+ ", isDeleted=" + isDeleted + ", category=" + category + ", provider=" + provider + "]";
-	}	
+		return "PurchaseOrder [id=" + id + ", numPurchaseOrder=" + numPurchaseOrder + ", sendDate=" + sendDate
+				+ ", receiptDate=" + receiptDate + ", description=" + description + ", estado=" + estado + ", total="
+				+ total + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + ", isDeleted=" + isDeleted
+				+ ", provider=" + provider + ", details=" + details + "]";
+	}
 }
