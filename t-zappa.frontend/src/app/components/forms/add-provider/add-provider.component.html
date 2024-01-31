@@ -13,10 +13,24 @@
                     <div class="card-body">
                         <form #miForm="ngForm" (ngSubmit)="agregarProvider(miForm)">                            
                             <div class="row mb-3">
-                                <p class="h6">Datos de la Empresa: </p>  
-                                <div class="col-md-4">
+                                <p class="h6">Datos de la Empresa: </p> 
+                                <div class="col-md-4">                                    
                                     <div class=" form-floating mb-3 mb-md-0">
-                                        <input #codProvider="ngModel" [ngClass]="!codProvider.value ? 'mi-requerido': codProvider.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'" minlength="3" maxlength="25" required class="form-control form-control-sm" name="codProvider" [(ngModel)]="provider.codProvider" type="text" minlength="4" placeholder="" />
+                                        <input #logo="ngModel" [ngClass]="!logo.value ? 'mi-requerido': logo.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'" minlength="3" maxlength="255" required class="form-control form-control-sm" name="logo" [(ngModel)]="provider.logo" type="url" placeholder="" />
+                                        <label id="labelCode" for="inputCode">Logo:</label>
+                                        <ng-container *ngIf="logo.value">
+                                            <span *ngIf="logo.errors?.['minlength']" class="mi-invalid-feedback">
+                                                Longitud minima 3
+                                            </span>
+                                            <span *ngIf="logo.errors?.['maxlength']" class="mi-invalid-feedback">
+                                                Longitud maxima 25
+                                            </span>                                             
+                                        </ng-container>
+                                    </div>                                    
+                                </div> 
+                                <div class="col-md-4">                                    
+                                    <div class=" form-floating mb-3 mb-md-0">
+                                        <input #codProvider="ngModel" [ngClass]="!codProvider.value ? 'mi-requerido': codProvider.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'" minlength="3" maxlength="25" required class="form-control form-control-sm" name="codProvider" [(ngModel)]="provider.codProvider" type="text" placeholder="" />
                                         <label id="labelCode" for="inputCode">Codigo proveedor:</label>
                                         <ng-container *ngIf="codProvider.value">
                                             <span *ngIf="codProvider.errors?.['minlength']" class="mi-invalid-feedback">
@@ -43,8 +57,10 @@
                                             </span>                                             
                                         </ng-container>
                                     </div>
-                                </div>
-                                <div class="col-md-4">
+                                </div>                                
+                            </div>
+                            <div class="row  mb-4">
+                                <div class="col-md-3">
                                     <div class=" form-floating mb-3 mb-md-0">
                                         <input required minlength="3" maxlength="25" class="form-control form-control-sm" name="sector" [(ngModel)]="provider.sector.sector" type="text"
                                         #sector="ngModel" [ngClass]="!sector.value ? 'mi-requerido': sector.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'"
@@ -59,10 +75,8 @@
                                             </span>                                             
                                         </ng-container>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="row  mb-4">                                
-                                <div class="col-md-4">
+                                </div>                                
+                                <div class="col-md-3">
                                     <div class=" form-floating mb-3">
                                         <input required minlength="3" class="form-control form-control-sm" name="website" [(ngModel)]="provider.website" 
                                         #website="ngModel" [ngClass]="!website.value ? 'mi-requerido': website.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'"
@@ -78,7 +92,7 @@
                                         </ng-container> 
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class=" form-floating mb-3 mb-md-0">
                                         <input required class="form-control form-control-sm" name="emailOne" [(ngModel)]="provider.email" type="email" minlength="4" placeholder=""
                                         #emailOne="ngModel" [ngClass]="!emailOne.value ? 'mi-requerido': emailOne.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'"
@@ -94,7 +108,7 @@
                                         </ng-container> 
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class=" form-floating">
                                         <input required maxlength="12" class="form-control form-control-sm" name="telefonoEmpresa" [(ngModel)]="provider.phone" type="text" placeholder=""
                                         #phoneOne="ngModel" [ngClass]="!phoneOne.value ? 'mi-requerido': phoneOne.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'"
@@ -160,15 +174,14 @@
                             <div class="row mb-5">
                                 <div class="col-md-4">  
                                     <div class=" form-floating">                                                 
-                                        <select required class="form-control form-control-sm" name="country" [(ngModel)]="provider.location.city.state.country.name"
-                                        #country="ngModel" [ngClass]="!country.value ? 'mi-requerido': country.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'"
+                                        <select required class="form-control form-control-sm" name="country" [(ngModel)]="provider.location.city.state.country.id"  (change)="updateStates(countryModel.value)"
+                                        #countryModel="ngModel" [ngClass]="!countryModel.value ? 'mi-requerido': countryModel.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'"
                                         >
-                                            <option value="argentina">Argentina</option>
-                                            <option value="espana">España</option>
+                                            <option *ngFor="let country of countries; index as i" value="{{ country.id }}">{{ country.name }}</option>
                                             <!-- Mas opc -->
                                         </select>
                                         <label for="SelPais">País:</label>
-                                        <ng-container *ngIf="country.value">
+                                        <ng-container *ngIf="countryModel.value">
                                             <span class="invalid-feedback mi-invalid-feedback">
                                                 Requerido
                                             </span>
@@ -176,14 +189,14 @@
                                     </div>
                                 </div>
                                 <div class="col-md-4">  
-                                    <div class=" form-floating">                                                 
-                                        <select required class="form-control form-control-sm" name="state" [(ngModel)]="provider.location.city.state.name" (change)="updateLocalidades()"
-                                        #state="ngModel" [ngClass]="!state.value ? 'mi-requerido': state.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'"
+                                    <div *ngIf="this.states.length != 0" class=" form-floating">                                                 
+                                        <select required class="form-control form-control-sm" name="state" [(ngModel)]="provider.location.city.state.id" (change)="updateCities(stateModel.value)"
+                                        #stateModel="ngModel" [ngClass]="!stateModel.value ? 'mi-requerido': stateModel.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'"
                                         >
-                                            <option *ngFor="let state of states" value="{{ state.nombre }}">{{ state.nombre }}</option>
+                                            <option *ngFor="let state of this.states; index as i" value="{{ state.id }}">{{ state.name }}</option>
                                         </select>
                                         <label for="SelPais">Provincia:</label>
-                                        <ng-container *ngIf="state.value">
+                                        <ng-container *ngIf="stateModel.value">
                                             <span class="invalid-feedback mi-invalid-feedback">
                                                 Requerido
                                             </span>
@@ -191,11 +204,11 @@
                                     </div>
                                 </div>
                                 <div class="col-md-4">  
-                                    <div class=" form-floating">                                                 
-                                        <select required class="form-control form-control-sm" name="city" [(ngModel)]="provider.location.city.name"
+                                    <div *ngIf="this.cities.length != 0" class=" form-floating">                                                 
+                                        <select required class="form-control form-control-sm" name="city" [(ngModel)]="provider.location.city.id"
                                         #city="ngModel" [ngClass]="!city.value ? 'mi-requerido': city.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'"
                                         >
-                                            <option  *ngFor="let city of states[this.indexProv].localidades" value="{{ city.nombre }}">{{ city.nombre }}</option>
+                                            <option  *ngFor="let city of this.cities ; index as i" value="{{ city.id }}">{{ city.name }}</option>
                                         </select>
                                         <label for="SelLocalidad">Localidad:</label>
                                         <ng-container *ngIf="city.value">
@@ -229,16 +242,18 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <div class=" form-floating">                                                        
-                                                <input required type="text" class="form-control form-control-sm" name="ivaCondition" [(ngModel)]="provider.taxData.ivaCondition.condition" placeholder=""
+                                            <div class=" form-floating">
+                                                <select required class="form-select form-select-sm" name="ivaCondition" [(ngModel)]="provider.taxData.ivaCondition.id"
                                                 #ivaCondition="ngModel" [ngClass]="!ivaCondition.value ? 'mi-requerido': ivaCondition.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'"
                                                 >
+                                                    <option *ngFor="let condition of this.ivaConditions; index as i" value="{{ condition.id }}">{{ condition.condition }}</option>
+                                                </select>                                               
                                                 <label for="inputCondIva">Cond. iva: </label>
                                                 <ng-container *ngIf="ivaCondition.value">
                                                     <span class="invalid-feedback mi-invalid-feedback">
                                                         Requerido
                                                     </span>
-                                                </ng-container>
+                                                </ng-container>                                                    
                                             </div>
                                         </div>
                                     </div>

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'; 
 import { Provider } from '../models/provider';
-import { agregarObjetoSiExiste, pisarDatosByTipo } from '../utils/localStorage';
+import { agregarObjetoSiExiste} from '../utils/localStorage';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 

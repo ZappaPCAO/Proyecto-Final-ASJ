@@ -7,6 +7,7 @@ export interface Provider {
   website?: string;
   email: string;  
   phone: string;
+  logo: string;
   location:{
     id: number;
     street: string;

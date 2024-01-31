@@ -44,27 +44,19 @@ public class ProviderService {
 	    try {
 	    	this.sectorService.newSector(provider.getSector());
 	    	
-	    	provider.getSector().toString();
-	    	
 			this.contactDataService.newContactData(provider.getContactData());
-			
-			provider.getContactData().toString();
 			
 			this.taxDataService.newTaxData(provider.getTaxData());
 			
-			provider.getTaxData().toString();
-			
 			this.locationService.newLocation(provider.getLocation());
-	    	
-			provider.getLocation().toString();
 			
 	        provider.setCreatedAt(LocalDateTime.now());
 	        provider.setIsDeleted(false);
 	        
 	        return Optional.ofNullable(this.providerRepository.save(provider));
-	    } catch (DataIntegrityViolationException error) {	   
-	    	
-	        return Optional.empty();
+	    } catch (DataIntegrityViolationException error ) {
+	    	System.out.println("Clave duplicada detectada");
+            return Optional.empty();
 	    }
 	}	
 }

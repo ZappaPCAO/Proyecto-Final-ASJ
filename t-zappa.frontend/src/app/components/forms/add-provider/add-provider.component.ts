@@ -4,9 +4,11 @@ import { Provider } from '../../../models/provider';
 import { ActivatedRoute, Router } from '@angular/router';
 import { verificarCamposEspeciales, verificarDatos, verificarLongitudes } from '../../../utils/validaciones';
 import { NgForm } from '@angular/forms';
-import { Provincia } from '../../../models/provincias';
-import { ProvLocArgentinasService } from '../../../services/prov-loc-argentinas.service';
 import Swal from 'sweetalert2';
+import { City, Country, State } from '../../../models/geoLocation';
+import { InicializadorService } from '../../../services/inicializador.service';
+import { state } from '@angular/animations';
+import { IvaCondition } from '../../../models/ivaCondition';
 
 
 @Component({
@@ -15,7 +17,8 @@ import Swal from 'sweetalert2';
   styleUrl: './add-provider.component.css'
 })
 export class AddProviderComponent implements OnInit {
-  indexProv = 0; states!: Provincia[];
+  countries: Country[] = []; states: State[] = []; cities: City[] = [];
+  ivaConditions: IvaCondition[] = [];
 
   provider: Provider = {
     id: 0,
@@ -24,6 +27,7 @@ export class AddProviderComponent implements OnInit {
     website: '',
     email: '',
     phone: '',
+    logo: '',
     sector:{
       id: 0,
       sector: ''
@@ -34,13 +38,13 @@ export class AddProviderComponent implements OnInit {
       number: 0,
       postalCode: '',
       city: {
-        id: 20,
+        id: 0,
         name: '',
         state:{
-          id: 24,
+          id: 0,
           name: '',
           country: {
-            id: 2,
+            id: 0,
             name: ''
           }
         }
@@ -50,7 +54,7 @@ export class AddProviderComponent implements OnInit {
       id: 0,
       cuit: '',
       ivaCondition: {
-        id: 2,
+        id: 0,
         condition: ''
       },
     },
@@ -68,16 +72,19 @@ export class AddProviderComponent implements OnInit {
 
   constructor(private router: Router, private route: ActivatedRoute,
     public providerService: ProviderService,
-    private provService: ProvLocArgentinasService){}
+    private inicializadorService: InicializadorService){}
   
-  updateLocalidades(){ // para el change de la provincia
-     this.indexProv = this.states.findIndex(provincia => provincia.nombre === this.provider.location.city.state.name); 
+  updateStates(idCountry:number){ // para el change del pais
+    this.states = this.countries.find(country => +country.id == idCountry)?.states!; 
+  }
+  updateCities(idState:number){ // para el change de la provincia
+    this.cities = this.states.find(state => +state.id == idState)?.cities!;
   }
 
   verificarUpdate(){
     if(this.idProvider > 0){      
       this.provider = this.providerService.getById(this.idProvider);
-      this.updateLocalidades();
+      // this.updateLocalidades();
     }
     console.log(this.provider)
   }
@@ -118,8 +125,12 @@ export class AddProviderComponent implements OnInit {
   ngOnInit(): void {   
     this.route.params.subscribe((params) => {
       this.idProvider = params['id'] || 0;      
-      this.states = this.provService.provincias; // get
-      
+      this.inicializadorService.getGeoLocations().subscribe(data => {
+        this.countries = data;
+      });// GET de geoLocation  
+      this.inicializadorService.getIvaConditions().subscribe(data => {
+        this.ivaConditions = data;
+      }); // GET de IVA
       this.verificarUpdate();
     });  
   };

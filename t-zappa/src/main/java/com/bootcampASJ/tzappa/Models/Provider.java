@@ -53,6 +53,10 @@ public class Provider {
 	@Column(unique = true)
 	private String phone;
 	
+	@Size(min = 3, message = "[website] longitud fuera de rango 3-inf.")
+	@Column(unique = true, columnDefinition = "text")
+	private String logo;
+	
 	@JsonInclude(JsonInclude.Include.NON_NULL)
 	@Column(name="created_at")
 	private LocalDateTime createdAt;
@@ -201,6 +205,14 @@ public class Provider {
 
 	public void setArticles(List<Article> articles) {
 		this.articles = articles;
+	}
+
+	public String getLogo() {
+		return logo;
+	}
+
+	public void setLogo(String logo) {
+		this.logo = logo;
 	}
 
 	@Override

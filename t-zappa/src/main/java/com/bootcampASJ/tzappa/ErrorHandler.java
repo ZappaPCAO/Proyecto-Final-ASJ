@@ -16,6 +16,5 @@ public class ErrorHandler {
 		});
 		
 		return errors;		
-	}
-	
+	}	
 }

@@ -73,12 +73,6 @@ public class PurchaseOrder {
 	@JoinColumn(name = "provider_id", referencedColumnName = "id", nullable = false)
 	private Provider provider;
 	
-//	// Relacion bidirecc
-//	
-//	@OneToMany
-//	@JoinColumn(name = "details", referencedColumnName = "id", nullable = false)
-//	private List<Detail> details;
-	
 	// Metodos
 
 	public PurchaseOrder() {}
@@ -176,6 +170,6 @@ public class PurchaseOrder {
 		return "PurchaseOrder [id=" + id + ", numPurchaseOrder=" + numPurchaseOrder + ", sendDate=" + sendDate
 				+ ", receiptDate=" + receiptDate + ", description=" + description + ", estado=" + estado + ", total="
 				+ total + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + ", isDeleted=" + isDeleted
-				+ ", provider=" + provider + ", details=" + details + "]";
+				+ ", provider=" + provider + "]";
 	}
 }

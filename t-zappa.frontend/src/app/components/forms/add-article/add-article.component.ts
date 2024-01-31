@@ -23,6 +23,7 @@ export class AddArticleComponent implements OnInit {
       website: '',
       email: '',
       phone: '',
+      logo: '',
       sector:{
         id: 0,
         sector: ''
