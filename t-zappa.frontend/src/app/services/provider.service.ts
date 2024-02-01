@@ -8,53 +8,36 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ProviderService {
-  // private dataProviders = providers || [];
 
-  private url = 'http://localhost:8080/proveedores';
+  private url = 'http://localhost:8080/providers';
 
   constructor(private http: HttpClient) { }
 
   get() : Observable<Provider[]>{
     return this.http.get<Provider[]>(this.url);
-    // return this.dataProviders.sort((a:Provider,b:Provider) => a.razSocial.localeCompare(b.razSocial));
   }
 
-  getById(id: number) : any {
-    // let provider!: Provider;
+  getById(id: number) : Observable<Provider> {
+    return this.http.get<Provider>(`${this.url}/${id}`);
+  }
 
-    // if(this.dataProviders.length > 0){
-    //   provider = this.dataProviders.find( provider => provider.id == id )!; 
-    // }
-
-    return null;
+  getBySector(id: number) : Observable<Provider[]> {
+    return this.http.get<Provider[]>(`${this.url}/sector/${id}`);
   }
 
   post(provider: Provider) : Observable<Provider>{
-    // provider.id = (this.dataProviders && this.dataProviders.length > 0) ? this.dataProviders[this.dataProviders.length-1].id + 1 : 1; // Controlo la id
-
-    // this.dataProviders.push(provider);
-    
-    // pisarDatosByTipo('provider', this.dataProviders);
-
     return this.http.post<Provider>(this.url, provider);
   }
 
-  put(provider: Provider){
-    let auxProvider!: Provider;
-
-    // auxProvider = this.dataProviders.find(provi => provi.id = provider.id)!;
-    
-    auxProvider = provider;
-
-    agregarObjetoSiExiste('provider', provider);
+  put(provider: Provider) : Observable<Provider>{
+    return this.http.put<Provider>(`${this.url}/${provider.id}`, provider);
   }
 
-  delete(provider: Provider){
-    let index: number;
-    // index = this.dataProviders.findIndex(provi => provi.id === provider.id);
-    
-    // this.dataProviders.splice(index, 1);
+  delete(id: number) : Observable<Provider>{
+    return this.http.delete<Provider>(`${this.url}/delete/${id}`);
+  }
 
-    // pisarDatosByTipo('provider', this.dataProviders);
+  rescue(id: number) : Observable<Provider> {
+    return this.http.delete<Provider>(`${this.url}/rescue/${id}`);
   }
 }

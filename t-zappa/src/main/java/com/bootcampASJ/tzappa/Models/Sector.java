@@ -42,7 +42,10 @@ public class Sector {
 
 	// Metodos
 	
-	public Sector() {}
+	public Sector() {
+		this.createdAt = LocalDateTime.now();
+		this.isDeleted = false;
+	}
 
 	public Integer getId() {
 		return id;

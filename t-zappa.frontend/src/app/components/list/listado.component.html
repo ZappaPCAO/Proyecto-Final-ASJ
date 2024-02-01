@@ -1,7 +1,21 @@
 <main oncontextmenu="return false;" (mouseleave)="closeContextMenu()">
   <div class="container-fluid p-0 m-0">
     <div class="row p-0 m-0">
-      <div class="col-12 p-0 m-0">
+      <div class="col-5"></div>
+      <div class="col-3">
+        <label for="">Filtar por cualquier cosa: </label>
+        <input class="form-control" type="text" name="filtro" [(ngModel)]="filter" placeholder="Buscar...">
+      </div>
+      <div class="col-4"> 
+        <span>filtrar por categoria: </span>       
+        <select [(ngModel)]="filtro" name="sector" class="form-select" (change)="updateList()">
+          <option selected value="0">Todo</option>
+          <option *ngFor="let sector of this.sectors; index as i" value="{{ sector.id }}">{{ sector.sector }}</option>
+        </select>
+      </div>
+    </div>
+    <div class="row p-0 m-0">
+      <div class="col-12 p-0 m-0">        
         <div class="table-responsive table-scroll mi-bg-black" data-mdb-perfect-scrollbar="true">
           <table class="table table-dark table-bordered table-hover p-0 m-0">
             <thead>
@@ -31,16 +45,16 @@
               </tr>
             </thead>
             <tbody>
-              <tr (mouseup)="detectRightMouseClick($event, el)" scope="row" class="text-uppercase text-center" *ngFor="let el of this.tbody; let i = index">
+              <tr (mouseup)="detectRightMouseClick($event, el)" scope="row" class="text-uppercase text-center" *ngFor="let el of this.tbody | filtro : filter">
                 <ng-container *ngFor="let key of thead">
                   <ng-container [ngSwitch]="key">
                     <ng-container *ngSwitchCase="'contactData'">
-                      <td>
+                      <td [ngClass]="{'tr-delete': (el.isDeleted)}">
                         <span class="p-0 m-0 text-center">
                           <p>{{el[key].name}}<strong> - </strong>{{el[key].lastName}}</p>
                         </span>
                       </td>
-                      <td>
+                      <td [ngClass]="{'tr-delete': (el.isDeleted)}">
                         <span class="p-0 m-0 text-start">
                           <p class="p-0 m-0"><strong>Sitio: </strong> {{el['website']}}</p>
                           <p class="p-0 m-0"><strong>Email: </strong> {{el[key].email}}</p>
@@ -49,19 +63,19 @@
                       </td>                      
                     </ng-container>
                     <ng-container *ngSwitchCase="'proveedor'">
-                      <td>{{el[key].businessName}}</td>
+                      <td [ngClass]="{'tr-delete': (el.isDeleted)}">{{el[key].businessName}}</td>
                     </ng-container>
                     <ng-container *ngSwitchCase="'detalle'">
-                      <td>{{el[key][0].proveedor.businessName}}</td>
+                      <td [ngClass]="{'tr-delete': (el.isDeleted)}">{{el[key][0].proveedor.businessName}}</td>
                     </ng-container>
                     <ng-container *ngSwitchCase="'precio'">
-                      <td>{{el[key] | currency:'USD':'symbol':'1.2-2'}}</td>
+                      <td [ngClass]="{'tr-delete': (el.isDeleted)}">{{el[key] | currency:'USD':'symbol':'1.2-2'}}</td>
                     </ng-container>
                     <ng-container *ngSwitchCase="'total'">
-                      <td>{{el[key] | currency:'USD':'symbol':'1.2-2'}}</td>
+                      <td [ngClass]="{'tr-delete': (el.isDeleted)}">{{el[key] | currency:'USD':'symbol':'1.2-2'}}</td>
                     </ng-container>
                     <ng-container *ngSwitchDefault>
-                      <td>{{el[key]}}</td>
+                      <td [ngClass]="{'tr-delete': (el.isDeleted)}">{{el[key]}}</td>
                     </ng-container>
                   </ng-container>
                 </ng-container>                
@@ -128,9 +142,15 @@
                   <svg xmlns="http://www.w3.org/2000/svg" height="16" width="6" viewBox="0 0 192 512"><path class="icono" d="M48 80a48 48 0 1 1 96 0A48 48 0 1 1 48 80zM0 224c0-17.7 14.3-32 32-32H96c17.7 0 32 14.3 32 32V448h32c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H64V256H32c-17.7 0-32-14.3-32-32z"/></svg>
                   Informacion
                 </button>
-                <button type="button" class="btn bttn text-start text-uppercase" (click)="condicion !== 'purchase-order' ? onDelete() : onCancel()">
-                  <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14" viewBox="0 0 448 512"><path class="icono" d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0H284.2c12.1 0 23.2 6.8 28.6 17.7L320 32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 96 0 81.7 0 64S14.3 32 32 32h96l7.2-14.3zM32 128H416V448c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64V128zm96 64c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16z"/></svg>
-                  Eliminar
+                <button type="button" class="btn bttn text-start text-uppercase" (click)="condicion === 'purchase-order' ? onCancel() : (this.currentRecord.isDeleted) ? onRecuperar() : onDelete()">
+                  <ng-container *ngIf="(condicion !== 'purchase-order')">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14" viewBox="0 0 448 512"><path class="icono" d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0H284.2c12.1 0 23.2 6.8 28.6 17.7L320 32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 96 0 81.7 0 64S14.3 32 32 32h96l7.2-14.3zM32 128H416V448c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64V128zm96 64c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16z"/></svg>
+                    Eliminar
+                  </ng-container>
+                  <ng-container *ngIf="(condicion === 'purchase-order')">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14" viewBox="0 0 448 512"><path class="icono" d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0H284.2c12.1 0 23.2 6.8 28.6 17.7L320 32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 96 0 81.7 0 64S14.3 32 32 32h96l7.2-14.3zM32 128H416V448c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64V128zm96 64c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16z"/></svg>
+                    Cancelar
+                  </ng-container>                  
                 </button>
               </div>
             </div>

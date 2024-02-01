@@ -35,23 +35,65 @@ export class AdministrarServicesService {
       }
       return new Observable();
     }
+    
+    getBySector(id:number, tipo: string) : Observable<Provider[] | Article[] | PurchaseOrder[]>{
 
-    delete(dato:any, tipo:string){
       switch (tipo) {        
         case 'article':
-          this.serviceArticle.delete(dato);
+          // return <Article[]>this.serviceArticle.get();
           break;
         case 'provider':
-          this.serviceProvider.delete(dato);
+          return this.serviceProvider.getBySector(id);
           break;
         case 'purchase-order':
-          this.servicePurchaseOrder.delete(dato)
+          // datos = this.servicePurchaseOrder.get();
           break;
 
         default:
           break;
       }
+      return new Observable();
     }
+
+    rescue(id:number, tipo:string) : Observable<Provider | Article | PurchaseOrder>{
+      
+
+      switch (tipo) {        
+        case 'article':
+          
+          break;
+        case 'provider':
+          return this.serviceProvider.rescue(id);
+          break;
+        case 'purchase-order':
+          
+          break;
+
+        default:
+          break;
+      }
+      return new Observable();
+    }
+
+    delete(id:number, tipo:string) : Observable<Provider | Article | PurchaseOrder>{
+
+      switch (tipo) {        
+        case 'article':
+          
+          break;
+        case 'provider':
+          return this.serviceProvider.delete(id);
+          break;
+        case 'purchase-order':
+          
+          break;
+
+        default:
+          break;
+      }
+      return new Observable();
+    }
+
     put(dato:any, tipo:string){
       console.log(JSON.stringify(dato,null,1) + 'holasdsadas' + tipo)
       switch (tipo) {        

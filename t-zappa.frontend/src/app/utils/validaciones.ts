@@ -1,7 +1,6 @@
 import { Article } from "../models/article";
 import { Provider } from "../models/provider";
 import { PurchaseOrder } from "../models/purchase-order";
-import { ProviderService } from "../services/provider.service";
 
 // Funciones auxiliares
 function verificarCaracteresEspeciales(value: string): boolean{
@@ -59,7 +58,7 @@ export function verificarLongitudes(data: any): boolean{
     for (const key in data) {
         let longitud = (''+data[key]).length;
 
-        if(band && (key !== 'id' && key !== 'descri')){ // Si es id o descri omito esta parte. Ya la descripcion no es obligatoria y el id lo manejo yo.
+        if(band && (key !== 'id' && key !== 'descri' && key !== 'articles' )){ // Si es id o descri omito esta parte. Ya la descripcion no es obligatoria y el id lo manejo yo.
             band = (longitud >= 3); // Verifico que sea al menos 3 en todos los campos.
             if(key === 'cod'){      // Lo trato distinto, necesito que sea >=4
                 band = (longitud >= 4);

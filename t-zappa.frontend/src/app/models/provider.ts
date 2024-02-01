@@ -1,4 +1,5 @@
-import { obtenerObjetoByTipo } from "../utils/localStorage";
+import { IvaCondition } from "./ivaCondition";
+import { Sector } from "./sector";
 
 export interface Provider {
   id: number;
@@ -8,6 +9,7 @@ export interface Provider {
   email: string;  
   phone: string;
   logo: string;
+  isDeleted?: boolean;
   location:{
     id: number;
     street: string;
@@ -26,17 +28,11 @@ export interface Provider {
       }
     }
   };
-  sector:{
-    id: number;
-    sector: string;
-  }
+  sector: Sector;
   taxData:{
     id: number;
     cuit: string;
-    ivaCondition: {
-      id: number;
-      condition: string;
-    }
+    ivaCondition: IvaCondition;
   };  
   contactData:{
     id: number;

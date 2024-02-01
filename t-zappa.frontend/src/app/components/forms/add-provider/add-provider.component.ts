@@ -7,8 +7,10 @@ import { NgForm } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { City, Country, State } from '../../../models/geoLocation';
 import { InicializadorService } from '../../../services/inicializador.service';
-import { state } from '@angular/animations';
 import { IvaCondition } from '../../../models/ivaCondition';
+import { Sector } from '../../../models/sector';
+import { SectorService } from '../../../services/sector.service';
+import { forkJoin, mergeMap } from 'rxjs';
 
 
 @Component({
@@ -18,7 +20,7 @@ import { IvaCondition } from '../../../models/ivaCondition';
 })
 export class AddProviderComponent implements OnInit {
   countries: Country[] = []; states: State[] = []; cities: City[] = [];
-  ivaConditions: IvaCondition[] = [];
+  ivaConditions: IvaCondition[] = []; sectors: Sector[] = [];
 
   provider: Provider = {
     id: 0,
@@ -72,7 +74,8 @@ export class AddProviderComponent implements OnInit {
 
   constructor(private router: Router, private route: ActivatedRoute,
     public providerService: ProviderService,
-    private inicializadorService: InicializadorService){}
+    private inicializadorService: InicializadorService,
+    private sectorService: SectorService){}
   
   updateStates(idCountry:number){ // para el change del pais
     this.states = this.countries.find(country => +country.id == idCountry)?.states!; 
@@ -83,10 +86,13 @@ export class AddProviderComponent implements OnInit {
 
   verificarUpdate(){
     if(this.idProvider > 0){      
-      this.provider = this.providerService.getById(this.idProvider);
-      // this.updateLocalidades();
+      this.providerService.getById(this.idProvider).subscribe( data => {
+        this.provider = data;
+         this.updateStates(this.provider.location.city.state.country.id);
+         this.updateCities(this.provider.location.city.state.id);        
+      });
     }
-    console.log(this.provider)
+    
   }
 
   agregarProvider(form: NgForm){
@@ -99,7 +105,9 @@ export class AddProviderComponent implements OnInit {
             this.provider = data;
           } );
         }else{
-          this.providerService.put(this.provider);
+          this.providerService.put(this.provider).subscribe(data => {
+            this.provider = data;
+          });
         }
         Swal.fire({
           title: "¿Desea crear otro?",          
@@ -122,16 +130,19 @@ export class AddProviderComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {   
+  ngOnInit(): void {    
     this.route.params.subscribe((params) => {
-      this.idProvider = params['id'] || 0;      
+      this.idProvider = params['id'] || 0;
       this.inicializadorService.getGeoLocations().subscribe(data => {
         this.countries = data;
-      });// GET de geoLocation  
-      this.inicializadorService.getIvaConditions().subscribe(data => {
-        this.ivaConditions = data;
-      }); // GET de IVA
-      this.verificarUpdate();
+        this.inicializadorService.getIvaConditions().subscribe(data => {
+          this.ivaConditions = data;
+          this.sectorService.getSectors().subscribe(data => {
+            this.sectors = data;
+            this.verificarUpdate();
+          }); // Get de Sectors
+        }); // GET de IVA       
+      });// GET de geoLocations        
     });  
-  };
+  }
 }

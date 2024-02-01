@@ -93,7 +93,10 @@ public class Provider {
 	
 	// Metodos
 
-	public Provider() {}
+	public Provider() {
+		this.createdAt = LocalDateTime.now();
+		this.isDeleted = false;
+	}
 
 	public Integer getId() {
 		return id;

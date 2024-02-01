@@ -56,3 +56,6 @@ thead tr th{
 .contextMenu .bttn:hover .icono{
   fill: #FFF;
 }
+table tr .tr-delete{
+  background-color: rgb(173, 173, 173) !important;
+}

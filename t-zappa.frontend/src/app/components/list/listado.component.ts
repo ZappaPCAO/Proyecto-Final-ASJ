@@ -3,8 +3,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AdministrarServicesService } from '../../services/administrar-services.service';
 import { Provider } from '../../models/provider';
 import { Article } from '../../models/article';
-import { PurchaseOrder } from '../../models/purchase-order';
+import { PurchaseOrder, purchasesOrders } from '../../models/purchase-order';
 import Swal from 'sweetalert2';
+import { SectorService } from '../../services/sector.service';
+import { Sector } from '../../models/sector';
 
 @Component({
   selector: 'listado',
@@ -16,13 +18,12 @@ export class ListadoComponent implements OnInit{
   thead: any = [];tbody: any = [];
   condicion: string = '';
   rightPanelStyle: any;
-  currentRecord!: any;
-
+  currentRecord!:  Provider | Article | PurchaseOrder | any;
+  sectors: Sector[] = [];
+  filtro: number = 0;
+  filter: string= "";
   constructor(private route: ActivatedRoute, private router: Router, 
-    private serivicioAdm: AdministrarServicesService){
-      this.route.data.subscribe(data => {
-        console.log('Estado recibido:', data);
-      });
+    private serivicioAdm: AdministrarServicesService, private sectorService: SectorService){     
   }
 
   detectRightMouseClick($event: any, el: Provider | Article | PurchaseOrder) {
@@ -54,7 +55,7 @@ export class ListadoComponent implements OnInit{
   }
 
   onCancel() {
-    this.currentRecord.estado = 'cancelada';
+    this.currentRecord.estado = 'cancelada'; // VEER creo q seria solo un caracter.
     this.serivicioAdm.put(this.currentRecord, this.condicion);
   }
 
@@ -69,7 +70,6 @@ export class ListadoComponent implements OnInit{
                      (this.condicion === 'provider') ? ['codProvider','businessName','contactData'] : 
                                                        ['nroOC','fecEmision','fecEntrega','detalle','estado', 'total'];
       }
-      console.log(JSON.stringify(this.tbody) + "<== datos q recibo del back.")
     });
   }                                                                        
   
@@ -78,21 +78,45 @@ export class ListadoComponent implements OnInit{
     this.closeContextMenu();
   }
 
+  onRecuperar(){
+    this.serivicioAdm.rescue(this.currentRecord.id, this.condicion).subscribe( (data : Provider | Article | PurchaseOrder) => {
+          
+      let index = this.tbody.findIndex((item: Provider | Article | PurchaseOrder) => item.id === this.currentRecord.id);
+
+      if (index !== -1){
+        Object.assign(this.tbody[index], data);
+        Swal.fire({
+          position: "bottom-end",
+          icon: "success",
+          title: "Recuperado correctamente!",
+          showConfirmButton: false,
+          timer: 1500
+        });
+        this.closeContextMenu();
+      }     
+    });      
+  }
+
   onDelete(){
     Swal.fire({
       title: "¿Estas seguro?",
-      text: `¡${this.currentRecord.id} sera eliminado permanentemente!`,
-      
+      text: `¡Proveedor: ${this.currentRecord.businessName}, sera eliminado!`,      
       showCancelButton: true,
       allowOutsideClick: false,
       allowEscapeKey: false,
       confirmButtonColor: "var(--color-primary)",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!"
+      confirmButtonText: "Si, eliminaló!"
     }).then((result) => {
       if (result.isConfirmed) {
-        this.serivicioAdm.delete(this.currentRecord, this.condicion); // ver de poner una promesa
-        this.closeContextMenu();
+        this.serivicioAdm.delete(this.currentRecord.id, this.condicion).subscribe( (data : Provider | Article | PurchaseOrder) => {
+          
+          let index = this.tbody.findIndex((item: Provider | Article | PurchaseOrder) => item.id === this.currentRecord.id);
+
+          if (index !== -1)
+            Object.assign(this.tbody[index], data);          
+          
+        });        
         Swal.fire({
           position: "bottom-end",
           icon: "success",
@@ -100,7 +124,14 @@ export class ListadoComponent implements OnInit{
           showConfirmButton: false,
           timer: 1500
         });
+        this.closeContextMenu();
       }
+    });
+  }
+
+  updateList(){
+    this.serivicioAdm.getBySector(this.filtro, this.condicion).subscribe( (data : Provider[] | Article[] | PurchaseOrder[]) => {
+      this.tbody = data;
     });
   }
 
@@ -112,7 +143,11 @@ export class ListadoComponent implements OnInit{
           this.generarArreglos();
       }else{
         this.router.navigate(['']); // Lo mando al home
-      }   
+      }
+
+      this.sectorService.getSectors().subscribe((data: Sector[]) => {
+        this.sectors = data;        
+      });
     });
   }
 }
