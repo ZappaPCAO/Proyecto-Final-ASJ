@@ -1,7 +1,14 @@
-<main oncontextmenu="return false;" (mouseleave)="closeContextMenu()">
+<main *ngIf="this.tbody.length > 0" oncontextmenu="return false;" (mouseleave)="closeContextMenu()">
   <div class="container-fluid p-0 m-0">
     <div class="row p-0 m-0">
-      <div class="col-5"></div>
+      <div class="col-3">
+        <div class="form-check form-switch">
+          <input class="form-check-input" [(ngModel)]="filtroBaja" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+          <label class="form-check-label" for="flexSwitchCheckDefault">Traer solo activos.</label>
+        </div> 
+        
+      </div>
+      <div class="col-2"></div>
       <div class="col-3">
         <label for="">Filtar por cualquier cosa: </label>
         <input class="form-control" type="text" name="filtro" [(ngModel)]="filter" placeholder="Buscar...">
@@ -22,16 +29,19 @@
               <tr class="text-uppercase text-center">
                 <ng-container [ngSwitch]="condicion">
                     <ng-container *ngSwitchCase="'provider'">
+                      <th>logo</th>
                       <th>cod</th>
                       <th>raz. social</th>
+                      <th>ubicación</th>
                       <th>nombre completo</th>
                       <th>contacto</th>                      
                     </ng-container>
                     <ng-container *ngSwitchCase="'article'">
-                      <th>producto</th>
+                      <th>imagen</th>
+                      <th>SKU - nombre</th>
                       <th>categoria</th>
-                      <th>proveedor</th>
-                      <th>precio</th>                      
+                      <th>precio</th>  
+                      <th>proveedor</th>                                          
                     </ng-container>
                     <ng-container *ngSwitchCase="'purchase-order'">
                       <th>n° orden</th>
@@ -45,9 +55,29 @@
               </tr>
             </thead>
             <tbody>
-              <tr (mouseup)="detectRightMouseClick($event, el)" scope="row" class="text-uppercase text-center" *ngFor="let el of this.tbody | filtro : filter">
+              <tr (mouseup)="detectRightMouseClick($event, el)" scope="row" class="text-uppercase text-center" 
+                *ngFor="let el of this.tbody | lowFilter : filtroBaja | filter : filter">
                 <ng-container *ngFor="let key of thead">
                   <ng-container [ngSwitch]="key">
+                    <ng-container *ngSwitchCase="'location'"> <!-- Empiezan los que manejo en providers -->
+                      <td [ngClass]="{'tr-delete': (el.isDeleted)}">
+                        <span class="p-0 m-0 text-center">
+                          <p>{{el[key].city.state.country.name}}<strong> - </strong>{{el[key].city.state.name}}</p>
+                        </span>
+                      </td>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'logo'">
+                      <td [ngClass]="{'tr-delete': (el.isDeleted)}">
+                        <div class="bd-placeholder-img card-img-top imgContainer">
+                          <img
+                            class="imgCard"
+                            src= "{{ el[key] }}" 
+                            alt="image"
+                            (error)="changeImage($event)"
+                          />
+                        </div>
+                      </td>
+                    </ng-container>
                     <ng-container *ngSwitchCase="'contactData'">
                       <td [ngClass]="{'tr-delete': (el.isDeleted)}">
                         <span class="p-0 m-0 text-center">
@@ -62,19 +92,36 @@
                         </span>           
                       </td>                      
                     </ng-container>
-                    <ng-container *ngSwitchCase="'proveedor'">
+
+                    <ng-container *ngSwitchCase="'provider'"> <!-- Empiezan los que manejo en articles -->
                       <td [ngClass]="{'tr-delete': (el.isDeleted)}">{{el[key].businessName}}</td>
                     </ng-container>
-                    <ng-container *ngSwitchCase="'detalle'">
-                      <td [ngClass]="{'tr-delete': (el.isDeleted)}">{{el[key][0].proveedor.businessName}}</td>
-                    </ng-container>
-                    <ng-container *ngSwitchCase="'precio'">
+                    <ng-container *ngSwitchCase="'price'">
                       <td [ngClass]="{'tr-delete': (el.isDeleted)}">{{el[key] | currency:'USD':'symbol':'1.2-2'}}</td>
                     </ng-container>
+                    <ng-container *ngSwitchCase="'category'">
+                      <td [ngClass]="{'tr-delete': (el.isDeleted)}">{{ el[key].category }}</td>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'image'">
+                      <td [ngClass]="{'tr-delete': (el.isDeleted)}">
+                        <div class="bd-placeholder-img card-img-top imgContainer">
+                          <img
+                            class="imgCard"
+                            src= "{{ el[key] }}" 
+                            alt="image"
+                            (error)="changeImage($event)"
+                          />
+                        </div>
+                      </td>
+                    </ng-container>
+
+                    <ng-container *ngSwitchCase="'detalle'"> <!-- Empiezan los que manejo en purchase orders -->
+                      <td [ngClass]="{'tr-delete': (el.isDeleted)}">{{el[key][0].proveedor.businessName}}</td>
+                    </ng-container>                    
                     <ng-container *ngSwitchCase="'total'">
                       <td [ngClass]="{'tr-delete': (el.isDeleted)}">{{el[key] | currency:'USD':'symbol':'1.2-2'}}</td>
                     </ng-container>
-                    <ng-container *ngSwitchDefault>
+                    <ng-container *ngSwitchDefault> <!-- Estos los muestro como vienen -->
                       <td [ngClass]="{'tr-delete': (el.isDeleted)}">{{el[key]}}</td>
                     </ng-container>
                   </ng-container>

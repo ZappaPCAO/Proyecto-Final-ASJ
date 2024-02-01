@@ -19,7 +19,8 @@ import { ArticleService } from './services/article.service';
 import { ProviderService } from './services/provider.service';
 import { PurchaseOrderService } from './services/purchase-order.service';
 import { HomeComponent } from './components/home/home.component';
-import { FiltroPipe } from './pipes/filtro.pipe';
+import { FilterPipe } from './pipes/filter.pipe';
+import { LowFilterPipe } from './pipes/lowFilter.pipe';
 
 
 
@@ -34,7 +35,8 @@ import { FiltroPipe } from './pipes/filtro.pipe';
     AddPurchaseOrderComponent,
     ListadoComponent,
     HomeComponent,
-    FiltroPipe
+    FilterPipe,
+    LowFilterPipe
   ],
   imports: [
     BrowserModule,

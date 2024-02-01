@@ -2,7 +2,9 @@ package com.bootcampASJ.tzappa.Models;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -71,7 +73,10 @@ public class Article {
 	
 	// Metodos
 
-	public Article() {}
+	public Article() {
+		this.createdAt = LocalDateTime.now();
+		this.isDeleted = false;
+	}
 
 	public Integer getId() {
 		return id;

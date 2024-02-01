@@ -41,14 +41,14 @@ export class AddPurchaseOrderComponent implements OnInit {
 
     if(detalle && articulo){
       detalle.cantidad += this.cantidad;
-      this.purchaseOrder.total += (this.cantidad * articulo.precio);
-      detalle.subtotal = detalle.cantidad * articulo.precio;
+      this.purchaseOrder.total += (this.cantidad * articulo.price);
+      detalle.subtotal = detalle.cantidad * articulo.price;
     }else{
       const newDetalle: Detalle = {
         proveedor: proveedor,
         articulo: articulo,
         cantidad: this.cantidad,
-        subtotal: this.cantidad * articulo.precio,
+        subtotal: this.cantidad * articulo.price,
       }
       if(newDetalle){
         this.purchaseOrder.detalle.push(newDetalle);
@@ -113,14 +113,14 @@ export class AddPurchaseOrderComponent implements OnInit {
   }
 
   updateArticles() {
-    this.arrArticles = this.articleService.get().filter(article => article.proveedor.id == this.idProveedor); 
+    //this.arrArticles = this.articleService.get().filter(article => article.proveedor.id == this.idProveedor); 
   }
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
       this.idPurchaseOrder = params['id'] || 0;      
-      // this.arrProviders = this.providerService.get(); //get
-      this.arrArticles = this.articleService.get(); //get
+      // this.arrProviders = this.providerService.get(); //get ACA VER XQ CAMBIE EL SERVICIO
+      //this.arrArticles = this.articleService.get(); //get ACA VER PQ CAMBIE EL SERVICIO
       this.purchaseOrder.fecEmision = formatDate(new Date());
 
       this.verificarUpdate();     

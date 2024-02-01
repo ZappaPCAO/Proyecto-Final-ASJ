@@ -67,6 +67,7 @@ public class ProviderController {
 	        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
 	    }
 	}
+	
 	@PutMapping("/{id}")
 	public ResponseEntity<Object> updateProvider(@PathVariable Integer id, @Valid @RequestBody Provider provider,
 													BindingResult bindingResult){
@@ -87,7 +88,7 @@ public class ProviderController {
 	}
 	
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<Object> deleteSector(@PathVariable Integer id){
+	public ResponseEntity<Object> deleteProvider(@PathVariable Integer id){
 		Optional<Provider> result = this.providerService.deleteProvider(id);
 		
 		if (result.isPresent()){
@@ -99,7 +100,7 @@ public class ProviderController {
 	}
 	
 	@DeleteMapping("/rescue/{id}")
-	public ResponseEntity<Object> rescueSector(@PathVariable Integer id){
+	public ResponseEntity<Object> rescueProvider(@PathVariable Integer id){
 		Optional<Provider> result = this.providerService.rescueProvider(id);
 		
 		if (result.isPresent()){

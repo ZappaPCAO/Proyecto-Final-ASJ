@@ -10,8 +10,6 @@ import { InicializadorService } from '../../../services/inicializador.service';
 import { IvaCondition } from '../../../models/ivaCondition';
 import { Sector } from '../../../models/sector';
 import { SectorService } from '../../../services/sector.service';
-import { forkJoin, mergeMap } from 'rxjs';
-
 
 @Component({
   selector: 'add-provider',

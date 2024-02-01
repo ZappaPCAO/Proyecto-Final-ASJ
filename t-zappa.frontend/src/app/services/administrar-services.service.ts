@@ -5,7 +5,7 @@ import { PurchaseOrderService } from './purchase-order.service';
 import { Provider } from '../models/provider';
 import { Article } from '../models/article';
 import { PurchaseOrder } from '../models/purchase-order';
-import { Observable, map } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +21,7 @@ export class AdministrarServicesService {
 
       switch (tipo) {        
         case 'article':
-          // return <Article[]>this.serviceArticle.get();
+          return this.serviceArticle.get();
           break;
         case 'provider':
           return this.serviceProvider.get();
@@ -60,7 +60,7 @@ export class AdministrarServicesService {
 
       switch (tipo) {        
         case 'article':
-          
+          return this.serviceArticle.rescue(id);
           break;
         case 'provider':
           return this.serviceProvider.rescue(id);
@@ -79,7 +79,7 @@ export class AdministrarServicesService {
 
       switch (tipo) {        
         case 'article':
-          
+          return this.serviceArticle.delete(id);
           break;
         case 'provider':
           return this.serviceProvider.delete(id);

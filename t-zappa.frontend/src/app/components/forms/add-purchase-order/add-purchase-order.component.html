@@ -67,7 +67,7 @@
                                     <div class="form-floating">                                                 
                                         <select required class="form-control" name="articulo" [(ngModel)]="idArticulo" #articulo="ngModel">
                                             <option *ngFor="let article of arrArticles" value="{{article.id}}">
-                                                {{article.producto| uppercase	}}
+                                                {{article.name| uppercase	}}
                                             </option>                                                           
                                         </select>
                                         <label for="SelProductos">Articulo:</label>                                        
@@ -103,7 +103,7 @@
                                         <tbody>
                                           <tr *ngFor="let detalle of purchaseOrder.detalle">
                                             <td>{{ detalle.proveedor.businessName }}</td>
-                                            <td>{{ detalle.articulo.producto }}</td>
+                                            <td>{{ detalle.articulo.name }}</td>
                                             <td>{{ detalle.cantidad }}</td>
                                             <td>{{ detalle.subtotal | currency:'USD':'symbol':'1.2-2' }}</td>
                                             <td>

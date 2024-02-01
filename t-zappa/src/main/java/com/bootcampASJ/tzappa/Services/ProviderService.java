@@ -55,6 +55,13 @@ public class ProviderService {
 	public Optional<Provider> getProviderById(Integer id) {
 		return this.providerRepository.findById(id);
 	}
+	
+	public Optional<List<Provider>> getProviderBySector(Integer id) {
+		
+		Sector sector = this.sectorRepository.findById(id).get();
+		
+		return Optional.ofNullable(this.providerRepository.findBySector(sector));
+	}
 
 	@Transactional
 	public Optional<Provider> newProvider(Provider provider) {
@@ -131,6 +138,7 @@ public class ProviderService {
 			
 			if(provider != null) {
 				provider.setIsDeleted(true);
+				provider.setUpdatedAt(LocalDateTime.now());
 				
 				return Optional.ofNullable(this.providerRepository.save(provider));
 			}
@@ -152,6 +160,7 @@ public class ProviderService {
 			
 			if(provider != null) {
 				provider.setIsDeleted(false);
+				provider.setUpdatedAt(LocalDateTime.now());
 				
 				return Optional.ofNullable(this.providerRepository.save(provider));
 			}
@@ -165,12 +174,4 @@ public class ProviderService {
 		    return Optional.empty();
 		}
 	}
-	
-	public Optional<List<Provider>> getProviderBySector(Integer id) {
-		
-		Sector sector = this.sectorRepository.findById(id).get();
-		
-		return Optional.ofNullable(this.providerRepository.findBySector(sector));
-	}
-	
 }

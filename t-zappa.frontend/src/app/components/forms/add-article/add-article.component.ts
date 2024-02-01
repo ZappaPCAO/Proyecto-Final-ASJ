@@ -7,6 +7,8 @@ import { verificarCamposEspeciales, verificarDatos, verificarLongitudes } from '
 import { NgForm } from '@angular/forms';
 import { Provider } from '../../../models/provider';
 import Swal from 'sweetalert2';
+import { Category } from '../../../models/category';
+import { CategoryService } from '../../../services/category.service';
 
 @Component({
   selector: 'add-article',
@@ -16,7 +18,12 @@ import Swal from 'sweetalert2';
 export class AddArticleComponent implements OnInit {
   article: Article = {
     id: 0,
-    proveedor: {
+    codArticle: '',
+    name: '',
+    description: '',
+    price: 0,
+    image: '',
+    provider: {
       id: 0,
       codProvider: '',
       businessName: '',
@@ -62,36 +69,43 @@ export class AddArticleComponent implements OnInit {
         email: '',
         role: '',
       }
+    },    
+    category: {
+      id: 0,
+      category: ''
     },
-    codArt: '',
-    categoria: '',
-    producto: '',
-    descri: '',
-    precio: 0,
   };
-  arrProviders!: Provider[];
-  idArticle: number = 0;idProveedor: number = 0;
+  providers: Provider[] = []; categories: Category[] = [];
+  idArticle: number = 0;
 
   constructor(private router: Router, private route: ActivatedRoute,
-    private providerService: ProviderService, private articleService: ArticleService){}
+    private providerService: ProviderService, private articleService: ArticleService,
+    private categoryService: CategoryService){}
   
   verificarUpdate(){
     if(this.idArticle > 0){      
-      this.article = this.articleService.getById(this.idArticle);
-      this.idProveedor = this.article.proveedor.id;      
+      this.articleService.getById(this.idArticle).subscribe( (data : Article) => {
+        this.article = data;
+      });       
     }
-    console.log(this.article);
   }
 
-  agregarArticle(form: NgForm){ 
-    this.article.proveedor = this.arrProviders.find(provi => provi.id == this.idProveedor)!;
-
+  agregarArticle(form: NgForm){
+    console.log(JSON.stringify(this.article))
+    
     if( form.valid && 
       ( verificarDatos(this.article) && // que no hay ningun caracter raro
         verificarLongitudes(this.article) && // que los largos sean los que quiero
         verificarCamposEspeciales(this.article) ) ){ // controlo campos especificos
-          
-      if(this.idArticle === 0){ // 0 => Nuevo ; >0 => Edito
+        if(this.idArticle === 0){ // 0 => Nuevo ; >0 => Edito
+          this.articleService.post(this.article).subscribe((data : Article) =>{
+            this.article = data;
+          } );
+        }else{
+          this.articleService.put(this.article).subscribe(data => {
+            this.article = data;
+          });
+        }
         Swal.fire({
           title: "¿Desea crear otro?",          
           icon: 'success',
@@ -102,25 +116,12 @@ export class AddArticleComponent implements OnInit {
           confirmButtonText: "Si",
           cancelButtonText: "No"
         }).then((result) => {
-          this.articleService.post(this.article);
           if (result.isConfirmed) {
             form.reset();
-          }else{          
+          }else{
             this.router.navigate(['article', 'list']);
           }
-        });        
-      }else{
-        Swal.fire({
-          position: "bottom-end",
-          icon: "success",
-          title: "Editado correctamente!!",
-          showConfirmButton: false,
-          timer: 1500
-        }).then(() => {
-          this.articleService.put(this.article);
-          this.router.navigate(['article', 'list']);          
         });
-      }
     }else{
       // Hago lo que hizo el profe con los cartelitos.
     }
@@ -128,10 +129,14 @@ export class AddArticleComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
-      this.idArticle = params['id'] || 0;      
-      // this.arrProviders = this.providerService.get(); //get
-
-      this.verificarUpdate();
+      this.idArticle = params['id'] || 0;
+      this.providerService.get().subscribe( (data: Provider[]) => {
+        this.providers = data;
+        this.categoryService.get().subscribe( (data : Category[]) => {
+          this.categories = data;
+          this.verificarUpdate();
+        }); // GET de categories        
+      }); // GET de providers
     });
   }
 }

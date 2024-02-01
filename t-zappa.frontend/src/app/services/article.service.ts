@@ -1,50 +1,46 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Article, articles } from '../models/article';
-import { agregarObjetoSiExiste, pisarDatosByTipo } from '../utils/localStorage';
+import { Article } from '../models/article';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ArticleService {
-  dataArticles: Article[] = articles;
 
-  constructor(private http: HttpClient) {
-    console.log(`Servicio funcionando correctamente!`);
+  private url = 'http://localhost:8080/articles';
+
+  constructor(private http: HttpClient) {}
+
+  get () : Observable<Article[]>{
+    return this.http.get<Article[]>(this.url);
   }
 
-  get (){
-    return this.dataArticles.sort((a:Article,b:Article) => a.producto.localeCompare(b.producto));
+  getById(id: number) : Observable<Article> {
+    return this.http.get<Article>(`${this.url}/${id}`);
   }
 
-  getById(id: number): Article {
-    let article!: any;
-
-    if(this.dataArticles.length > 0){
-      article = this.dataArticles.find( article => article.id == id ); 
-    }
-
-    return article;
-  }
-  
-  post(article: Article){
-    article.id = (this.dataArticles && this.dataArticles.length > 0) ? this.dataArticles[this.dataArticles.length-1].id + 1 : 1; // Controlo la id
-    this.dataArticles.push(article);
-    pisarDatosByTipo('article', this.dataArticles);
+  getByCategory(id: number) : Observable<Article[]> {
+    return this.http.get<Article[]>(`${this.url}/category/${id}`);
   }
 
-  put(article: Article) {
-    let auxArticle: Article = this.dataArticles.find(arti => arti.id = article.id)!;
-
-    auxArticle = article;
-
-    agregarObjetoSiExiste('article', article);
+  getByProvider(id: number) : Observable<Article[]> {
+    return this.http.get<Article[]>(`${this.url}/provider/${id}`);
   }
 
-  delete(article: Article) {
-    let index: number = this.dataArticles.findIndex(arti => arti.id === article.id);
-    
-    this.dataArticles.splice(index, 1);
-    pisarDatosByTipo('article', this.dataArticles);
+  post(article: Article) : Observable<Article>{
+    return this.http.post<Article>(this.url, article);
+  }
+
+  put(article: Article) : Observable<Article>{
+    return this.http.put<Article>(`${this.url}/${article.id}`, article);
+  }
+
+  delete(id: number) : Observable<Article>{
+    return this.http.delete<Article>(`${this.url}/delete/${id}`);
+  }
+
+  rescue(id: number) : Observable<Article> {
+    return this.http.delete<Article>(`${this.url}/rescue/${id}`);
   }
 }

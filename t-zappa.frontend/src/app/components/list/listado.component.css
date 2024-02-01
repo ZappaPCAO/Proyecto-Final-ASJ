@@ -59,3 +59,15 @@ thead tr th{
 table tr .tr-delete{
   background-color: rgb(173, 173, 173) !important;
 }
+.imgContainer{
+  width: 100%;
+  height: 4.375rem;
+  overflow: hidden;
+  border-radius: 5px;
+}
+
+.imgCard{
+  width: 100%;
+  height: 4.375rem;
+  object-fit:cover
+}

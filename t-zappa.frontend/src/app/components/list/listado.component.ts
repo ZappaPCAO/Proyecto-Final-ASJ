@@ -3,8 +3,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AdministrarServicesService } from '../../services/administrar-services.service';
 import { Provider } from '../../models/provider';
 import { Article } from '../../models/article';
-import { PurchaseOrder, purchasesOrders } from '../../models/purchase-order';
+import { PurchaseOrder } from '../../models/purchase-order';
 import Swal from 'sweetalert2';
+
 import { SectorService } from '../../services/sector.service';
 import { Sector } from '../../models/sector';
 
@@ -22,6 +23,8 @@ export class ListadoComponent implements OnInit{
   sectors: Sector[] = [];
   filtro: number = 0;
   filter: string= "";
+  filtroBaja: boolean = false;
+
   constructor(private route: ActivatedRoute, private router: Router, 
     private serivicioAdm: AdministrarServicesService, private sectorService: SectorService){     
   }
@@ -51,7 +54,7 @@ export class ListadoComponent implements OnInit{
   }
 
   onAdd() {
-  
+    this.sinInfo();
   }
 
   onCancel() {
@@ -59,6 +62,10 @@ export class ListadoComponent implements OnInit{
     this.serivicioAdm.put(this.currentRecord, this.condicion);
   }
 
+  changeImage(event: Event): void {
+    const imagen = event.target as HTMLImageElement;
+    imagen.src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/832px-No-Image-Placeholder.svg.png';
+  }
 
   generarArreglos(){
     this.serivicioAdm.get(this.condicion).subscribe( (data: Provider[] | Article[] | PurchaseOrder[]) => {
@@ -66,8 +73,8 @@ export class ListadoComponent implements OnInit{
       
       if(this.tbody && this.tbody.length > 0){
       
-        this.thead = (this.condicion === 'article')  ? ['producto','categoria','proveedor', 'precio'] :
-                     (this.condicion === 'provider') ? ['codProvider','businessName','contactData'] : 
+        this.thead = (this.condicion === 'article')  ? ['image','name','category','price','provider'] :
+                     (this.condicion === 'provider') ? ['logo','codProvider','businessName', 'location', 'contactData'] : 
                                                        ['nroOC','fecEmision','fecEntrega','detalle','estado', 'total'];
       }
     });
@@ -132,6 +139,22 @@ export class ListadoComponent implements OnInit{
   updateList(){
     this.serivicioAdm.getBySector(this.filtro, this.condicion).subscribe( (data : Provider[] | Article[] | PurchaseOrder[]) => {
       this.tbody = data;
+    });
+  }
+
+  sinInfo(){
+    Swal.fire({
+      title: "¡No hay nada para mostrar!",
+      html: "Sera redirigido",
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: () => {
+        Swal.showLoading();        
+      }
+    }).then((result) => {      
+      if (result.dismiss === Swal.DismissReason.timer) {
+        this.router.navigate([this.condicion]);
+      }
     });
   }
 

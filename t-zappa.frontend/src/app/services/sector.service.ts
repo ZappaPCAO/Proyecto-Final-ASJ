@@ -14,4 +14,21 @@ export class SectorService {
   getSectors() : Observable<Sector[]>{
     return this.http.get<Sector[]>(this.url);
   }
+
+  // post(article: Article) : Observable<Article>{
+  //   return this.http.post<Article>(this.url, article);
+  // }
+
+  // put(article: Article) : Observable<Article>{
+  //   return this.http.put<Article>(`${this.url}/${article.id}`, article);
+  // }
+
+  // delete(id: number) : Observable<Article>{
+  //   return this.http.delete<Article>(`${this.url}/delete/${id}`);
+  // }
+
+  // rescue(id: number) : Observable<Article> {
+  //   return this.http.delete<Article>(`${this.url}/rescue/${id}`);
+  // }
+
 }

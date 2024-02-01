@@ -3,7 +3,9 @@ package com.bootcampASJ.tzappa.Models;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -86,10 +88,11 @@ public class Provider {
 	@JoinColumn(name = "tax_data_id", referencedColumnName = "id", nullable = false)
 	private TaxData taxData;
 	
-	// Relacion bidirecc
-	
-	@OneToMany(mappedBy = "provider", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private List<Article> articles;
+//	// Relacion bidirecc
+//	
+//	@OneToMany(mappedBy = "provider", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//	@JsonBackReference
+//	private List<Article> articles;
 	
 	// Metodos
 
@@ -202,13 +205,13 @@ public class Provider {
 		this.taxData = taxData;
 	}
 
-	public List<Article> getArticles() {
-		return articles;
-	}
-
-	public void setArticles(List<Article> articles) {
-		this.articles = articles;
-	}
+//	public List<Article> getArticles() {
+//		return articles;
+//	}
+//
+//	public void setArticles(List<Article> articles) {
+//		this.articles = articles;
+//	}
 
 	public String getLogo() {
 		return logo;
@@ -223,6 +226,6 @@ public class Provider {
 		return "Provider [id=" + id + ", codProvider=" + codProvider + ", businessName=" + businessName + ", website="
 				+ website + ", email=" + email + ", phone=" + phone + ", createdAt=" + createdAt + ", updatedAt="
 				+ updatedAt + ", isDeleted=" + isDeleted + ", sector=" + sector + ", contactData=" + contactData
-				+ ", location=" + location + ", taxData=" + taxData + ", articles=" + articles + "]";
+				+ ", location=" + location + ", taxData=" + taxData + "]";
 	}
 }

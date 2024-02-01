@@ -3,9 +3,9 @@ import { Provider } from '../models/provider';
 
 
 @Pipe({
-  name: 'filtro'
+  name: 'filter'
 })
-export class FiltroPipe implements PipeTransform {
+export class FilterPipe implements PipeTransform {
 
   transform(value: any[], args?: any): any {
     if (args === '' || args === undefined) {

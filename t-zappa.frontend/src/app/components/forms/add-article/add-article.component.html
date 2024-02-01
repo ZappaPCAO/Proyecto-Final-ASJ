@@ -7,12 +7,36 @@
                     <div class="card-body">
                         <form #miForm="ngForm" (ngSubmit)="agregarArticle(miForm)">
                             <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <div class="form-floating mb-3 mb-md-0">
+                                        <input required minlength="3" maxlength="25" class="form-control" name="codArticle" [(ngModel)]="this.article.codArticle" type="text" placeholder="" 
+                                        #codArticle="ngModel" [ngClass]="!codArticle.value ? 'mi-requerido': codArticle.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'"
+                                        />
+                                        <label id="labelCode" for="inputCode">SKU: </label>
+                                        <ng-container *ngIf="codArticle.value">
+                                            <span *ngIf="codArticle.errors?.['minlength']" class="mi-invalid-feedback">
+                                                Longitud minima 3
+                                            </span>
+                                            <span *ngIf="codArticle.errors?.['maxlength']" class="mi-invalid-feedback">
+                                                Longitud maxima 25
+                                            </span>                                             
+                                        </ng-container>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating mb-3 mb-md-0">
+                                        <input required minlength="3" class="form-control" [(ngModel)]="this.article.name" name="name" type="text" placeholder="" />
+                                        <label id="labelCode" for="inputProducto">Nombre: </label>
+                                    </div>
+                                </div>                                                                                             
+                            </div>               
+                            <div class="row mb-3">                                
                                 <div class="col-md-6">  
                                     <div class="form-floating">                                                 
-                                        <select required class="form-control" name="proveedor" [(ngModel)]="idProveedor" 
+                                        <select required class="form-control" name="proveedor" [(ngModel)]="this.article.provider.id" 
                                         #provedor="ngModel" [ngClass]="!provedor.value ? 'mi-requerido': provedor.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'"
                                         >
-                                            <option *ngFor="let provider of this.arrProviders" value="{{provider.id}}">
+                                            <option *ngFor="let provider of this.providers" value="{{provider.id}}">
                                                 {{provider.businessName| uppercase}}
                                             </option>
                                         </select>
@@ -24,85 +48,72 @@
                                         </ng-container> 
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-floating mb-3 mb-md-0">
-                                        <input required minlength="3" maxlength="25" class="form-control" name="cod" [(ngModel)]="this.article.codArt" type="text" placeholder="" 
-                                        #cod="ngModel" [ngClass]="!cod.value ? 'mi-requerido': cod.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'"
-                                        />
-                                        <label id="labelCode" for="inputCode">Codigo</label>
-                                        <ng-container *ngIf="cod.value">
-                                            <span *ngIf="cod.errors?.['minlength']" class="mi-invalid-feedback">
-                                                Longitud minima 3
-                                            </span>
-                                            <span *ngIf="cod.errors?.['maxlength']" class="mi-invalid-feedback">
-                                                Longitud maxima 25
-                                            </span>                                             
-                                        </ng-container>
-                                    </div>
-                                </div>                                                                                          
-                            </div>               
-                            <div class="row mb-3">
                                 <div class="col-md-6">  
                                     <div class="form-floating">                                                 
-                                        <select required class="form-control" name="categoria" [(ngModel)]="this.article.categoria"
-                                        #categoria="ngModel" [ngClass]="!categoria.value ? 'mi-requerido': categoria.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'"
+                                        <select required class="form-control" name="category" [(ngModel)]="this.article.category.id"
+                                        #category="ngModel" [ngClass]="!category.value ? 'mi-requerido': category.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'"
                                         >
-                                            <option value="deportes">deportes</option>
-                                            <option value="electronica">electronica</option>
-                                            <option value="moda">moda</option>
-                                            <option value="hogar">hogar</option>                                            
-                                            <option value="entretenimiento">entretenimiento</option>
-                                            <option value="electrodomesticos">electrodomesticos</option>
-                                            <option value="alimentos">alimentos</option>
+                                            <option *ngFor="let category of this.categories" value="{{category.id}}">
+                                                {{category.category| uppercase}}
+                                            </option>
                                             <!-- Mas opc -->
                                         </select>
                                         <label for="SelCategoria">Categoria:</label>
-                                        <ng-container *ngIf="categoria.value">
-                                            <span *ngIf="categoria.errors?.['required']" class="mi-invalid-feedback">
+                                        <ng-container *ngIf="category.value">
+                                            <span *ngIf="category.errors?.['required']" class="mi-invalid-feedback">
                                                 Longitud minima 3                                            
                                             </span>                                             
                                         </ng-container>
                                     </div>
+                                </div>                                                                                
+                            </div>
+                            <div class="row mb-3">                                
+                                <div class="col-md-6">                                    
+                                    <div class=" form-floating mb-3 mb-md-0">
+                                        <input #image="ngModel" [ngClass]="!image.value ? 'mi-requerido': image.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'" minlength="3" maxlength="255" required class="form-control form-control-sm"
+                                        name="image" [(ngModel)]="article.image" type="url" placeholder="" />
+                                        <label id="labelCode" for="inputCode">Imagen:</label>
+                                        <ng-container *ngIf="image.value">
+                                            <span *ngIf="image.errors?.['minlength']" class="mi-invalid-feedback">
+                                                Longitud minima 3
+                                            </span>
+                                            <span *ngIf="image.errors?.['maxlength']" class="mi-invalid-feedback">
+                                                Longitud maxima 25
+                                            </span>                                             
+                                        </ng-container>
+                                    </div>                                    
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating mb-3 mb-md-0">
-                                        <input required minlength="3" class="form-control" [(ngModel)]="this.article.producto" name="producto" type="text" placeholder="" />
-                                        <label id="labelCode" for="inputProducto">Producto: </label>
+                                        <input class="form-control" name="price" [(ngModel)]="this.article.price" min="1" required type="number" placeholder="" 
+                                        #price="ngModel" [ngClass]="!price.value ? 'mi-requerido': price.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'"
+                                        />
+                                        <label id="labelRubro" for="inputPrecio">Precio: </label>
+                                        <ng-container *ngIf="price.value">
+                                            <span *ngIf="price.errors?.['min']" class="mi-invalid-feedback">
+                                                valor positivo
+                                            </span>                                             
+                                        </ng-container>
                                     </div>
-                                </div>                                                
+                                </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="col-md-12">
                                     <div class="form-floating mb-3">
-                                        <textarea maxlength="512" minlength="3" class="form-control" name="descri" [(ngModel)]="this.article.descri" type="text" placeholder=""
-                                        #descri="ngModel" [ngClass]="!descri.value ? 'mi-requerido': descri.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'"
+                                        <textarea maxlength="512" minlength="3" class="form-control" name="description" [(ngModel)]="this.article.description" type="text" placeholder=""
+                                        #description="ngModel" [ngClass]="!description.value ? 'mi-requerido': description.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'"
                                         ></textarea>
                                         <label for="inputDescri">Descripcion: </label>
-                                        <ng-container *ngIf="descri.value">
-                                            <span *ngIf="descri.errors?.['minlength']" class="mi-invalid-feedback">
+                                        <ng-container *ngIf="description.value">
+                                            <span *ngIf="description.errors?.['minlength']" class="mi-invalid-feedback">
                                                 Longitud minima 3
                                             </span>
-                                            <span *ngIf="descri.errors?.['maxlength']" class="mi-invalid-feedback">
+                                            <span *ngIf="description.errors?.['maxlength']" class="mi-invalid-feedback">
                                                 Longitud maxima 512
                                             </span>                                             
                                         </ng-container>
                                     </div>
                                 </div>                                
-                            </div>                            
-                            <div class="row mb-3">
-                                <div class="col-md-12">
-                                    <div class="form-floating mb-3 mb-md-0">
-                                        <input class="form-control" name="precio" [(ngModel)]="this.article.precio" min="1" required type="number" placeholder="" 
-                                        #precio="ngModel" [ngClass]="!precio.value ? 'mi-requerido': precio.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'"
-                                        />
-                                        <label id="labelRubro" for="inputPrecio">Precio: </label>
-                                        <ng-container *ngIf="precio.value">
-                                            <span *ngIf="precio.errors?.['min']" class="mi-invalid-feedback">
-                                                valor positivo
-                                            </span>                                             
-                                        </ng-container>
-                                    </div>
-                                </div>                                                
                             </div>                                                                                                                          
                             <div class="mt-4 mb-0">
                                 <div class="d-grid">
