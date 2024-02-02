@@ -11,8 +11,12 @@ export class CategoryService {
 
   constructor(private http: HttpClient) {}
 
-  get () : Observable<Category[]>{
+  get() : Observable<Category[]>{
     return this.http.get<Category[]>(this.url);
+  }
+
+  getById(id: number) : Observable<Category>{
+    return this.http.get<Category>(`${this.url}/${id}`);
   }
 
   post(category: Category) : Observable<Category>{

@@ -1,4 +1,5 @@
 import { Article } from "../models/article";
+import { Category } from "../models/category";
 import { Provider } from "../models/provider";
 import { PurchaseOrder } from "../models/purchase-order";
 
@@ -35,7 +36,7 @@ function esWeb(web: string): boolean {
 }
 //--------------------------------------------------------------------------//
 
-export function verificarDatos(data: Provider | Article | PurchaseOrder): boolean{  
+export function verificarDatos(data: Provider | Article | PurchaseOrder | Category): boolean{  
     const values = Object.values(data);
     let bands: boolean[] = [];
 

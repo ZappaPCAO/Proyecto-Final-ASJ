@@ -5,6 +5,7 @@ import { AddArticleComponent } from './components/forms/add-article/add-article.
 import { AddPurchaseOrderComponent } from './components/forms/add-purchase-order/add-purchase-order.component';
 import { ListadoComponent } from './components/list/listado.component';
 import { HomeComponent } from './components/home/home.component';
+import { AddCategoryComponent } from './components/forms/add-category/add-category.component';
 
 const routes: Routes = [
   {path:``, component: HomeComponent},
@@ -20,7 +21,7 @@ const routes: Routes = [
     children:[
       {path: ``, component: AddProviderComponent},       
       {path: `list`, component: ListadoComponent, data: { tipo: 'provider' }},
-      {path: ':id', component:AddProviderComponent}, 
+      {path: ':id', component: AddProviderComponent}, 
       {path: `**`, redirectTo: '' },
     ]
   },
@@ -28,7 +29,15 @@ const routes: Routes = [
     children:[
       {path: ``, component: AddPurchaseOrderComponent},  
       {path: `list`, component: ListadoComponent, data: { tipo: 'purchase-order' }},     
-      {path: `:id`, component:AddPurchaseOrderComponent},          
+      {path: `:id`, component: AddPurchaseOrderComponent},          
+      {path: `**`, redirectTo: ''},
+    ]
+  },
+  {path: `category`,
+    children:[
+      {path: ``, component: AddCategoryComponent},  
+      {path: `list`, component: ListadoComponent, data: { tipo: 'category' }},     
+      {path: `:id`, component: AddCategoryComponent},          
       {path: `**`, redirectTo: ''},
     ]
   },
