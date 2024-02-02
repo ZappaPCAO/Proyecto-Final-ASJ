@@ -72,7 +72,7 @@ export class AddArticleComponent implements OnInit {
     },    
     category: {
       id: 0,
-      category: ''
+      name: ''
     },
   };
   providers: Provider[] = []; categories: Category[] = [];

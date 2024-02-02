@@ -6,6 +6,8 @@ import { Provider } from '../models/provider';
 import { Article } from '../models/article';
 import { PurchaseOrder } from '../models/purchase-order';
 import { Observable } from 'rxjs';
+import { CategoryService } from './category.service';
+import { Category } from '../models/category';
 
 @Injectable({
   providedIn: 'root'
@@ -14,10 +16,11 @@ export class AdministrarServicesService {
 
   constructor(private serviceProvider: ProviderService,
     private serviceArticle: ArticleService,
-    private servicePurchaseOrder: PurchaseOrderService) { }
+    private servicePurchaseOrder: PurchaseOrderService,
+    private serviceCategory: CategoryService) { }
 
     // Administro los get por medio de parametros.
-    get(tipo: string) : Observable<Provider[] | Article[] | PurchaseOrder[]>{
+    get(tipo: string) : Observable<Provider[] | Article[] | PurchaseOrder[] | Category[]>{
 
       switch (tipo) {        
         case 'article':
@@ -29,7 +32,9 @@ export class AdministrarServicesService {
         case 'purchase-order':
           // datos = this.servicePurchaseOrder.get();
           break;
-
+        case 'category':
+          return this.serviceCategory.get();
+          break;
         default:
           break;
       }
@@ -55,7 +60,7 @@ export class AdministrarServicesService {
       return new Observable();
     }
 
-    rescue(id:number, tipo:string) : Observable<Provider | Article | PurchaseOrder>{
+    rescue(id:number, tipo:string) : Observable<Provider | Article | PurchaseOrder | Category>{
       
 
       switch (tipo) {        
@@ -68,6 +73,9 @@ export class AdministrarServicesService {
         case 'purchase-order':
           
           break;
+        case 'category':
+          return this.serviceCategory.rescue(id);
+          break;
 
         default:
           break;
@@ -75,7 +83,7 @@ export class AdministrarServicesService {
       return new Observable();
     }
 
-    delete(id:number, tipo:string) : Observable<Provider | Article | PurchaseOrder>{
+    delete(id:number, tipo:string) : Observable<Provider | Article | PurchaseOrder | Category>{
 
       switch (tipo) {        
         case 'article':
@@ -86,6 +94,9 @@ export class AdministrarServicesService {
           break;
         case 'purchase-order':
           
+          break;
+        case 'category':
+          return this.serviceCategory.delete(id);
           break;
 
         default:

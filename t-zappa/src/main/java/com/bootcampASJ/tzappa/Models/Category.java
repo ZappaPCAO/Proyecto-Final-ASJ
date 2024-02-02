@@ -23,8 +23,8 @@ public class Category {
 	
 	@NotNull(message="[category] no puede ser nula.")
 	@Size(min = 4, max = 30, message = "[category] longitud fuera de rango 4-30.")
-	@Column
-	private String category;
+	@Column(name="category")
+	private String name;
 	
 	@JsonInclude(JsonInclude.Include.NON_NULL)
 	@Column(name="created_at")
@@ -50,12 +50,12 @@ public class Category {
 		this.id = id;
 	}
 
-	public String getCategory() {
-		return category;
+	public String getName() {
+		return name;
 	}
 
-	public void setCategory(String category) {
-		this.category = category;
+	public void setName(String category) {
+		this.name = category;
 	}
 
 	public LocalDateTime getCreatedAt() {
@@ -84,7 +84,7 @@ public class Category {
 
 	@Override
 	public String toString() {
-		return "Category [id=" + id + ", category=" + category + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt
+		return "Category [id=" + id + ", category=" + name + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt
 				+ ", isDeleted=" + isDeleted + "]";
 	}
 }

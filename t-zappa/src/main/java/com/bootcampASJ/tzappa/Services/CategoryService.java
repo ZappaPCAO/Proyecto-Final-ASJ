@@ -26,6 +26,10 @@ public class CategoryService {
 		return this.categoryRepository.findAll();	
 	}
 	
+	public Category getCategoryById(Integer id) {
+		return this.categoryRepository.findById(id).get();
+	}
+	
 	@Transactional
 	public Optional<Category> newCategory(Category category) {	
 	    try {

@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 
 import { SectorService } from '../../services/sector.service';
 import { Sector } from '../../models/sector';
+import { Category } from '../../models/category';
 
 @Component({
   selector: 'listado',
@@ -68,14 +69,14 @@ export class ListadoComponent implements OnInit{
   }
 
   generarArreglos(){
-    this.serivicioAdm.get(this.condicion).subscribe( (data: Provider[] | Article[] | PurchaseOrder[]) => {
+    this.serivicioAdm.get(this.condicion).subscribe( (data: Provider[] | Article[] | PurchaseOrder[] | Category[]) => {
       this.tbody = data;
       
       if(this.tbody && this.tbody.length > 0){
       
         this.thead = (this.condicion === 'article')  ? ['image','name','category','price','provider'] :
                      (this.condicion === 'provider') ? ['logo','codProvider','businessName', 'location', 'contactData'] : 
-                                                       ['nroOC','fecEmision','fecEntrega','detalle','estado', 'total'];
+                     (this.condicion === 'purchase-order') ? ['nroOC','fecEmision','fecEntrega','detalle','estado', 'total'] : ['name'];
       }
     });
   }                                                                        
@@ -86,7 +87,7 @@ export class ListadoComponent implements OnInit{
   }
 
   onRecuperar(){
-    this.serivicioAdm.rescue(this.currentRecord.id, this.condicion).subscribe( (data : Provider | Article | PurchaseOrder) => {
+    this.serivicioAdm.rescue(this.currentRecord.id, this.condicion).subscribe( (data : Provider | Article | PurchaseOrder | Category) => {
           
       let index = this.tbody.findIndex((item: Provider | Article | PurchaseOrder) => item.id === this.currentRecord.id);
 
@@ -116,7 +117,7 @@ export class ListadoComponent implements OnInit{
       confirmButtonText: "Si, eliminaló!"
     }).then((result) => {
       if (result.isConfirmed) {
-        this.serivicioAdm.delete(this.currentRecord.id, this.condicion).subscribe( (data : Provider | Article | PurchaseOrder) => {
+        this.serivicioAdm.delete(this.currentRecord.id, this.condicion).subscribe( (data : Provider | Article | PurchaseOrder | Category) => {
           
           let index = this.tbody.findIndex((item: Provider | Article | PurchaseOrder) => item.id === this.currentRecord.id);
 

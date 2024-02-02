@@ -1,19 +1,21 @@
-<main *ngIf="this.tbody.length > 0" oncontextmenu="return false;" (mouseleave)="closeContextMenu()">
+<main class="mi-bg-black" *ngIf="this.tbody.length > 0" oncontextmenu="return false;" (mouseleave)="closeContextMenu()">
   <div class="container-fluid p-0 m-0">
-    <div class="row p-0 m-0">
-      <div class="col-3">
-        <div class="form-check form-switch">
+    <div class="row py-2 m-0 mb-1 mi-bg-black text-white">
+      <div class="col-2 pe-0">
+        <div class="form-check form-switch mt-4">
           <input class="form-check-input" [(ngModel)]="filtroBaja" type="checkbox" role="switch" id="flexSwitchCheckDefault">
           <label class="form-check-label" for="flexSwitchCheckDefault">Traer solo activos.</label>
-        </div> 
-        
+        </div>         
       </div>
-      <div class="col-2"></div>
+      <div class="col-5 ps-0 pe-5">
+        <h2 class="text-center m-0">Listado de {{ this.condicion }}</h2>
+        <div class="b-degrade" style="height: .1rem;"></div>
+      </div>
       <div class="col-3">
         <label for="">Filtar por cualquier cosa: </label>
         <input class="form-control" type="text" name="filtro" [(ngModel)]="filter" placeholder="Buscar...">
       </div>
-      <div class="col-4"> 
+      <div class="col-2"> 
         <span>filtrar por categoria: </span>       
         <select [(ngModel)]="filtro" name="sector" class="form-select" (change)="updateList()">
           <option selected value="0">Todo</option>
@@ -50,7 +52,10 @@
                       <th>proveedor</th>
                       <th>estado</th>
                       <th>total</th>                      
-                    </ng-container>                    
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'category'">
+                      <th>Nombre</th>                                          
+                    </ng-container>                       
                   </ng-container>                       
               </tr>
             </thead>
@@ -92,7 +97,6 @@
                         </span>           
                       </td>                      
                     </ng-container>
-
                     <ng-container *ngSwitchCase="'provider'"> <!-- Empiezan los que manejo en articles -->
                       <td [ngClass]="{'tr-delete': (el.isDeleted)}">{{el[key].businessName}}</td>
                     </ng-container>

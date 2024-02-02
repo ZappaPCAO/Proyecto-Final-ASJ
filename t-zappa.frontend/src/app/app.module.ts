@@ -9,7 +9,7 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { FooterComponent } from './shared/footer/footer.component';
-import { MainComponent } from './components/main/main.component';
+import { MainComponent } from './shared/main/main.component';
 import { AddProviderComponent } from './components/forms/add-provider/add-provider.component';
 import { AddArticleComponent } from './components/forms/add-article/add-article.component';
 import { AddPurchaseOrderComponent } from './components/forms/add-purchase-order/add-purchase-order.component';

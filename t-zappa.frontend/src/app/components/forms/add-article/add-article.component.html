@@ -49,26 +49,26 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">  
-                                    <div class="form-floating">                                                 
+                                    <div class="form-floating d-flex">                                                 
                                         <select required class="form-control" name="category" [(ngModel)]="this.article.category.id"
                                         #category="ngModel" [ngClass]="!category.value ? 'mi-requerido': category.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'"
                                         >
                                             <option *ngFor="let category of this.categories" value="{{category.id}}">
-                                                {{category.category| uppercase}}
+                                                {{category.name| uppercase}}
                                             </option>
                                             <!-- Mas opc -->
                                         </select>
                                         <label for="SelCategoria">Categoria:</label>
+                                        <span class="mt-1 ms-1">                                                        
+                                            <button data-bs-toggle="modal" data-bs-target="#staticBackdrop" title="Agregar nueva categoria" type="button" class="btn btn-lg btn-outline-success">
+                                                <svg xmlns="http://www.w3.org/2000/svg" height="14" width="12" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.--><path fill="#8732cd" d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"/></svg>
+                                            </button>
+                                        </span>  
                                         <ng-container *ngIf="category.value">
                                             <span *ngIf="category.errors?.['required']" class="mi-invalid-feedback">
                                                 Longitud minima 3                                            
                                             </span>                                             
-                                        </ng-container>
-                                        <span class="mt-1 ms-1">                                                        
-                                            <button data-bs-toggle="modal" data-bs-target="#staticBackdrop" title="Agregar nuevo rubro" type="button" class="btn btn-lg btn-outline-success">
-                                                <svg xmlns="http://www.w3.org/2000/svg" height="14" width="12" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.--><path fill="#8732cd" d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"/></svg>
-                                            </button>
-                                        </span>
+                                        </ng-container>                                                                              
                                     </div>
                                 </div>                                                                                
                             </div>
@@ -140,7 +140,7 @@
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>                
                 </div>
                 <div class="modal-body">
-                    <app-add-category ></app-add-category>
+                    <app-add-category [categories]="categories" ></app-add-category>
                 </div>
             </div> 
         </div>

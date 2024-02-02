@@ -37,6 +37,11 @@ public class CategoryController {
 		return ResponseEntity.ok( this.categoryService.getCategories() );
 	}
 	
+	@GetMapping("/{id}") // [GET] localhost:8080/proveedores
+	public ResponseEntity<Object> getCategoryById(@PathVariable Integer id) {		
+		return ResponseEntity.ok( this.categoryService.getCategoryById(id) );
+	}
+	
 	@PostMapping
 	public ResponseEntity<Object> newCategory(@Valid @RequestBody Category category, BindingResult bindingResult) {
 		 if (bindingResult.hasErrors()) {
