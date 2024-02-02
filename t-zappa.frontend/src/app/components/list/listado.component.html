@@ -7,20 +7,30 @@
           <label class="form-check-label" for="flexSwitchCheckDefault">Traer solo activos.</label>
         </div>         
       </div>
-      <div class="col-5 ps-0 pe-5">
+      <div class="col-5 ps-0 pe-5"
+           [ngClass]="{'col-5':  (this.condicion === 'article' || this.condicion === 'provider'), 
+                       'col-7': !(this.condicion === 'article' || this.condicion === 'provider')}" >
         <h2 class="text-center m-0">Listado de {{ this.condicion }}</h2>
         <div class="b-degrade" style="height: .1rem;"></div>
       </div>
       <div class="col-3">
-        <label for="">Filtar por cualquier cosa: </label>
+        <label for="">Filtar: </label>
         <input class="form-control" type="text" name="filtro" [(ngModel)]="filter" placeholder="Buscar...">
       </div>
-      <div class="col-2"> 
-        <span>filtrar por categoria: </span>       
-        <select [(ngModel)]="filtro" name="sector" class="form-select" (change)="updateList()">
-          <option selected value="0">Todo</option>
-          <option *ngFor="let sector of this.sectors; index as i" value="{{ sector.id }}">{{ sector.sector }}</option>
-        </select>
+      <div *ngIf="(this.condicion === 'article' || this.condicion === 'provider')" class="col-2"> 
+        <span>filtrar por {{(this.condicion === 'article') ? 'Categoria' : 'Sector'}}: </span>
+          <div *ngIf="this.condicion === 'provider'">
+            <select [(ngModel)]="filtro" name="sector" class="form-select" (change)="updateList('sector')">
+              <option selected value="0">Todo</option>
+              <option *ngFor="let sector of this.sectors" value="{{ sector.id }}">{{ sector.sector }}</option>
+            </select>
+          </div>
+          <div *ngIf="this.condicion === 'article'">
+            <select [(ngModel)]="filtro" name="sector" class="form-select" (change)="updateList('category')">
+              <option selected value="0">Todo</option>
+              <option *ngFor="let category of this.categories" value="{{ category.id }}">{{ category.name }}</option>
+            </select>
+          </div>        
       </div>
     </div>
     <div class="row p-0 m-0">
@@ -104,7 +114,10 @@
                       <td [ngClass]="{'tr-delete': (el.isDeleted)}">{{el[key] | currency:'USD':'symbol':'1.2-2'}}</td>
                     </ng-container>
                     <ng-container *ngSwitchCase="'category'">
-                      <td [ngClass]="{'tr-delete': (el.isDeleted)}">{{ el[key].category }}</td>
+                      <td [ngClass]="{'tr-delete': (el.isDeleted)}">{{ el[key].name }}</td>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'codArticle'">
+                      <td [ngClass]="{'tr-delete': (el.isDeleted)}">{{el['codArticle']}} - {{ el[key] }}</td>
                     </ng-container>
                     <ng-container *ngSwitchCase="'image'">
                       <td [ngClass]="{'tr-delete': (el.isDeleted)}">

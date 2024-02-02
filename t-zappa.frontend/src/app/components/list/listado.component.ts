@@ -9,6 +9,7 @@ import Swal from 'sweetalert2';
 import { SectorService } from '../../services/sector.service';
 import { Sector } from '../../models/sector';
 import { Category } from '../../models/category';
+import { CategoryService } from '../../services/category.service';
 
 @Component({
   selector: 'listado',
@@ -21,13 +22,14 @@ export class ListadoComponent implements OnInit{
   condicion: string = '';
   rightPanelStyle: any;
   currentRecord!:  Provider | Article | PurchaseOrder | any;
-  sectors: Sector[] = [];
+  sectors: Sector[] = []; categories: Category[] = [];
   filtro: number = 0;
   filter: string= "";
   filtroBaja: boolean = false;
 
   constructor(private route: ActivatedRoute, private router: Router, 
-    private serivicioAdm: AdministrarServicesService, private sectorService: SectorService){     
+    private serivicioAdm: AdministrarServicesService, private sectorService: SectorService,
+    private categoryService: CategoryService){     
   }
 
   detectRightMouseClick($event: any, el: Provider | Article | PurchaseOrder) {
@@ -74,7 +76,7 @@ export class ListadoComponent implements OnInit{
       
       if(this.tbody && this.tbody.length > 0){
       
-        this.thead = (this.condicion === 'article')  ? ['image','name','category','price','provider'] :
+        this.thead = (this.condicion === 'article')  ? ['image','codArticle','category','price','provider'] :
                      (this.condicion === 'provider') ? ['logo','codProvider','businessName', 'location', 'contactData'] : 
                      (this.condicion === 'purchase-order') ? ['nroOC','fecEmision','fecEntrega','detalle','estado', 'total'] : ['name'];
       }
@@ -137,8 +139,8 @@ export class ListadoComponent implements OnInit{
     });
   }
 
-  updateList(){
-    this.serivicioAdm.getBySector(this.filtro, this.condicion).subscribe( (data : Provider[] | Article[] | PurchaseOrder[]) => {
+  updateList(tipo:string){
+    this.serivicioAdm.getBy(this.filtro, tipo).subscribe( (data : Provider[] | Article[] | PurchaseOrder[]) => {
       this.tbody = data;
     });
   }
@@ -169,9 +171,16 @@ export class ListadoComponent implements OnInit{
         this.router.navigate(['']); // Lo mando al home
       }
 
-      this.sectorService.getSectors().subscribe((data: Sector[]) => {
-        this.sectors = data;        
-      });
+      if(this.condicion === 'provider'){
+        this.sectorService.getSectors().subscribe((data: Sector[]) => {
+          this.sectors = data;        
+        });
+      }else if(this.condicion === 'article'){
+        this.categoryService.get().subscribe((data: Category[]) => {
+          this.categories = data;          
+        });
+      }
+      
     });
   }
 }

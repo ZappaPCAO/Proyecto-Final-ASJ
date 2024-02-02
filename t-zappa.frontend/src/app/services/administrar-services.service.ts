@@ -41,13 +41,13 @@ export class AdministrarServicesService {
       return new Observable();
     }
     
-    getBySector(id:number, tipo: string) : Observable<Provider[] | Article[] | PurchaseOrder[]>{
+    getBy(id:number, tipo: string) : Observable<Provider[] | Article[] | PurchaseOrder[]>{
 
       switch (tipo) {        
-        case 'article':
-          // return <Article[]>this.serviceArticle.get();
+        case 'category':
+          return this.serviceArticle.getByCategory(id);
           break;
-        case 'provider':
+        case 'sector':
           return this.serviceProvider.getBySector(id);
           break;
         case 'purchase-order':

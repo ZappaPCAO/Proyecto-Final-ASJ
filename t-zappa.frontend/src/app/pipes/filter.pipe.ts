@@ -14,18 +14,14 @@ export class FilterPipe implements PipeTransform {
 
     return value.filter((item) => {
       for (const key in item) {
-        if (key === "businessName" || key === "codProvider") {
-          if (item[key].toLowerCase().includes(args)) {
+          if ( (key === 'businessName'|| key === 'codProvider'||
+                key === 'name'|| key === 'description') &&
+                (item[key].toLowerCase().includes(args))){    
+              return true;            
+          }else if(( key === 'contactData' ) &&
+                ( item[key].name.toLowerCase().includes(args) || item[key].lastName.toLowerCase().includes(args) )){
             return true;
           }
-        } else if (key === "contactData") {
-          if (
-            item[key].name.toLowerCase().includes(args) ||
-            item[key].lastName.toLowerCase().includes(args)
-          ) {
-            return true;
-          }
-        }
       }
       return false;
     });
