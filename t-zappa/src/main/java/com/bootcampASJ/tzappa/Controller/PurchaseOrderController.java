@@ -50,6 +50,11 @@ public class PurchaseOrderController {
 		return ResponseEntity.ok(this.purchaseOrderService.getPurchaseOrdersByProvider(id));
 	}
 	
+	@GetMapping("/num-purchase-order")
+    public ResponseEntity<String> getNewNumPurchaseOrder() {
+        return new ResponseEntity<>(this.purchaseOrderService.getNumPurchaseOrder(), HttpStatus.OK);
+    }
+	
 	@PostMapping
 	public ResponseEntity<Object> newPurchaseOrder(@Valid @RequestBody PurchaseOrder purchaseOrder, BindingResult bindingResult) {
 		 if (bindingResult.hasErrors()) {

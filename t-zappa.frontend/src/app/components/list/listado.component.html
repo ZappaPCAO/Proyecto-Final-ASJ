@@ -71,7 +71,7 @@
             </thead>
             <tbody>
               <tr (mouseup)="detectRightMouseClick($event, el)" scope="row" class="text-uppercase text-center" 
-                *ngFor="let el of this.tbody | lowFilter : filtroBaja | filter : filter">
+                *ngFor="let el of this.tbody | lowFilter : filtroBaja | filter : filter : (this.condicion === 'purchase-order')">
                 <ng-container *ngFor="let key of thead">
                   <ng-container [ngSwitch]="key">
                     <ng-container *ngSwitchCase="'location'"> <!-- Empiezan los que manejo en providers -->
@@ -150,16 +150,16 @@
             </tbody>
           </table>
         </div>
-        <div *ngIf="condicion == 'purchase-order'" class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div *ngIf="condicion == 'purchase-order' && currentRecord != null" class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
-                <h2 class="modal-title fs-5" id="exampleModalLabel">Detalle Orden: {{currentRecord.nroOC}}</h2>
+                <h2 class="modal-title fs-5" id="exampleModalLabel">Detalle Orden: {{currentRecord.numPurchaseOrder}}</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
                 <div class="row">
-                  <p class="h4 text-center">{{currentRecord.detalle[0].proveedor.razSocial}}</p>
+                  <p class="h4 text-center">{{currentRecord.provider.businessName}}</p>
                   <table class="table">
                     <thead>
                       <tr>
@@ -169,15 +169,15 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr class="col" *ngFor="let el of currentRecord.detalle">
+                      <tr class="col" *ngFor="let detail of currentRecord.details">
                         <td>
-                          {{el.articulo.producto}} {{(el.cantidad > 1)?'('+el.cantidad+')':''}}
+                          {{detail.article.name}} {{(detail.amount > 1)?'('+detail.amount+')':''}}
                         </td>
                         <td>
-                          {{el.articulo.precio}}
+                          {{detail.article.price}}
                         </td>
                         <td>
-                          {{el.subtotal}}
+                          {{detail.subtotal}}
                         </td>
                       </tr>
                     </tbody>

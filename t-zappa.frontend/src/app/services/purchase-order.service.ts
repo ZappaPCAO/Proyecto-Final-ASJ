@@ -24,6 +24,10 @@ export class PurchaseOrderService {
     return this.http.get<PurchaseOrder[]>(`${this.url}/provider/${id}`);
   }
 
+  getNewNumOrder() : Observable<string>{ // Traigo el numero de orden correspondiente.
+    return this.http.get<string>(`${this.url}/num-purchase-order`, { responseType: 'text' as 'json' });
+  }
+
   post(purchasOrder: PurchaseOrder) : Observable<PurchaseOrder>{
     return this.http.post<PurchaseOrder>(this.url, purchasOrder);
   }

@@ -20,7 +20,7 @@ import { Detail } from '../../../models/detail';
 export class AddPurchaseOrderComponent implements OnInit {
   purchaseOrder: PurchaseOrder = {
     id: 0,
-    numPurchaseOrder: 0,
+    numPurchaseOrder: '',
     sendDate: '',
     receiptDate: '',
     email: '',
@@ -193,9 +193,12 @@ export class AddPurchaseOrderComponent implements OnInit {
           this.providers = data;
           this.articleService.getByActives().subscribe( (data : Article[]) => {
             this.articles = data;
-
-            this.purchaseOrder.sendDate = formatDate(new Date());
-            this.verificarUpdate();   
+            this.purchaseOrderService.getNewNumOrder().subscribe((data : string) => {
+              this.purchaseOrder.numPurchaseOrder = data;
+              
+              this.purchaseOrder.sendDate = formatDate(new Date());
+              this.verificarUpdate();   
+            });            
           })
         });        
     });

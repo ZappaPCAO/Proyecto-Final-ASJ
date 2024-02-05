@@ -33,7 +33,7 @@ public class PurchaseOrder {
 	@NotNull(message="[num_purchase_order] no puede ser nula.")
 	@Min(value = 1, message = "[num_purchase_order] debe ser un numero positivo.")
 	@Column(name = "num_purchase_order", unique = true)
-	private Integer numPurchaseOrder;
+	private String numPurchaseOrder;
 	
 	@NotNull(message="[send_date] no puede ser nula.")
 	@Column(name = "send_date")
@@ -95,11 +95,11 @@ public class PurchaseOrder {
 		this.id = id;
 	}
 
-	public Integer getNumPurchaseOrder() {
+	public String getNumPurchaseOrder() {
 		return numPurchaseOrder;
 	}
 
-	public void setNumPurchaseOrder(Integer numPurchaseOrder) {
+	public void setNumPurchaseOrder(String numPurchaseOrder) {
 		this.numPurchaseOrder = numPurchaseOrder;
 	}
 

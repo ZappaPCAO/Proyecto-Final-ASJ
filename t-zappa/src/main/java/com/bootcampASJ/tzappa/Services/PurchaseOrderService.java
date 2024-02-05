@@ -49,6 +49,20 @@ public class PurchaseOrderService {
 		return this.purchaseOrderRepository.findByProvider(provider);
 	}
 	
+	public String getNumPurchaseOrder() {
+		// Busca la última orden de compra ordenada por númeroCompra de forma descendente
+        Optional<PurchaseOrder> lastPurchaseOrder = Optional.ofNullable(this.purchaseOrderRepository.findLastNumPurchaseOrders());
+        
+        // Incrementa el número de compra en 1 y formatea como cadena de 8 caracteres con ceros a la izquierda
+        String newNumPurchaseOrder = lastPurchaseOrder.map(order -> {
+            Integer currentNum = Integer.parseInt(order.getNumPurchaseOrder());
+            Integer newNumber = currentNum + 1;
+            return String.format("%08d", newNumber);
+        }).orElse("00000001"); // Si no hay ninguna orden de compra, comienza desde 1
+
+        return newNumPurchaseOrder;
+	}
+	
 	@Transactional
 	public PurchaseOrder newPurchaseOrder(PurchaseOrder purchaseOrder) {
 	    

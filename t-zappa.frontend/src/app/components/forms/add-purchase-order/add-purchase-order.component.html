@@ -9,7 +9,7 @@
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <div class="form-floating mb-3 mb-md-0">
-                                        <input required minlength="3" maxlength="25" class="form-control" name="numPurchaseOrder" [(ngModel)]="purchaseOrder.numPurchaseOrder" type="text" placeholder="" 
+                                        <input disabled title="Generado automaticamente" required minlength="3" maxlength="25" class="form-control" name="numPurchaseOrder" [(ngModel)]="purchaseOrder.numPurchaseOrder" type="text" placeholder="" 
                                         #numPurchaseOrder="ngModel" [ngClass]="!numPurchaseOrder.value ? 'mi-requerido': numPurchaseOrder.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'"
                                         />
                                         <label id="labelCode" for="inputNroOrdenCompra">Nro. Orden de Compra: </label>
@@ -48,7 +48,7 @@
                                 <div class="col-md-12">
                                     <div class="form-floating">
                                         <textarea maxlength="512" class="form-control" name="descri" [(ngModel)]="purchaseOrder.description" type="text" placeholder=""></textarea>
-                                        <label for="inputDescri">Descripcion: </label>
+                                        <label for="inputDescri">Información de recepción: </label>
                                     </div>
                                 </div>                                
                             </div>                                                                        
@@ -58,7 +58,7 @@
                                         <select (change)="updateArticles()" [title]="purchaseOrder.details.length > 0 ? 'No puedes modificar el proveedor, una ves iniciado el detalle' :
                                                  'Proveedores'" [disabled]="purchaseOrder.details.length > 0" class="form-select" name="provider" [(ngModel)]="purchaseOrder.provider.id">
                                             <option *ngFor="let provider of providers" value="{{provider.id}}">
-                                                {{provider.businessName| uppercase}}
+                                                {{provider.businessName | uppercase}}
                                             </option>                                                           
                                         </select>
                                         <label for="SelProvedores">Provedor:</label>

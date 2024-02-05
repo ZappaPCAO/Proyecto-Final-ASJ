@@ -33,6 +33,7 @@ export class ListadoComponent implements OnInit{
   }
 
   detectRightMouseClick($event: any, el: Provider | Article | PurchaseOrder) {
+    console.log("hola");
     if ($event.which === 3) {
       // Ajusta la posición del menú respecto a la ventana del navegador
       this.rightPanelStyle = {
