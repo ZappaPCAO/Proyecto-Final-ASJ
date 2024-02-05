@@ -9,4 +9,6 @@ import com.bootcampASJ.tzappa.Models.Sector;
 
 public interface ProviderRepository extends JpaRepository<Provider, Integer> {
 	List<Provider> findBySector(Sector sector);
+	List<Provider> findAllByOrderByBusinessName();
+	List<Provider> findByIsDeletedFalse();
 }

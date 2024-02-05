@@ -130,10 +130,10 @@ export class AddArticleComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
       this.idArticle = params['id'] || 0;
-      this.providerService.get().subscribe( (data: Provider[]) => {
+      this.providerService.getByActives().subscribe( (data: Provider[]) => {
         this.providers = data;
-        this.categoryService.get().subscribe( (data : Category[]) => {
-          this.categories = data;
+        this.categoryService.getByActives().subscribe( (data : Category[]) => {
+          this.categories = data;  
           this.verificarUpdate();
         }); // GET de categories        
       }); // GET de providers

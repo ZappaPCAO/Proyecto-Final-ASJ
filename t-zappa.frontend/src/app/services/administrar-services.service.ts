@@ -30,7 +30,7 @@ export class AdministrarServicesService {
           return this.serviceProvider.get();
           break;
         case 'purchase-order':
-          // datos = this.servicePurchaseOrder.get();
+          return this.servicePurchaseOrder.get();
           break;
         case 'category':
           return this.serviceCategory.get();

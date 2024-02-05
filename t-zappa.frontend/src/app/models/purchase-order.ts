@@ -1,103 +1,16 @@
-import { obtenerObjetoByTipo } from "../utils/localStorage";
-import { Article } from "./article";
+import { Detail } from "./detail";
 import { Provider } from "./provider";
 
 export interface PurchaseOrder {
-  id: number,
-  nroOC: string,
-  fecEmision: string,
-  fecEntrega: string,
-  email: string,
-  descri: string,
-  detalle: Detalle[],
-  estado: 'activa' | 'cancelada',
-  total: number,
+  id: number;
+  numPurchaseOrder: number;
+  sendDate: string;
+  receiptDate: string;
+  email: string;
+  description: string;
+  details: Detail[];
+  state: 'A' | 'C';
+  total: number;
+  isDeleted?: boolean;
+  provider: Provider;
 }
-
-export interface Detalle{
-  proveedor: Provider,
-  articulo: Article,
-  cantidad: number,
-  subtotal: number,
-}
-
-export const purchasesOrders: PurchaseOrder[] = obtenerObjetoByTipo("purchase-order");
-
-// [{
-//   id: 0,
-//   nroOC: '',
-//   fecEmision: '',
-//   fecEntrega: '',
-//   email: '',
-//   descri: '',
-//   detalle: [{
-//     proveedor: {
-//       id: 0,
-//       cod: '',
-//       razSocial: '',
-//       rubro: '',
-//       sitioWeb: '',
-//       email: '',
-//       telefono: 0,
-//       direccion: {
-//         calle: '',
-//         nro: 0,
-//         cp: '',
-//         localidad: '',
-//         provincia: '',
-//         pais: '',
-//       },
-//       datosFiscales: {
-//         cuit: '',
-//         condIva: '',
-//       },
-//       datosContacto: {
-//         nombre: '',
-//         apellido: '',
-//         telefono: 0,
-//         email: '',
-//         rol: '',
-//       }
-//     },
-//     articulo: {
-//       id: 0,
-//       proveedor: {
-//         id: 0,
-//         cod: '',
-//         razSocial: '',
-//         rubro: '',
-//         sitioWeb: '',
-//         email: '',
-//         telefono: 0,
-//         direccion: {
-//           calle: '',
-//           nro: 0,
-//           cp: '',
-//           localidad: '',
-//           provincia: '',
-//           pais: '',
-//         },
-//         datosFiscales: {
-//           cuit: '',
-//           condIva: '',
-//         },
-//         datosContacto: {
-//           nombre: '',
-//           apellido: '',
-//           telefono: 0,
-//           email: '',
-//           rol: '',
-//         }
-//       },
-//       codArt: '',
-//       categoria: '',
-//       producto: '',
-//       descri: '',
-//       precio: 0,
-//     },
-//     cantidad: 0,
-//     subtotal: 0,
-//   }],
-//   estado: 'activa',
-//   total: 0,
-// }];

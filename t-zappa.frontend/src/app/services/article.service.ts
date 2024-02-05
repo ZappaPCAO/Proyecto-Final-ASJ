@@ -28,6 +28,10 @@ export class ArticleService {
     return this.http.get<Article[]>(`${this.url}/provider/${id}`);
   }
 
+  getByActives() : Observable<Article[]> {
+    return this.http.get<Article[]>(`${this.url}/actives`);
+  }
+
   post(article: Article) : Observable<Article>{
     return this.http.post<Article>(this.url, article);
   }

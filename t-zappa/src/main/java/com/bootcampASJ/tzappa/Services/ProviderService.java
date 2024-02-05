@@ -52,6 +52,10 @@ public class ProviderService {
 		return this.providerRepository.findAll();	
 	}
 	
+	public List<Provider> getProvidersByActive(){
+		return this.providerRepository.findByIsDeletedFalse();
+	}
+	
 	public Optional<Provider> getProviderById(Integer id) {
 		return this.providerRepository.findById(id);
 	}

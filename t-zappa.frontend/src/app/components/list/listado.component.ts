@@ -78,7 +78,7 @@ export class ListadoComponent implements OnInit{
       
         this.thead = (this.condicion === 'article')  ? ['image','codArticle','category','price','provider'] :
                      (this.condicion === 'provider') ? ['logo','codProvider','businessName', 'location', 'contactData'] : 
-                     (this.condicion === 'purchase-order') ? ['nroOC','fecEmision','fecEntrega','detalle','estado', 'total'] : ['name'];
+                     (this.condicion === 'purchase-order') ? ['numPurchaseOrder','sendDate','receiptDate', 'provider', 'state', 'total'] : ['name'];
       }
     });
   }                                                                        

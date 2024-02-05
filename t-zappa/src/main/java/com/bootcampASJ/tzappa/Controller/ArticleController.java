@@ -35,6 +35,11 @@ public class ArticleController {
 		return ResponseEntity.ok( this.articleService.getArticles() );
 	}
 	
+	@GetMapping("/actives")
+	public ResponseEntity<Object> getProvidersByActive() {		
+		return ResponseEntity.ok( this.articleService.getArticlesByActive() );
+	}
+	
 	@GetMapping("/{id}") // [GET] localhost:8080/proveedores/3
 	public ResponseEntity<Object> getProviderById(@PathVariable Integer id) {
 		return ResponseEntity.ok(this.articleService.getArticleById(id));

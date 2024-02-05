@@ -1,47 +1,34 @@
 import { Injectable } from '@angular/core';
-import { PurchaseOrder, purchasesOrders } from '../models/purchase-order';
-import { agregarObjetoSiExiste, pisarDatosByTipo } from '../utils/localStorage'; 
+import { PurchaseOrder } from '../models/purchase-order';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PurchaseOrderService {
-  dataPurchaseOrders: PurchaseOrder[] = purchasesOrders || [];
 
-  constructor() { }
+  private url = 'http://localhost:8080/purchase-orders';
 
-  get (){
-    return this.dataPurchaseOrders.sort((a:PurchaseOrder,b:PurchaseOrder) => a.fecEmision.localeCompare(b.fecEmision));
+  constructor(private http: HttpClient) {}
+
+  get () : Observable<PurchaseOrder[]>{
+    return this.http.get<PurchaseOrder[]>(this.url);
   }
 
-  getById(id: number): PurchaseOrder {
-    let purchaseOrder!: any;
-
-    if(this.dataPurchaseOrders.length > 0){
-      purchaseOrder = this.dataPurchaseOrders.find( purchaseOrder => purchaseOrder.id == id ); 
-    }
-
-    return purchaseOrder;
-  }
-  
-  post(purchaseOrder: PurchaseOrder){
-    purchaseOrder.id = (this.dataPurchaseOrders && this.dataPurchaseOrders.length > 0) ? this.dataPurchaseOrders[this.dataPurchaseOrders.length-1].id + 1 : 1; // Controlo la id
-    this.dataPurchaseOrders.push(purchaseOrder);
-    pisarDatosByTipo('purchase-order', this.dataPurchaseOrders);
+  getById(id: number) : Observable<PurchaseOrder> {
+    return this.http.get<PurchaseOrder>(`${this.url}/${id}`);
   }
 
-  put(purchaseOrder: PurchaseOrder) {
-    let auxPurchaseOrder: PurchaseOrder = this.dataPurchaseOrders.find(purOrder => purOrder.id == purchaseOrder.id)!;
-    
-    auxPurchaseOrder = purchaseOrder;
-    agregarObjetoSiExiste('purchase-order', purchaseOrder);
+  getByProvider(id: number) : Observable<PurchaseOrder[]> {
+    return this.http.get<PurchaseOrder[]>(`${this.url}/provider/${id}`);
   }
 
-  delete(purchaseOrder: PurchaseOrder) {
-    let index: number = this.dataPurchaseOrders.findIndex(purOrder => purOrder.id === purchaseOrder.id);
-    
-    this.dataPurchaseOrders.splice(index, 1);
-    
-    pisarDatosByTipo('purchase-order', this.dataPurchaseOrders);
+  post(purchasOrder: PurchaseOrder) : Observable<PurchaseOrder>{
+    return this.http.post<PurchaseOrder>(this.url, purchasOrder);
+  }
+
+  put(purchasOrder: PurchaseOrder) : Observable<PurchaseOrder>{
+    return this.http.put<PurchaseOrder>(`${this.url}/${purchasOrder.id}`, purchasOrder);
   }
 }

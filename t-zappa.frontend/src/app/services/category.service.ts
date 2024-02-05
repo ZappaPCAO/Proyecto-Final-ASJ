@@ -19,6 +19,10 @@ export class CategoryService {
     return this.http.get<Category>(`${this.url}/${id}`);
   }
 
+  getByActives() : Observable<Category[]> {
+    return this.http.get<Category[]>(`${this.url}/actives`);
+  }
+
   post(category: Category) : Observable<Category>{
     return this.http.post<Category>(this.url, category);
   }

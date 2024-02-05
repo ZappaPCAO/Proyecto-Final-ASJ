@@ -24,6 +24,10 @@ export class ProviderService {
     return this.http.get<Provider[]>(`${this.url}/sector/${id}`);
   }
 
+  getByActives() : Observable<Provider[]> {
+    return this.http.get<Provider[]>(`${this.url}/actives`);
+  }
+
   post(provider: Provider) : Observable<Provider>{
     return this.http.post<Provider>(this.url, provider);
   }

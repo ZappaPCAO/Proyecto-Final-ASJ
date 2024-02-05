@@ -37,7 +37,7 @@ public class Detail {
 	@JoinColumn(name = "article_id", referencedColumnName = "id", nullable = false)
 	private Article article;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne
 	@JoinColumn(name = "purchase_order_id", referencedColumnName = "id", nullable = false)
 	private PurchaseOrder purchaseOrder;
 	
@@ -77,9 +77,9 @@ public class Detail {
 		this.article = article;
 	}
 
-	public PurchaseOrder getPurchaseOrder() {
-		return purchaseOrder;
-	}
+//	public PurchaseOrder getPurchaseOrder() {
+//		return purchaseOrder;
+//	}
 
 	public void setPurchaseOrder(PurchaseOrder purchaseOrder) {
 		this.purchaseOrder = purchaseOrder;

@@ -37,6 +37,11 @@ public class CategoryController {
 		return ResponseEntity.ok( this.categoryService.getCategories() );
 	}
 	
+	@GetMapping("/actives")
+	public ResponseEntity<Object> getProvidersByActive() {		
+		return ResponseEntity.ok( this.categoryService.getCategoriesByActive() );
+	}
+	
 	@GetMapping("/{id}") // [GET] localhost:8080/proveedores
 	public ResponseEntity<Object> getCategoryById(@PathVariable Integer id) {		
 		return ResponseEntity.ok( this.categoryService.getCategoryById(id) );

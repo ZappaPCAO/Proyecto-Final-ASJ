@@ -9,15 +9,15 @@
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <div class="form-floating mb-3 mb-md-0">
-                                        <input required minlength="3" maxlength="25" class="form-control" name="nroOC" [(ngModel)]="purchaseOrder.nroOC" type="text" placeholder="" 
-                                        #nroOc="ngModel" [ngClass]="!nroOc.value ? 'mi-requerido': nroOc.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'"
+                                        <input required minlength="3" maxlength="25" class="form-control" name="numPurchaseOrder" [(ngModel)]="purchaseOrder.numPurchaseOrder" type="text" placeholder="" 
+                                        #numPurchaseOrder="ngModel" [ngClass]="!numPurchaseOrder.value ? 'mi-requerido': numPurchaseOrder.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'"
                                         />
                                         <label id="labelCode" for="inputNroOrdenCompra">Nro. Orden de Compra: </label>
-                                        <ng-container *ngIf="nroOc.value">
-                                            <span *ngIf="nroOc.errors?.['minlength']" class="mi-invalid-feedback">
+                                        <ng-container *ngIf="numPurchaseOrder.value">
+                                            <span *ngIf="numPurchaseOrder.errors?.['minlength']" class="mi-invalid-feedback">
                                                 Longitud minima 3
                                             </span>
-                                            <span *ngIf="nroOc.errors?.['maxlength']" class="mi-invalid-feedback">
+                                            <span *ngIf="numPurchaseOrder.errors?.['maxlength']" class="mi-invalid-feedback">
                                                 Longitud maxima 25
                                             </span>                                            
                                         </ng-container> 
@@ -33,13 +33,13 @@
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <input readonly class="form-control" name="fecEmision" [(ngModel)]="purchaseOrder.fecEmision" type="date" placeholder="" />
+                                        <input readonly class="form-control" name="fecEmision" [(ngModel)]="purchaseOrder.sendDate" type="date" placeholder="" />
                                         <label for="inputFecEmision">Fecha de emision:</label>
                                     </div>
                                 </div> 
                                 <div class="col-md-6">
                                     <div class="form-floating mb-3 mb-md-0">
-                                        <input class="form-control" name="fecEntrega" [(ngModel)]="purchaseOrder.fecEntrega" type="date" placeholder="" />
+                                        <input class="form-control" name="fecEntrega" [(ngModel)]="purchaseOrder.receiptDate" type="date" placeholder="" />
                                         <label for="inputFecEntrega">Fecha de recepcion:</label>
                                     </div>
                                 </div>                                                               
@@ -47,7 +47,7 @@
                             <div class="row mb-3">
                                 <div class="col-md-12">
                                     <div class="form-floating">
-                                        <textarea maxlength="512" class="form-control" name="descri" [(ngModel)]="purchaseOrder.descri" type="text" placeholder=""></textarea>
+                                        <textarea maxlength="512" class="form-control" name="descri" [(ngModel)]="purchaseOrder.description" type="text" placeholder=""></textarea>
                                         <label for="inputDescri">Descripcion: </label>
                                     </div>
                                 </div>                                
@@ -55,8 +55,9 @@
                             <div class="row mb-3">
                                 <div class="col-md-5">  
                                     <div class="form-floating">                                                 
-                                        <select (change)="updateArticles()" [title]="purchaseOrder.detalle.length > 0 ? 'No puedes modificar el proveedor, una ves iniciado el detalle' : 'Proveedores'" [disabled]="purchaseOrder.detalle.length > 0" class="form-control" name="proveedor" [(ngModel)]="idProveedor">
-                                            <option *ngFor="let provider of arrProviders" value="{{provider.id}}">
+                                        <select (change)="updateArticles()" [title]="purchaseOrder.details.length > 0 ? 'No puedes modificar el proveedor, una ves iniciado el detalle' :
+                                                 'Proveedores'" [disabled]="purchaseOrder.details.length > 0" class="form-select" name="provider" [(ngModel)]="purchaseOrder.provider.id">
+                                            <option *ngFor="let provider of providers" value="{{provider.id}}">
                                                 {{provider.businessName| uppercase}}
                                             </option>                                                           
                                         </select>
@@ -65,8 +66,8 @@
                                 </div>
                                 <div class="col-md-4">  
                                     <div class="form-floating">                                                 
-                                        <select required class="form-control" name="articulo" [(ngModel)]="idArticulo" #articulo="ngModel">
-                                            <option *ngFor="let article of arrArticles" value="{{article.id}}">
+                                        <select required class="form-select" name="article" [(ngModel)]="this.idArticle" #article="ngModel">
+                                            <option *ngFor="let article of articles" value="{{article.id}}">
                                                 {{article.name| uppercase	}}
                                             </option>                                                           
                                         </select>
@@ -75,7 +76,7 @@
                                 </div>
                                 <div class="col-md-2">
                                     <div class="form-floating">                                                        
-                                        <input type="number" min="1" value="1" class="form-control" [(ngModel)]="cantidad" name="cantidad" placeholder="">
+                                        <input type="number" min="1" value="1" class="form-control" [(ngModel)]="this.amount" name="cantidad" placeholder="">
                                         <label for="inputCantidad">Cantidad:</label>
                                     </div>
                                 </div>
@@ -87,7 +88,7 @@
                                     </div>
                                 </div>           
                             </div>                            
-                            <div *ngIf="purchaseOrder.detalle.length > 0" class="row mt-0">
+                            <div *ngIf="purchaseOrder.details.length > 0" class="row mt-0">
                                 <p class="text-uppercase h5 p-0 m-0">Detalle: </p>
                                 <div class="col-md-12 table-responsive table-scroll">
                                     <table class="table mt-4 text-center text-uppercase">
@@ -101,13 +102,13 @@
                                           </tr>
                                         </thead>
                                         <tbody>
-                                          <tr *ngFor="let detalle of purchaseOrder.detalle">
-                                            <td>{{ detalle.proveedor.businessName }}</td>
-                                            <td>{{ detalle.articulo.name }}</td>
-                                            <td>{{ detalle.cantidad }}</td>
-                                            <td>{{ detalle.subtotal | currency:'USD':'symbol':'1.2-2' }}</td>
+                                          <tr *ngFor="let detail of purchaseOrder.details">
+                                            <td>{{ purchaseOrder.provider.businessName }}</td>
+                                            <td>{{ detail.article.name }}</td>
+                                            <td>{{ detail.amount }}</td>
+                                            <td>{{ detail.subtotal | currency:'USD':'symbol':'1.2-2' }}</td>
                                             <td>
-                                                <button type="button" title="Eliminar" class="btn btn-outline-danger btn-sm" (click)="eliminarDetalle(detalle)">
+                                                <button type="button" title="Eliminar" class="btn btn-outline-danger btn-sm" (click)="eliminarDetalle(detail)">
                                                     <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.--><path fill="#bc0101" d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z"/></svg>
                                                 </button>
                                             </td>

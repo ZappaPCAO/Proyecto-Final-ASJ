@@ -61,7 +61,9 @@ export function verificarLongitudes(data: any): boolean{
     for (const key in data) {
         let longitud = (''+data[key]).length;
 
-        if(band && (key !== 'id' && key !== 'description' && key !== 'articles' && key != 'image'  && key !== 'sector' && key !== 'category' && key !== 'provider')){ // Si es id o descri omito esta parte. Ya la descripcion no es obligatoria y el id lo manejo yo.
+        if(band && (key !== 'id' && key !== 'state' && key !== 'total' && key !== 'provider' &&
+                    key !== 'description' && key !== 'articles' && key != 'image'  && key !== 'sector' &&
+                    key !== 'category' && key !== 'provider')){ // Si es id o descri omito esta parte. Ya la descripcion no es obligatoria y el id lo manejo yo.
             band = (longitud >= 3); // Verifico que sea al menos 3 en todos los campos.
             if(key === 'cod'){      // Lo trato distinto, necesito que sea >=4
                 band = (longitud >= 4);

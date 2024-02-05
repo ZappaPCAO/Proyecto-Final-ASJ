@@ -40,6 +40,11 @@ public class ProviderController {
 		return ResponseEntity.ok(this.providerService.getProviderById(id));
 	}
 	
+	@GetMapping("/actives")
+	public ResponseEntity<Object> getProvidersByActive() {		
+		return ResponseEntity.ok( this.providerService.getProvidersByActive() );
+	}
+	
 	@GetMapping("/sector/{id}")
 	public ResponseEntity<Object> getProviderBySector(@PathVariable Integer id){
 		

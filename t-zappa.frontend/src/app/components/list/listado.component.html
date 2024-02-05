@@ -117,7 +117,7 @@
                       <td [ngClass]="{'tr-delete': (el.isDeleted)}">{{ el[key].name }}</td>
                     </ng-container>
                     <ng-container *ngSwitchCase="'codArticle'">
-                      <td [ngClass]="{'tr-delete': (el.isDeleted)}">{{el['codArticle']}} - {{ el[key] }}</td>
+                      <td [ngClass]="{'tr-delete': (el.isDeleted)}">{{el[key]}} - {{ el['name'] }}</td>
                     </ng-container>
                     <ng-container *ngSwitchCase="'image'">
                       <td [ngClass]="{'tr-delete': (el.isDeleted)}">
@@ -131,12 +131,15 @@
                         </div>
                       </td>
                     </ng-container>
-
-                    <ng-container *ngSwitchCase="'detalle'"> <!-- Empiezan los que manejo en purchase orders -->
+<!-- 
+                    <ng-container *ngSwitchCase="'detalle'">
                       <td [ngClass]="{'tr-delete': (el.isDeleted)}">{{el[key][0].proveedor.businessName}}</td>
-                    </ng-container>                    
-                    <ng-container *ngSwitchCase="'total'">
+                    </ng-container>                     -->
+                    <ng-container *ngSwitchCase="'total'"> <!-- Empiezan los que manejo en purchase orders -->
                       <td [ngClass]="{'tr-delete': (el.isDeleted)}">{{el[key] | currency:'USD':'symbol':'1.2-2'}}</td>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'state'">
+                      <td [ngClass]="{'tr-delete': (el.isDeleted)}">{{ (el[key] === 'A' ? "ACTIVA" : "CANCELADA") }}</td>
                     </ng-container>
                     <ng-container *ngSwitchDefault> <!-- Estos los muestro como vienen -->
                       <td [ngClass]="{'tr-delete': (el.isDeleted)}">{{el[key]}}</td>

@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -17,6 +18,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 @Entity
@@ -45,11 +47,11 @@ public class PurchaseOrder {
 	@Column(columnDefinition = "text")
 	private String description;
 	
-	@Column
+	@Column(name="estado") // Cambiar a ingles
 	@NotNull(message="[estado] no puede ser nula.")
-	@Size(min = 1, max = 1, message = "[estado] tiene que ser solo un caracter.")
-	private char estado;
-	
+//	@Pattern(regexp = ".{1}", message = "[state] tiene que ser solo un carácter.")
+	private Character state;
+
 	@NotNull(message="[total] no puede ser nula.")
 	@Min(value = 1, message = "[total] debe ser un numero positivo.")
 	@Column
@@ -73,9 +75,17 @@ public class PurchaseOrder {
 	@JoinColumn(name = "provider_id", referencedColumnName = "id", nullable = false)
 	private Provider provider;
 	
+	
+	// Prueba
+	@OneToMany(mappedBy = "purchaseOrder", cascade = CascadeType.ALL)
+	private List<Detail> details;
+	
 	// Metodos
 
-	public PurchaseOrder() {}
+	public PurchaseOrder() {
+		this.createdAt = LocalDateTime.now();
+		this.isDeleted = false;
+	}
 
 	public Integer getId() {
 		return id;
@@ -117,12 +127,12 @@ public class PurchaseOrder {
 		this.description = description;
 	}
 
-	public char getEstado() {
-		return estado;
+	public char getState() {
+		return state;
 	}
 
 	public void setEstado(char estado) {
-		this.estado = estado;
+		this.state = estado;
 	}
 
 	public Double getTotal() {
@@ -164,11 +174,19 @@ public class PurchaseOrder {
 	public void setProvider(Provider provider) {
 		this.provider = provider;
 	}
+	
+	public List<Detail> getDetails() {
+		return details;
+	}
+
+	public void setDetails(List<Detail> details) {
+		this.details = details;
+	}
 
 	@Override
 	public String toString() {
 		return "PurchaseOrder [id=" + id + ", numPurchaseOrder=" + numPurchaseOrder + ", sendDate=" + sendDate
-				+ ", receiptDate=" + receiptDate + ", description=" + description + ", estado=" + estado + ", total="
+				+ ", receiptDate=" + receiptDate + ", description=" + description + ", state=" + state + ", total="
 				+ total + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + ", isDeleted=" + isDeleted
 				+ ", provider=" + provider + "]";
 	}

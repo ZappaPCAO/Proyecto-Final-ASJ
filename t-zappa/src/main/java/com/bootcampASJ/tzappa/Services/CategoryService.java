@@ -26,6 +26,10 @@ public class CategoryService {
 		return this.categoryRepository.findAll();	
 	}
 	
+	public List<Category> getCategoriesByActive(){
+		return this.categoryRepository.findByIsDeletedFalse();
+	}
+	
 	public Category getCategoryById(Integer id) {
 		return this.categoryRepository.findById(id).get();
 	}

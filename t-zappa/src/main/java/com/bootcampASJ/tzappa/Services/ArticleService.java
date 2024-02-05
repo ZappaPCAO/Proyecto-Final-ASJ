@@ -30,7 +30,11 @@ public class ArticleService {
 	ProviderRepository providerRepository;
 	
 	public List<Article> getArticles() {
-		return this.articleRepository.findAll();	
+		return this.articleRepository.findAllByOrderByName();
+	}
+	
+	public List<Article> getArticlesByActive(){
+		return this.articleRepository.findByIsDeletedFalse();
 	}
 	
 	public Optional<Article> getArticleById(Integer id) {
