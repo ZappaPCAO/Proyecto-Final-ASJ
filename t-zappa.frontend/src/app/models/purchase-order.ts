@@ -11,6 +11,5 @@ export interface PurchaseOrder {
   details: Detail[];
   state: 'A' | 'C';
   total: number;
-  isDeleted?: boolean;
   provider: Provider;
 }

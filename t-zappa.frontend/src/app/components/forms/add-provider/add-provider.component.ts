@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProviderService } from '../../../services/provider.service';
 import { Provider } from '../../../models/provider';
 import { ActivatedRoute, Router } from '@angular/router';
-import { verificarCamposEspeciales, verificarDatos, verificarLongitudes } from '../../../utils/validaciones';
+import { verificarCamposEspeciales, verificarDatos, verificarLongitudes } from '../../../utils/validates';
 import { NgForm } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { City, Country, State } from '../../../models/geoLocation';

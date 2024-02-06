@@ -5,12 +5,11 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
+
 import org.springframework.stereotype.Service;
 
 import com.bootcampASJ.tzappa.IdenticalRecord;
 
-import com.bootcampASJ.tzappa.Models.Detail;
 import com.bootcampASJ.tzappa.Models.Provider;
 import com.bootcampASJ.tzappa.Models.PurchaseOrder;
 import com.bootcampASJ.tzappa.Repositories.ArticleRepository;
@@ -34,10 +33,6 @@ public class PurchaseOrderService {
 		return this.purchaseOrderRepository.findAllByOrderBySendDate();
 	}
 	
-//	public List<PurchaseOrder> getArticlesByActive(){
-//		return this.articleRepository.findByIsDeletedFalse();
-//	}
-	
 	public PurchaseOrder getPurchaseOrderById(Integer id) {
 		return this.purchaseOrderRepository.findById(id).get();
 	}
@@ -46,7 +41,11 @@ public class PurchaseOrderService {
 		
 		Provider provider = this.providerRepository.findById(id).get();
 		
-		return this.purchaseOrderRepository.findByProvider(provider);
+		return this.purchaseOrderRepository.findByProviderOrderBySendDate(provider);
+	}
+	
+	public List<PurchaseOrder> getPurchaseOrdersByActive(){
+		return this.purchaseOrderRepository.findByStateOrderBySendDate('A');
 	}
 	
 	public String getNumPurchaseOrder() {
@@ -74,4 +73,35 @@ public class PurchaseOrderService {
 	    
 	   return aux;    
 	}
+	
+	@Transactional
+	public PurchaseOrder cancelPurchaseOrder(Integer id) {
+		PurchaseOrder purchaseOrder = this.purchaseOrderRepository.findById(id).get();
+		
+		if(purchaseOrder == null)  
+			throw new IdenticalRecord("La entidad no fue encontrada en la base de datos");
+		if(purchaseOrder.getState() == 'C' ) 
+			throw new IdenticalRecord("Este registro ya esta CANCELADO.");
+	
+		purchaseOrder.setUpdatedAt(LocalDateTime.now());
+		purchaseOrder.setState('C');
+		
+		return this.purchaseOrderRepository.save(purchaseOrder);
+	}
+	
+	@Transactional
+	public PurchaseOrder activatePurchaseOrder(Integer id) {
+		PurchaseOrder purchaseOrder = this.purchaseOrderRepository.findById(id).get();
+		
+		if(purchaseOrder == null)  
+			throw new IdenticalRecord("La entidad no fue encontrada en la base de datos");
+		if(purchaseOrder.getState() == 'A' ) 
+			throw new IdenticalRecord("Este registro ya esta ACTIVO.");
+	
+		purchaseOrder.setUpdatedAt(LocalDateTime.now());
+		purchaseOrder.setState('A');
+		
+		return this.purchaseOrderRepository.save(purchaseOrder);
+	}
+	
 }

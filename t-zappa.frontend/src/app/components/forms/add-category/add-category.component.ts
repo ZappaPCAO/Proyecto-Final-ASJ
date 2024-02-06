@@ -3,7 +3,7 @@ import { Category } from '../../../models/category';
 import { CategoryService } from '../../../services/category.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
-import { verificarCamposEspeciales, verificarDatos, verificarLongitudes } from '../../../utils/validaciones';
+import { verificarCamposEspeciales, verificarDatos, verificarLongitudes } from '../../../utils/validates';
 import Swal from 'sweetalert2';
 
 @Component({

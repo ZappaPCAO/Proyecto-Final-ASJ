@@ -1,4 +1,4 @@
-<main class="mi-bg-black" *ngIf="this.tbody.length > 0" oncontextmenu="return false;" (mouseleave)="closeContextMenu()">
+<main class="mi-bg-black" oncontextmenu="return false;" (mouseleave)="closeContextMenu()">
   <div class="container-fluid p-0 m-0">
     <div class="row py-2 m-0 mb-1 mi-bg-black text-white">
       <div class="col-2 pe-0">
@@ -10,8 +10,11 @@
       <div class="col-5 ps-0 pe-5"
            [ngClass]="{'col-5':  (this.condicion === 'article' || this.condicion === 'provider'), 
                        'col-7': !(this.condicion === 'article' || this.condicion === 'provider')}" >
-        <h2 class="text-center m-0">Listado de {{ this.condicion }}</h2>
+        <h1 class="text-center m-0 h2">Listado de {{ (this.condicion === 'provider') ? 'Proveedores' :
+                                                     (this.condicion === 'article') ? 'Articulos' :
+                                                     (this.condicion === 'purchase-order') ? 'Ordenes de Compra' : 'Categorias' }}</h1>
         <div class="b-degrade" style="height: .1rem;"></div>
+        <p class="text-center m-0 mt-1 h6">(Click derecho) Para acciones</p>
       </div>
       <div class="col-3">
         <label for="">Filtar: </label>
@@ -108,7 +111,7 @@
                       </td>                      
                     </ng-container>
                     <ng-container *ngSwitchCase="'provider'"> <!-- Empiezan los que manejo en articles -->
-                      <td [ngClass]="{'tr-delete': (el.isDeleted)}">{{el[key].businessName}}</td>
+                      <td [ngClass]="{'tr-delete': (el.isDeleted || el.state == 'C')}">{{el[key].businessName}}</td>
                     </ng-container>
                     <ng-container *ngSwitchCase="'price'">
                       <td [ngClass]="{'tr-delete': (el.isDeleted)}">{{el[key] | currency:'USD':'symbol':'1.2-2'}}</td>
@@ -131,24 +134,105 @@
                         </div>
                       </td>
                     </ng-container>
-<!-- 
-                    <ng-container *ngSwitchCase="'detalle'">
-                      <td [ngClass]="{'tr-delete': (el.isDeleted)}">{{el[key][0].proveedor.businessName}}</td>
-                    </ng-container>                     -->
                     <ng-container *ngSwitchCase="'total'"> <!-- Empiezan los que manejo en purchase orders -->
-                      <td [ngClass]="{'tr-delete': (el.isDeleted)}">{{el[key] | currency:'USD':'symbol':'1.2-2'}}</td>
+                      <td [ngClass]="{'tr-delete': (el.state == 'C')}">{{el[key] | currency:'USD':'symbol':'1.2-2'}}</td>
                     </ng-container>
                     <ng-container *ngSwitchCase="'state'">
-                      <td [ngClass]="{'tr-delete': (el.isDeleted)}">{{ (el[key] === 'A' ? "ACTIVA" : "CANCELADA") }}</td>
+                      <td [ngClass]="{'tr-delete': (el.state == 'C')}">{{ (el[key] === 'A' ? "ACTIVA" : "CANCELADA") }}</td>
                     </ng-container>
                     <ng-container *ngSwitchDefault> <!-- Estos los muestro como vienen -->
-                      <td [ngClass]="{'tr-delete': (el.isDeleted)}">{{el[key]}}</td>
+                      <td [ngClass]="{'tr-delete': (el.isDeleted || el.state == 'C')}">{{el[key]}}</td>
                     </ng-container>
                   </ng-container>
                 </ng-container>                
               </tr>
             </tbody>
           </table>
+        </div>
+        <div *ngIf="condicion == 'provider' && currentRecord != null" class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-xl">
+            <div class="modal-content mi-bg-black text-white">          
+              <div class="modal-header b-degrade">
+                <h2 class="modal-title fs-5" id="exampleModalLabel">Detalle de {{currentRecord.businessName}}:</h2>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body container-fluid">
+                <div class="b-degrade mb-3"></div>
+                <div class="row">
+                  <div class="col-md-4" style="height: 23rem; width: 23rem;">
+                    <img
+                      class="imgCard"
+                      src= "{{ currentRecord.logo }}" 
+                      alt="image"
+                      style="height: 22rem; width: 21rem;"
+                      (error)="changeImage($event)"
+                    />
+                  </div>
+                  <div class="col-md-8">
+                    <p class="ms-2"><strong>Cod. Proveedor: </strong>{{ currentRecord.codProvider }}</p>
+                    <p class="ms-2"><strong>Razon Social: </strong>{{ currentRecord.businessName }}</p>
+                    <p class="ms-2"><strong>Sitio Web: </strong>{{ currentRecord.website }}</p>
+                    <p class="ms-2"><strong>E-mail: </strong>{{ currentRecord.email }}</p>
+                    <p class="ms-2"><strong>Telefono: </strong>{{ currentRecord.phone }}</p>
+                    <p class="ms-2"><strong>Rubro: </strong>{{ currentRecord.sector.sector }}</p>
+                    <div class="b-degrade"></div>
+                    <p class="h4 ms-3 mt-2"><strong>Direccion:</strong></p>
+                    <div>
+                      <div class="d-flex align-content-between ms-2">
+                        <span>
+                          <p><strong>Calle: </strong>{{ currentRecord.location.street }}</p>
+                        </span>
+                        <span class="ms-5">
+                          <p><strong>Nro: </strong>{{ currentRecord.location.number }}</p>
+                        </span>
+                      </div>
+                      <div class="d-flex align-content-between ms-2">
+                        <span>
+                          <p><strong>Pais: </strong>{{ currentRecord.location.city.state.country.name }}</p>
+                        </span>
+                        <span class="ms-5">
+                          <p><strong>Provincia: </strong>{{ currentRecord.location.city.state.name }}</p>
+                        </span>
+                        <span class="ms-5">
+                          <p><strong>Localidad: </strong>{{ currentRecord.location.city.name }}</p>
+                        </span>
+                      </div>
+                    </div>                      
+                  </div>              
+                </div>
+                <div class="b-degrade"></div>
+                <div class="row">                  
+                  <div class="col-md-4">
+                    <p class="h4 ms-3 mt-2"><strong>Datos Fiscales:</strong></p>                     
+                        <p class="ms-2"><strong>CUIT: </strong>{{ currentRecord.taxData.cuit }}</p>               
+                        <p class="ms-2"><strong>Cond. Iva: </strong>{{ currentRecord.taxData.ivaCondition.condition }}</p>
+                  </div>
+                  <div class="col-md-8 p-1">                    
+                    <p class="h4 ms-3 mt-2"><strong>Datos de Contacto:</strong></p>
+                    <div class="d-flex align-content-between ms-2">
+                      <span>
+                        <p><strong>Nombre: </strong>{{ currentRecord.contactData.name }}</p>
+                      </span>
+                      <span class="ms-5">
+                        <p><strong>Apellido: </strong>{{ currentRecord.contactData.lastName }}</p>
+                      </span>
+                      <span class="ms-5">
+                        <p><strong>Rol: </strong>{{ currentRecord.contactData.role }}</p>
+                      </span>                       
+                    </div>
+                    <div class="d-flex align-content-between ms-2">
+                      <span>
+                        <p><strong>E-mail: </strong>{{ currentRecord.contactData.email }}</p>
+                      </span>
+                      <span class="ms-5">
+                        <p><strong>Telefono: </strong>{{ currentRecord.contactData.phone }}</p>
+                      </span>                                            
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <div *ngIf="condicion == 'purchase-order' && currentRecord != null" class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog">
@@ -209,7 +293,7 @@
                   <svg xmlns="http://www.w3.org/2000/svg" height="16" width="6" viewBox="0 0 192 512"><path class="icono" d="M48 80a48 48 0 1 1 96 0A48 48 0 1 1 48 80zM0 224c0-17.7 14.3-32 32-32H96c17.7 0 32 14.3 32 32V448h32c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H64V256H32c-17.7 0-32-14.3-32-32z"/></svg>
                   Informacion
                 </button>
-                <button type="button" class="btn bttn text-start text-uppercase" (click)="condicion === 'purchase-order' ? onCancel() : (this.currentRecord.isDeleted) ? onRecuperar() : onDelete()">
+                <button type="button" class="btn bttn text-start text-uppercase" (click)="(this.currentRecord.isDeleted || this.currentRecord.state === 'C') ? onRecuperar() : onDelete()">
                   <ng-container *ngIf="(condicion !== 'purchase-order')">
                     <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14" viewBox="0 0 448 512"><path class="icono" d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0H284.2c12.1 0 23.2 6.8 28.6 17.7L320 32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 96 0 81.7 0 64S14.3 32 32 32h96l7.2-14.3zM32 128H416V448c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64V128zm96 64c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16z"/></svg>
                     Eliminar

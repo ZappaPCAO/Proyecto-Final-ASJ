@@ -1,5 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { Provider } from '../models/provider';
+import Swal from 'sweetalert2';
 
 
 @Pipe({
@@ -8,12 +9,15 @@ import { Provider } from '../models/provider';
 export class FilterPipe implements PipeTransform {
 
   transform(value: any[], args?: any, all?:boolean): any {
+    console.log("hol1a")
     if (args === '' || args === undefined) {
       return value;
     }
 
+    let filteredValue = [];
+
     if(!all){ // Si busca solo por algunos campos
-      return value.filter((item) => {
+      filteredValue = value.filter((item) => {
         for (const key in item) {
             if ( (key === 'businessName'|| key === 'codProvider'||
                   key === 'name'|| key === 'description') &&
@@ -27,9 +31,20 @@ export class FilterPipe implements PipeTransform {
         return false;
       });
     }else{ // Si busca por todos los campos
-      return value.filter((item) => JSON.stringify(item).toLowerCase().includes(args));
+      filteredValue = value.filter((item) => JSON.stringify(item).toLowerCase().includes(args));
     }
-   
+
+    if (filteredValue.length == 0) { // Me fijo si encontro coincidencias
+      console.log("deberia mostrar el cartel!")
+      Swal.fire({
+        title: "No se econtraron registros para el filtro aplicado!",
+        icon: "warning",
+        showCloseButton: true,        
+        showConfirmButton: false,
+      });
+    }  
+
+    return filteredValue;
   }
 
 }

@@ -61,8 +61,6 @@ export class AdministrarServicesService {
     }
 
     rescue(id:number, tipo:string) : Observable<Provider | Article | PurchaseOrder | Category>{
-      
-
       switch (tipo) {        
         case 'article':
           return this.serviceArticle.rescue(id);
@@ -71,7 +69,7 @@ export class AdministrarServicesService {
           return this.serviceProvider.rescue(id);
           break;
         case 'purchase-order':
-          
+          return this.servicePurchaseOrder.activate(id);
           break;
         case 'category':
           return this.serviceCategory.rescue(id);
@@ -93,7 +91,7 @@ export class AdministrarServicesService {
           return this.serviceProvider.delete(id);
           break;
         case 'purchase-order':
-          
+          return this.servicePurchaseOrder.cancel(id);
           break;
         case 'category':
           return this.serviceCategory.delete(id);

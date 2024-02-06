@@ -24,6 +24,10 @@ export class PurchaseOrderService {
     return this.http.get<PurchaseOrder[]>(`${this.url}/provider/${id}`);
   }
 
+  getByActive() : Observable<PurchaseOrder[]> { // Traigo solo las activas
+    return this.http.get<PurchaseOrder[]>(`${this.url}/active`);
+  }
+
   getNewNumOrder() : Observable<string>{ // Traigo el numero de orden correspondiente.
     return this.http.get<string>(`${this.url}/num-purchase-order`, { responseType: 'text' as 'json' });
   }
@@ -34,5 +38,13 @@ export class PurchaseOrderService {
 
   put(purchasOrder: PurchaseOrder) : Observable<PurchaseOrder>{
     return this.http.put<PurchaseOrder>(`${this.url}/${purchasOrder.id}`, purchasOrder);
+  }
+
+  cancel(id: number) : Observable<PurchaseOrder>{
+    return this.http.delete<PurchaseOrder>(`${this.url}/cancel/${id}`);
+  }
+
+  activate(id: number) : Observable<PurchaseOrder>{
+    return this.http.delete<PurchaseOrder>(`${this.url}/activate/${id}`);
   }
 }

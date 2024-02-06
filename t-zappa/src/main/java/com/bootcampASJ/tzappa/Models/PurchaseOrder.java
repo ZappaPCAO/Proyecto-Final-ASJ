@@ -49,7 +49,6 @@ public class PurchaseOrder {
 	
 	@Column(name="estado") // Cambiar a ingles
 	@NotNull(message="[estado] no puede ser nula.")
-//	@Pattern(regexp = ".{1}", message = "[state] tiene que ser solo un carácter.")
 	private Character state;
 
 	@NotNull(message="[total] no puede ser nula.")
@@ -65,9 +64,9 @@ public class PurchaseOrder {
 	@Column(name="updated_at")
 	private LocalDateTime updatedAt;
 	
-	@JsonInclude(JsonInclude.Include.NON_NULL)
-	@Column(name="is_deleted")
-	private Boolean isDeleted;
+//	@JsonInclude(JsonInclude.Include.NON_NULL)
+//	@Column(name="is_deleted")
+//	private Boolean isDeleted;
 	
 	// FK 
 	
@@ -84,7 +83,7 @@ public class PurchaseOrder {
 
 	public PurchaseOrder() {
 		this.createdAt = LocalDateTime.now();
-		this.isDeleted = false;
+		this.state = 'A';
 	}
 
 	public Integer getId() {
@@ -131,8 +130,8 @@ public class PurchaseOrder {
 		return state;
 	}
 
-	public void setEstado(char estado) {
-		this.state = estado;
+	public void setState(Character State) {
+		this.state = State;
 	}
 
 	public Double getTotal() {
@@ -159,14 +158,6 @@ public class PurchaseOrder {
 		this.updatedAt = updatedAt;
 	}
 
-	public Boolean getIsDeleted() {
-		return isDeleted;
-	}
-
-	public void setIsDeleted(Boolean isDeleted) {
-		this.isDeleted = isDeleted;
-	}
-
 	public Provider getProvider() {
 		return provider;
 	}
@@ -187,7 +178,6 @@ public class PurchaseOrder {
 	public String toString() {
 		return "PurchaseOrder [id=" + id + ", numPurchaseOrder=" + numPurchaseOrder + ", sendDate=" + sendDate
 				+ ", receiptDate=" + receiptDate + ", description=" + description + ", state=" + state + ", total="
-				+ total + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + ", isDeleted=" + isDeleted
-				+ ", provider=" + provider + "]";
+				+ total + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + ", provider=" + provider + "]";
 	}
 }

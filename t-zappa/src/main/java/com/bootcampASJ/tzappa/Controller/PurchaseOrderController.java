@@ -1,13 +1,12 @@
 package com.bootcampASJ.tzappa.Controller;
 
-import java.util.Collections;
 import java.util.Map;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bootcampASJ.tzappa.ErrorHandler;
-import com.bootcampASJ.tzappa.Models.Article;
 import com.bootcampASJ.tzappa.Models.Detail;
 import com.bootcampASJ.tzappa.Models.PurchaseOrder;
 import com.bootcampASJ.tzappa.Services.PurchaseOrderService;
@@ -38,6 +36,11 @@ public class PurchaseOrderController {
 	@GetMapping("/{id}") // [GET] localhost:8080/proveedores/3
 	public ResponseEntity<Object> getPurchaseOrderById(@PathVariable Integer id) {
 		return ResponseEntity.ok(this.purchaseOrderService.getPurchaseOrderById(id));
+	}
+	
+	@GetMapping("/active")
+	public ResponseEntity<Object> getPurchaseOrdersByActive(){
+		return ResponseEntity.ok(this.purchaseOrderService.getPurchaseOrdersByActive());
 	}
 	
 	@GetMapping("/provider/{id}")
@@ -74,5 +77,27 @@ public class PurchaseOrderController {
 		}catch(Exception error) {        
 	        return new ResponseEntity<>(error.getMessage(), HttpStatus.BAD_REQUEST);		    
 		}
+	}
+	
+	@DeleteMapping("/cancel/{id}")
+	public ResponseEntity<Object> cancelPurchaseOrder(@PathVariable Integer id) {
+		try {
+			PurchaseOrder result = this.purchaseOrderService.cancelPurchaseOrder(id);
+			
+			return new ResponseEntity<>(result, HttpStatus.OK);
+		}catch(Exception error) {
+			return new ResponseEntity<>("Error: " + error.getMessage(), HttpStatus.BAD_REQUEST);
+		}		
+	}
+	
+	@DeleteMapping("/activate/{id}")
+	public ResponseEntity<Object> activatePurchaseOrder(@PathVariable Integer id) {
+		try {
+			PurchaseOrder result = this.purchaseOrderService.activatePurchaseOrder(id);
+			
+			return new ResponseEntity<>(result, HttpStatus.OK);
+		}catch(Exception error) {
+			return new ResponseEntity<>("Error: " + error.getMessage(), HttpStatus.BAD_REQUEST);
+		}		
 	}
 }

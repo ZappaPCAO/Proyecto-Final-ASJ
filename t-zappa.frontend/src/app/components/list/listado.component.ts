@@ -61,11 +61,6 @@ export class ListadoComponent implements OnInit{
     this.sinInfo();
   }
 
-  onCancel() {
-    this.currentRecord.estado = 'cancelada'; // VEER creo q seria solo un caracter.
-    this.serivicioAdm.put(this.currentRecord, this.condicion);
-  }
-
   changeImage(event: Event): void {
     const imagen = event.target as HTMLImageElement;
     imagen.src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/832px-No-Image-Placeholder.svg.png';
@@ -80,7 +75,9 @@ export class ListadoComponent implements OnInit{
         this.thead = (this.condicion === 'article')  ? ['image','codArticle','category','price','provider'] :
                      (this.condicion === 'provider') ? ['logo','codProvider','businessName', 'location', 'contactData'] : 
                      (this.condicion === 'purchase-order') ? ['numPurchaseOrder','sendDate','receiptDate', 'provider', 'state', 'total'] : ['name'];
-      }
+      }else{
+        this.sinInfo();
+      }      
     });
   }                                                                        
   
@@ -143,6 +140,16 @@ export class ListadoComponent implements OnInit{
   updateList(tipo:string){
     this.serivicioAdm.getBy(this.filtro, tipo).subscribe( (data : Provider[] | Article[] | PurchaseOrder[]) => {
       this.tbody = data;
+
+      if(this.tbody.length == 0){ // Me fijo si encontro coincidencias         
+          console.log("deberia mostrar el cartel!")
+          Swal.fire({
+            title: "No se econtraron registros para el filtro aplicado!",
+            icon: "warning",
+            showCloseButton: true,        
+            showConfirmButton: false,
+          });        
+      }
     });
   }
 

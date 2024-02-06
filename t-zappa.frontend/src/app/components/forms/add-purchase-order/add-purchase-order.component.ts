@@ -5,9 +5,9 @@ import { PurchaseOrderService } from '../../../services/purchase-order.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Provider } from '../../../models/provider';
 import { Article } from '../../../models/article';
-import { formatDate, formatDateTime } from '../../../utils/formatoFecha';
+import { formatDate, formatDateTime } from '../../../utils/formatDate';
 import { NgForm } from '@angular/forms';
-import { verificarCamposEspeciales, verificarDatos, verificarLongitudes } from '../../../utils/validaciones';
+import { verificarCamposEspeciales, verificarDatos, verificarLongitudes } from '../../../utils/validates';
 import Swal from 'sweetalert2';
 import { PurchaseOrder } from '../../../models/purchase-order';
 import { Detail } from '../../../models/detail';
@@ -81,6 +81,7 @@ export class AddPurchaseOrderComponent implements OnInit {
   amount: number = 0; idArticle: number = 0;
   indexProv: number = 0;
   idPurchaseOrder: number = 0;
+  image: string = "";
 
   constructor(private router: Router, private route: ActivatedRoute,
     private providerService: ProviderService, private articleService: ArticleService, 
@@ -128,12 +129,9 @@ export class AddPurchaseOrderComponent implements OnInit {
     this.calcularTotal();
   }
   
-  verificarUpdate(){
-    // if(this.idPurchaseOrder > 0){      
-    //   this.purchaseOrderService.getById(this.idPurchaseOrder).subscribe((data : PurchaseOrder) => {
-    //     this.purchaseOrder = data;
-    //   });
-    // }
+  changeImage(event: Event): void {
+    const imagen = event.target as HTMLImageElement;
+    imagen.src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/832px-No-Image-Placeholder.svg.png';
   }
 
   agregarPurchaseOrder(form: NgForm){
@@ -196,8 +194,7 @@ export class AddPurchaseOrderComponent implements OnInit {
             this.purchaseOrderService.getNewNumOrder().subscribe((data : string) => {
               this.purchaseOrder.numPurchaseOrder = data;
               
-              this.purchaseOrder.sendDate = formatDate(new Date());
-              this.verificarUpdate();   
+              this.purchaseOrder.sendDate = formatDate(new Date());               
             });            
           })
         });        

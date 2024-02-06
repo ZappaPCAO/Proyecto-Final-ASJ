@@ -1,4 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import Swal from 'sweetalert2';
 
 @Pipe({
   name: 'lowFilter'
@@ -11,7 +12,21 @@ export class LowFilterPipe implements PipeTransform {
       return value;
     }
 
-    return value.filter((item) => !item.isDeleted);
+    let filteredValue = [];
+
+    filteredValue = value.filter((item) => (item.state === 'A' || item.isDeleted === false ));
+
+    if (filteredValue.length == 0) { // Me fijo si encontro coincidencias
+      console.log("deberia mostrar el cartel!")
+      Swal.fire({
+        title: "No se econtraron registros activos!",
+        icon: "warning",
+        showCloseButton: true,        
+        showConfirmButton: false,
+      });
+    }
+    
+    return filteredValue;
   }
   
 }

@@ -52,9 +52,18 @@
                                     </div>
                                 </div>                                
                             </div>                                                                        
-                            <div class="row mb-3">
-                                <div class="col-md-5">  
-                                    <div class="form-floating">                                                 
+                            <div class="row mb-3">                                
+                                <div class="col-md-6 d-flex">
+                                    <span *ngIf="purchaseOrder.details.length > 0" class="bd-placeholder-img card-img-top imgContainer me-4" style="height: 6rem;">
+                                        <img
+                                          class="imgCard"
+                                          src= "{{purchaseOrder.provider.logo}}" 
+                                          alt="image"
+                                          style="height: 6rem;"
+                                          (error)="changeImage($event)"                                        
+                                        />
+                                    </span> 
+                                    <div class="form-floating mt-3" style="width: 200%;">                                                 
                                         <select (change)="updateArticles()" [title]="purchaseOrder.details.length > 0 ? 'No puedes modificar el proveedor, una ves iniciado el detalle' :
                                                  'Proveedores'" [disabled]="purchaseOrder.details.length > 0" class="form-select" name="provider" [(ngModel)]="purchaseOrder.provider.id">
                                             <option *ngFor="let provider of providers" value="{{provider.id}}">
@@ -64,29 +73,27 @@
                                         <label for="SelProvedores">Provedor:</label>
                                     </div>
                                 </div>
-                                <div class="col-md-4">  
+                                <div class="col-md-4 mt-3">  
                                     <div class="form-floating">                                                 
                                         <select required class="form-select" name="article" [(ngModel)]="this.idArticle" #article="ngModel">
                                             <option *ngFor="let article of articles" value="{{article.id}}">
-                                                {{article.name| uppercase	}}
+                                                {{ article.name| uppercase	}}
                                             </option>                                                           
                                         </select>
                                         <label for="SelProductos">Articulo:</label>                                        
                                     </div>
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-2 d-flex mt-3">
                                     <div class="form-floating">                                                        
                                         <input type="number" min="1" value="1" class="form-control" [(ngModel)]="this.amount" name="cantidad" placeholder="">
                                         <label for="inputCantidad">Cantidad:</label>
                                     </div>
-                                </div>
-                                <div class="col-md-1">
-                                    <div class="form-floating mt-1 ">                                                        
+                                    <div class="form-floating mt-1 ms-3 ">                                                        
                                         <button title="Agregar al detalle" type="button" class="btn btn-lg btn-outline-success" (click)="agregarDetalle()">
                                             <svg xmlns="http://www.w3.org/2000/svg" height="14" width="12" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.--><path fill="#8732cd" d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"/></svg>
                                         </button>
                                     </div>
-                                </div>           
+                                </div>                                         
                             </div>                            
                             <div *ngIf="purchaseOrder.details.length > 0" class="row mt-0">
                                 <p class="text-uppercase h5 p-0 m-0">Detalle: </p>
