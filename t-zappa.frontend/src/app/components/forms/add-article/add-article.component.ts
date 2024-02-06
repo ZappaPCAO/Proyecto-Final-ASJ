@@ -3,7 +3,7 @@ import { ProviderService } from '../../../services/provider.service';
 import { ArticleService } from '../../../services/article.service';
 import { Article } from '../../../models/article';
 import { ActivatedRoute, Router } from '@angular/router';
-import { verificarCamposEspeciales, verificarDatos, verificarLongitudes } from '../../../utils/validates';
+// import { verificarCamposEspeciales, verificarDatos, verificarLongitudes } from '../../../utils/validates';
 import { NgForm } from '@angular/forms';
 import { Provider } from '../../../models/provider';
 import Swal from 'sweetalert2';
@@ -93,10 +93,12 @@ export class AddArticleComponent implements OnInit {
   agregarArticle(form: NgForm){
     console.log(JSON.stringify(this.article))
     
-    if( form.valid && 
-      ( verificarDatos(this.article) && // que no hay ningun caracter raro
-        verificarLongitudes(this.article) && // que los largos sean los que quiero
-        verificarCamposEspeciales(this.article) ) ){ // controlo campos especificos
+    if( form.valid
+      //  && 
+      // ( verificarDatos(this.article) && // que no hay ningun caracter raro
+      //   verificarLongitudes(this.article) && // que los largos sean los que quiero
+      //   verificarCamposEspeciales(this.article) ) 
+        ){ // controlo campos especificos
         if(this.idArticle === 0){ // 0 => Nuevo ; >0 => Edito
           this.articleService.post(this.article).subscribe((data : Article) =>{
             this.article = data;

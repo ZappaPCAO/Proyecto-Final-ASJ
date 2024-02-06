@@ -40,12 +40,13 @@ public class Article {
 	@Column(columnDefinition = "text")
 	private String description;
 	
-	@Column
 	@NotNull(message="[name] no puede ser nula.")
 	@Min(value = 1, message = "[number] debe ser un numero positivo.")
+	@Column
 	private Double price;
 	
-	@Column
+	@Size(min = 3, message = "[image] longitud fuera de rango 3-inf.")
+	@Column(columnDefinition = "text")
 	private String image;
 	
 	@JsonInclude(JsonInclude.Include.NON_NULL)

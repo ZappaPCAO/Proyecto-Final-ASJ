@@ -5,9 +5,9 @@ import { PurchaseOrderService } from '../../../services/purchase-order.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Provider } from '../../../models/provider';
 import { Article } from '../../../models/article';
-import { formatDate, formatDateTime } from '../../../utils/formatDate';
+import { formatDate } from '../../../utils/formatDate';
 import { NgForm } from '@angular/forms';
-import { verificarCamposEspeciales, verificarDatos, verificarLongitudes } from '../../../utils/validates';
+import { checkSpecialCharacters, checkOnlyNumbers } from '../../../utils/validates';
 import Swal from 'sweetalert2';
 import { PurchaseOrder } from '../../../models/purchase-order';
 import { Detail } from '../../../models/detail';
@@ -23,7 +23,6 @@ export class AddPurchaseOrderComponent implements OnInit {
     numPurchaseOrder: '',
     sendDate: '',
     receiptDate: '',
-    email: '',
     description: '',
     details: [],
     state: 'A',
@@ -81,8 +80,9 @@ export class AddPurchaseOrderComponent implements OnInit {
   amount: number = 0; idArticle: number = 0;
   indexProv: number = 0;
   idPurchaseOrder: number = 0;
-  image: string = "";
-
+  checkSpecialCharacters = checkSpecialCharacters;
+  checkOnlyNumbers = checkOnlyNumbers;
+  
   constructor(private router: Router, private route: ActivatedRoute,
     private providerService: ProviderService, private articleService: ArticleService, 
     private purchaseOrderService: PurchaseOrderService){}
@@ -92,6 +92,7 @@ export class AddPurchaseOrderComponent implements OnInit {
   }
 
   agregarDetalle() {
+    
     const detail: Detail = this.purchaseOrder.details.find(detail => detail.article.id == this.idArticle)!;   
     const article: Article = this.articles.find(arti => arti.id == this.idArticle)!;
 
@@ -135,47 +136,53 @@ export class AddPurchaseOrderComponent implements OnInit {
   }
 
   agregarPurchaseOrder(form: NgForm){
-    console.log("Esta es la orden: " + JSON.stringify(this.purchaseOrder));
-    if( form.valid && 
-      ( verificarDatos(this.purchaseOrder) && // que no hay ningun caracter raro
-        verificarLongitudes(this.purchaseOrder) && // que los largos sean los que quiero
-        verificarCamposEspeciales(this.purchaseOrder) ) ){ // controlo campos especificos
 
-        if(this.idPurchaseOrder === 0){ // 0 => Nuevo ; >0 => Edito
-          this.purchaseOrder.sendDate = new Date(this.purchaseOrder.sendDate).toISOString();
-          this.purchaseOrder.receiptDate = new Date(this.purchaseOrder.receiptDate).toISOString();
-          this.purchaseOrderService.post(this.purchaseOrder).subscribe((data : PurchaseOrder) => {
-            this.purchaseOrder = data;
-          }, (error) => {
-            Swal.fire({
-              position: "bottom-end",
-              icon: "error",
-              title: `Hubo un problema en la creacion: ${error.get}`,
-              showConfirmButton: false,
-              timer: 1500
-            });
-          }, () => {
-            Swal.fire({
-              title: "¿Desea crear otro?",          
-              icon: 'success',
-              timer: 2500,       
-              showCancelButton: true, 
-              confirmButtonColor: "var(--color-primary)",
-              cancelButtonColor: "var(--color-secondary)",          
-              confirmButtonText: "Si",
-              cancelButtonText: "No"
-            }).then((result) => {
-              if (result.isConfirmed) {
-                form.reset();
-              }else{
-                this.router.navigate(['purchase-order', "list"]); 
-              }
-            });
-          });
-        }
-    }else{
-      // Hago lo que hizo el profe con los cartelitos.
-    }
+    Object.keys(form.controls).forEach(controlName => {
+      const control = form.controls[controlName];
+      console.log(JSON.stringify(control) + "Prueba");
+    });
+
+    // console.log("Esta es la orden: " + JSON.stringify(this.purchaseOrder));
+    // if( form.valid && 
+    //   ( verificarDatos(this.purchaseOrder) && // que no hay ningun caracter raro
+    //     verificarLongitudes(this.purchaseOrder) && // que los largos sean los que quiero
+    //     verificarCamposEspeciales(this.purchaseOrder) ) ){ // controlo campos especificos
+
+    //     if(this.idPurchaseOrder === 0){ // 0 => Nuevo ; >0 => Edito
+    //       this.purchaseOrder.sendDate = new Date(this.purchaseOrder.sendDate).toISOString();
+    //       this.purchaseOrder.receiptDate = new Date(this.purchaseOrder.receiptDate).toISOString();
+    //       this.purchaseOrderService.post(this.purchaseOrder).subscribe((data : PurchaseOrder) => {
+    //         this.purchaseOrder = data;
+    //       }, (error) => {
+    //         Swal.fire({
+    //           position: "bottom-end",
+    //           icon: "error",
+    //           title: `Hubo un problema en la creacion: ${error.get}`,
+    //           showConfirmButton: false,
+    //           timer: 1500
+    //         });
+    //       }, () => {
+    //         Swal.fire({
+    //           title: "¿Desea crear otro?",          
+    //           icon: 'success',
+    //           timer: 2500,       
+    //           showCancelButton: true, 
+    //           confirmButtonColor: "var(--color-primary)",
+    //           cancelButtonColor: "var(--color-secondary)",          
+    //           confirmButtonText: "Si",
+    //           cancelButtonText: "No"
+    //         }).then((result) => {
+    //           if (result.isConfirmed) {
+    //             form.reset();
+    //           }else{
+    //             this.router.navigate(['purchase-order', "list"]); 
+    //           }
+    //         });
+    //       });
+    //     }
+    // }else{
+    //   // Hago lo que hizo el profe con los cartelitos.
+    // }
   }
 
   updateArticles() {

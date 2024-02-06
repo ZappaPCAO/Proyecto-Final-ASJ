@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ProviderService } from '../../../services/provider.service';
 import { Provider } from '../../../models/provider';
 import { ActivatedRoute, Router } from '@angular/router';
-import { verificarCamposEspeciales, verificarDatos, verificarLongitudes } from '../../../utils/validates';
+// import { verificarCamposEspeciales, verificarDatos, verificarLongitudes } from '../../../utils/validates';
+import { isCuit, isEmail, isWebsite } from '../../../utils/validates';
 import { NgForm } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { City, Country, State } from '../../../models/geoLocation';
@@ -19,6 +20,7 @@ import { SectorService } from '../../../services/sector.service';
 export class AddProviderComponent implements OnInit {
   countries: Country[] = []; states: State[] = []; cities: City[] = [];
   ivaConditions: IvaCondition[] = []; sectors: Sector[] = [];
+  isWebsite = isWebsite; isCuit=isCuit; isEmail = isEmail;
 
   provider: Provider = {
     id: 0,
@@ -75,6 +77,26 @@ export class AddProviderComponent implements OnInit {
     private inicializadorService: InicializadorService,
     private sectorService: SectorService){}
   
+  formatPhoneNumber(event: any) {
+    let phoneNumber = event.target.value.replace(/\D/g, '');
+
+    if (phoneNumber.length === 10) {
+      phoneNumber = phoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
+    }
+
+    this.provider.phone = phoneNumber;
+  }
+
+  formatCuil(event: any) {
+    let cuit = event.target.value.replace(/\D/g, ''); // Eliminar todos los caracteres no numéricos
+
+    if (cuit.length >= 2 && cuit.length <= 11) {
+      cuit = cuit.replace(/(\d{2})(\d{8})(\d{1})/, '$1-$2-$3');
+    }
+
+    this.provider.taxData.cuit = cuit;
+  }
+
   updateStates(idCountry:number){ // para el change del pais
     this.states = this.countries.find(country => +country.id == idCountry)?.states!; 
   }
@@ -94,10 +116,12 @@ export class AddProviderComponent implements OnInit {
   }
 
   agregarProvider(form: NgForm){
-    if( form.valid && 
-      ( verificarDatos(this.provider) && // que no hay ningun caracter raro
-        verificarLongitudes(this.provider) && // que los largos sean los que quiero
-        verificarCamposEspeciales(this.provider) ) ){ // controlo campos especificos
+    if( form.valid 
+      // && 
+      // ( verificarDatos(this.provider) && // que no hay ningun caracter raro
+      //   verificarLongitudes(this.provider) && // que los largos sean los que quiero
+      //   verificarCamposEspeciales(this.provider) ) 
+        ){ // controlo campos especificos
         if(this.idProvider === 0){ // 0 => Nuevo ; >0 => Edito
           this.providerService.post(this.provider).subscribe(data =>{
             this.provider = data;

@@ -16,28 +16,28 @@
                                 <p class="h6">Datos de la Empresa: </p> 
                                 <div class="col-md-4">                                    
                                     <div class=" form-floating mb-3 mb-md-0">
-                                        <input #logo="ngModel" [ngClass]="!logo.value ? 'mi-requerido': logo.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'" minlength="3" maxlength="255" required class="form-control form-control-sm" name="logo" [(ngModel)]="provider.logo" type="url" placeholder="" />
+                                        <input #logo="ngModel" [ngClass]="!logo.value ? '': logo.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'" minlength="3" maxlength="1024" class="form-control form-control-sm" name="logo" [(ngModel)]="provider.logo" type="url" placeholder="" />
                                         <label id="labelCode" for="inputCode">Logo:</label>
                                         <ng-container *ngIf="logo.value">
                                             <span *ngIf="logo.errors?.['minlength']" class="mi-invalid-feedback">
                                                 Longitud minima 3
                                             </span>
                                             <span *ngIf="logo.errors?.['maxlength']" class="mi-invalid-feedback">
-                                                Longitud maxima 25
+                                                Longitud maxima 1024
                                             </span>                                             
                                         </ng-container>
                                     </div>                                    
                                 </div> 
                                 <div class="col-md-4">                                    
                                     <div class=" form-floating mb-3 mb-md-0">
-                                        <input #codProvider="ngModel" [ngClass]="!codProvider.value ? 'mi-requerido': codProvider.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'" minlength="3" maxlength="25" required class="form-control form-control-sm" name="codProvider" [(ngModel)]="provider.codProvider" type="text" placeholder="" />
+                                        <input #codProvider="ngModel" [ngClass]="!codProvider.value ? 'mi-requerido': codProvider.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'" minlength="3" maxlength="30" required class="form-control form-control-sm" name="codProvider" [(ngModel)]="provider.codProvider" type="text" placeholder="" />
                                         <label id="labelCode" for="inputCode">Codigo proveedor:</label>
                                         <ng-container *ngIf="codProvider.value">
                                             <span *ngIf="codProvider.errors?.['minlength']" class="mi-invalid-feedback">
                                                 Longitud minima 3
                                             </span>
                                             <span *ngIf="codProvider.errors?.['maxlength']" class="mi-invalid-feedback">
-                                                Longitud maxima 25
+                                                Longitud maxima 30
                                             </span>                                             
                                         </ng-container>
                                     </div>                                    
@@ -46,14 +46,14 @@
                                     <div class=" form-floating">
                                         <input #bussName="ngModel"  class="form-control form-control-sm" name="bussName" [(ngModel)]="provider.businessName" type="text" placeholder=""
                                         [ngClass]="!bussName.value ? 'mi-requerido': bussName.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'"
-                                        required minlength="3" maxlength="25" >
+                                        required minlength="3" maxlength="50" >
                                         <label for="inputRazonSocial">Razon Social:</label>
                                         <ng-container *ngIf="bussName.value">
                                             <span *ngIf="bussName.errors?.['minlength']" class="mi-invalid-feedback">
                                                 Longitud minima 3
                                             </span>
                                             <span *ngIf="bussName.errors?.['maxlength']" class="mi-invalid-feedback">
-                                                Longitud maxima 25
+                                                Longitud maxima 50
                                             </span>                                             
                                         </ng-container>
                                     </div>
@@ -62,8 +62,8 @@
                             <div class="row mb-4 ">                                                                                            
                                 <div class="col-md-3">
                                     <div class=" form-floating mb-3">
-                                        <input required minlength="3" class="form-control form-control-sm" name="website" [(ngModel)]="provider.website" 
-                                        #website="ngModel" [ngClass]="!website.value ? 'mi-requerido': website.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'"
+                                        <input minlength="3" maxlength="1024" class="form-control form-control-sm" name="website" [(ngModel)]="provider.website" 
+                                        #website="ngModel" [ngClass]="!website.value ? '': website.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'"
                                         type="url" placeholder="" />
                                         <label for="inputSitioWeb">Sitio Web:</label>
                                         <ng-container *ngIf="website.value">
@@ -71,14 +71,17 @@
                                                 Longitud minima 3
                                             </span>
                                             <span *ngIf="website.errors?.['maxlength']" class="mi-invalid-feedback">
-                                                Longitud maxima 50
-                                            </span>                                             
+                                                Longitud maxima 1024
+                                            </span>
+                                            <span *ngIf="!isWebsite(website.value)" class="mi-invalid-feedback">
+                                                Debe ingresar un sitio web valido.
+                                            </span>                                                                                          
                                         </ng-container> 
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class=" form-floating mb-3 mb-md-0">
-                                        <input required class="form-control form-control-sm" name="emailOne" [(ngModel)]="provider.email" type="email" minlength="4" placeholder=""
+                                        <input required class="form-control form-control-sm" name="emailOne" [(ngModel)]="provider.email" type="email" minlength="4" maxlength="50" placeholder=""
                                         #emailOne="ngModel" [ngClass]="!emailOne.value ? 'mi-requerido': emailOne.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'"
                                         />
                                         <label id="labelCode" for="inputCode">E-mail:</label>
@@ -88,19 +91,22 @@
                                             </span>
                                             <span *ngIf="emailOne.errors?.['maxlength']" class="mi-invalid-feedback">
                                                 Longitud maxima 50
+                                            </span>
+                                            <span *ngIf="!isEmail(emailOne.value)" class="mi-invalid-feedback">
+                                                Debe ingresar un email valido.
                                             </span>                                             
                                         </ng-container> 
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class=" form-floating">
-                                        <input required maxlength="12" class="form-control form-control-sm" name="telefonoEmpresa" [(ngModel)]="provider.phone" type="text" placeholder=""
+                                        <input (input)="formatPhoneNumber($event)" required minlength="14" maxlength="14" class="form-control form-control-sm" name="telefonoEmpresa" [(ngModel)]="provider.phone" type="text" placeholder=""
                                         #phoneOne="ngModel" [ngClass]="!phoneOne.value ? 'mi-requerido': phoneOne.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'"
                                         />
                                         <label for="inputRazonSocial">Telefono: </label>
                                         <ng-container *ngIf="phoneOne.value">
-                                            <span class="invalid-feedback mi-invalid-feedback">
-                                                Formato invalido
+                                            <span *ngIf="phoneOne.errors?.['minlength']" class="mi-invalid-feedback">
+                                                Longitud 10, solo numeros.
                                             </span>
                                         </ng-container>
                                     </div>
@@ -110,24 +116,20 @@
                                         <select required class="form-select form-select-sm" name="sector" [(ngModel)]="provider.sector.id"
                                         #sector="ngModel" [ngClass]="!sector.value ? 'mi-requerido': sector.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'"
                                         >
-                                            <option *ngFor="let sector of this.sectors; index as i" value="{{ sector.id }}">{{ sector.sector }}</option>
-                                            <!-- Mas opc -->
+                                            <option *ngFor="let sector of this.sectors; index as i" value="{{ sector.id }}">{{ sector.sector }}</option>                                          
                                         </select>                                        
-                                        <label id="labelRubro" for="inputRubro">Rubro:</label>                                         
-                                        <ng-container *ngIf="sector.value">
-                                            <span *ngIf="sector.errors?.['minlength']" class="mi-invalid-feedback">
-                                                Longitud minima 3
-                                            </span>
-                                            <span *ngIf="sector.errors?.['maxlength']" class="mi-invalid-feedback">
-                                                Longitud maxima 25
-                                            </span>                                             
-                                        </ng-container>    
+                                        <label id="labelRubro" for="inputRubro">Rubro:</label>       
                                         <span class="mt-1 ms-1">                                                        
                                             <button title="Agregar nuevo rubro" type="button" class="btn btn-lg btn-outline-success">
                                                 <svg xmlns="http://www.w3.org/2000/svg" height="14" width="12" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.--><path fill="#8732cd" d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"/></svg>
                                             </button>
                                         </span>                                   
-                                    </div>                                    
+                                    </div>
+                                    <ng-container *ngIf="!sector.value">
+                                        <span class="mi-invalid-feedback">
+                                            Debes seleccionar un rubro.
+                                        </span>                                                                                       
+                                    </ng-container>                                 
                                 </div>
                             </div>
                             <div class="row mb-3">                      
@@ -150,8 +152,8 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class=" form-floating">                                                        
-                                        <input required min="1" max="99999" type="number" class="form-control form-control-sm" name="nroCalle" [(ngModel)]="provider.location.number" placeholder=""
-                                        #streetNumber="ngModel" [ngClass]="!streetNumber.value ? 'mi-requerido': streetNumber.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'">
+                                        <input min="1" max="99999" type="number" class="form-control form-control-sm" name="nroCalle" [(ngModel)]="provider.location.number" placeholder=""
+                                        #streetNumber="ngModel" [ngClass]="!streetNumber.value ? '': streetNumber.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'">
                                         <label for="inputCalleNro">Numero: </label>
                                         <ng-container *ngIf="streetNumber.value">
                                             <span *ngIf="streetNumber.errors?.['max']" class="mi-invalid-feedback">
@@ -185,13 +187,12 @@
                                         <select required class="form-select form-select-sm" name="country" [(ngModel)]="provider.location.city.state.country.id"  (change)="updateStates(countryModel.value)"
                                         #countryModel="ngModel" [ngClass]="!countryModel.value ? 'mi-requerido': countryModel.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'"
                                         >
-                                            <option *ngFor="let country of countries; index as i" value="{{ country.id }}">{{ country.name }}</option>
-                                            <!-- Mas opc -->
+                                            <option *ngFor="let country of countries; index as i" value="{{ country.id }}">{{ country.name }}</option>                                            
                                         </select>
                                         <label for="SelPais">País:</label>
-                                        <ng-container *ngIf="countryModel.value">
-                                            <span class="invalid-feedback mi-invalid-feedback">
-                                                Requerido
+                                        <ng-container *ngIf="!countryModel.value">
+                                            <span class="mi-invalid-feedback">
+                                                Debes seleccionar un pais.
                                             </span>
                                         </ng-container>
                                     </div>
@@ -204,9 +205,9 @@
                                             <option *ngFor="let state of this.states; index as i" value="{{ state.id }}">{{ state.name }}</option>
                                         </select>
                                         <label for="SelPais">Provincia:</label>
-                                        <ng-container *ngIf="stateModel.value">
-                                            <span class="invalid-feedback mi-invalid-feedback">
-                                                Requerido
+                                        <ng-container *ngIf="!stateModel.value">
+                                            <span class="mi-invalid-feedback">
+                                                Debes seleccionar una provincia.
                                             </span>
                                         </ng-container>
                                     </div>
@@ -219,9 +220,9 @@
                                             <option  *ngFor="let city of this.cities ; index as i" value="{{ city.id }}">{{ city.name }}</option>
                                         </select>
                                         <label for="SelLocalidad">Localidad:</label>
-                                        <ng-container *ngIf="city.value">
-                                            <span class="invalid-feedback mi-invalid-feedback">
-                                                Requerido
+                                        <ng-container *ngIf="!city.value">
+                                            <span class="mi-invalid-feedback">
+                                                Debes seleccionar una localidad.
                                             </span>
                                         </ng-container>
                                     </div>
@@ -233,17 +234,17 @@
                                         <p class="h6">Datos Fiscales: </p>
                                         <div class="col-md-12">                                                                                                       
                                             <div class=" form-floating">                                                                                                               
-                                                <input required maxlength="13" minlength="10"  type="text" class="form-control form-control-sm" name="cuit" [(ngModel)]="provider.taxData.cuit" placeholder=""
+                                                <input (input)="formatCuil($event)" required maxlength="13" minlength="13"  type="text" class="form-control form-control-sm" name="cuit" [(ngModel)]="provider.taxData.cuit" placeholder=""
                                                 #cuit="ngModel" [ngClass]="!cuit.value ? 'mi-requerido': cuit.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'"
                                                 >
                                                 <label for="inputCuit">CUIT: </label>
                                                 <ng-container *ngIf="cuit.value">
                                                     <span *ngIf="cuit.errors?.['minlength']" class="mi-invalid-feedback">
-                                                        Longitud minima 10
+                                                        11 caracteres, sin guiones.
                                                     </span>
-                                                    <span *ngIf="cuit.errors?.['maxlength']" class="mi-invalid-feedback">
-                                                        Longitud maxima 13
-                                                    </span>                                             
+                                                    <span *ngIf="!isCuit(cuit.value)" class="mi-invalid-feedback">
+                                                        Debe ingresar un cuit valido.
+                                                    </span>                                                                                                 
                                                 </ng-container> 
                                             </div>
                                         </div>                                    
@@ -257,9 +258,9 @@
                                                     <option *ngFor="let condition of this.ivaConditions; index as i" value="{{ condition.id }}">{{ condition.condition }}</option>
                                                 </select>                                               
                                                 <label for="inputCondIva">Cond. iva: </label>
-                                                <ng-container *ngIf="ivaCondition.value">
-                                                    <span class="invalid-feedback mi-invalid-feedback">
-                                                        Requerido
+                                                <ng-container *ngIf="!ivaCondition.value">
+                                                    <span class="mi-invalid-feedback">
+                                                        Debes seleccionar una cond. iva.
                                                     </span>
                                                 </ng-container>                                                    
                                             </div>
@@ -271,7 +272,7 @@
                                         <p class="h6">Datos de Contacto: </p>
                                         <div class="col-md-6">                                                                                                       
                                             <div class=" form-floating">                                                                                                               
-                                                <input required minlength="3" maxlength="25" type="text" class="form-control form-control-sm" name="name" [(ngModel)]="provider.contactData.name" placeholder=""
+                                                <input required minlength="3" maxlength="30" type="text" class="form-control form-control-sm" name="name" [(ngModel)]="provider.contactData.name" placeholder=""
                                                 #name="ngModel" [ngClass]="!name.value ? 'mi-requerido': name.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'"
                                                 >
                                                 <label for="inputNombre">Nombre: </label>
@@ -280,7 +281,7 @@
                                                         Longitud minima 3
                                                     </span>
                                                     <span *ngIf="name.errors?.['maxlength']" class="mi-invalid-feedback">
-                                                        Longitud maxima 25
+                                                        Longitud maxima 30
                                                     </span>                                             
                                                 </ng-container> 
                                             </div>
@@ -321,13 +322,13 @@
                                         </div>                                                                        
                                         <div class="col-md-3">
                                             <div class=" form-floating">                                                        
-                                                <input required maxlength="12" type="number" class="form-control form-control-sm" name="phoneTwo" [(ngModel)]="provider.contactData.phone" placeholder=""
+                                                <input required minlength="14" maxlength="14" type="number" class="form-control form-control-sm" name="phoneTwo" [(ngModel)]="provider.contactData.phone" placeholder=""
                                                 #phoneTwo="ngModel" [ngClass]="!phoneTwo.value ? 'mi-requerido': phoneTwo.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'"
                                                 >
                                                 <label for="inputTelefono">Telefono: </label>
                                                 <ng-container *ngIf="phoneTwo.value">
-                                                    <span class="invalid-feedback mi-invalid-feedback">
-                                                        Formato invalido
+                                                    <span *ngIf="phoneTwo.errors?.['minlength']" class="mi-invalid-feedback">
+                                                        Longitud 10, solo numeros.
                                                     </span>
                                                 </ng-container>
                                             </div>

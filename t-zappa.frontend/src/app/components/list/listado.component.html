@@ -133,6 +133,12 @@
                           />
                         </div>
                       </td>
+                    </ng-container>                    
+                    <ng-container *ngSwitchCase="'sendDate'"> <!-- Empiezan los que manejo en purchase orders -->
+                      <td [ngClass]="{'tr-delete': (el.state == 'C')}">{{el[key] | date: 'dd/MM/yyyy'}}</td>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'receiptDate'"> <!-- Empiezan los que manejo en purchase orders -->
+                      <td [ngClass]="{'tr-delete': (el.state == 'C')}">{{el[key] | date: 'dd/MM/yyyy'}}</td>
                     </ng-container>
                     <ng-container *ngSwitchCase="'total'"> <!-- Empiezan los que manejo en purchase orders -->
                       <td [ngClass]="{'tr-delete': (el.state == 'C')}">{{el[key] | currency:'USD':'symbol':'1.2-2'}}</td>
@@ -149,135 +155,151 @@
             </tbody>
           </table>
         </div>
-        <div *ngIf="condicion == 'provider' && currentRecord != null" class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog modal-xl">
-            <div class="modal-content mi-bg-black text-white">          
-              <div class="modal-header b-degrade">
-                <h2 class="modal-title fs-5" id="exampleModalLabel">Detalle de {{currentRecord.businessName}}:</h2>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body container-fluid">
-                <div class="b-degrade mb-3"></div>
-                <div class="row">
-                  <div class="col-md-4" style="height: 23rem; width: 23rem;">
-                    <img
-                      class="imgCard"
-                      src= "{{ currentRecord.logo }}" 
-                      alt="image"
-                      style="height: 22rem; width: 21rem;"
-                      (error)="changeImage($event)"
-                    />
-                  </div>
-                  <div class="col-md-8">
-                    <p class="ms-2"><strong>Cod. Proveedor: </strong>{{ currentRecord.codProvider }}</p>
-                    <p class="ms-2"><strong>Razon Social: </strong>{{ currentRecord.businessName }}</p>
-                    <p class="ms-2"><strong>Sitio Web: </strong>{{ currentRecord.website }}</p>
-                    <p class="ms-2"><strong>E-mail: </strong>{{ currentRecord.email }}</p>
-                    <p class="ms-2"><strong>Telefono: </strong>{{ currentRecord.phone }}</p>
-                    <p class="ms-2"><strong>Rubro: </strong>{{ currentRecord.sector.sector }}</p>
+
+        <ng-container [ngSwitch]="this.condicion">
+          <div *ngIf="currentRecord != null" class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+              <div class="modal-content mi-bg-black text-white">          
+                <div class="modal-header b-degrade">
+                  <h2 class="modal-title fs-5" id="exampleModalLabel">Detalle de prueba:</h2>
+                  <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body container-fluid">
+                  <div class="b-degrade mb-3"></div>
+                  <ng-container *ngSwitchCase="'provider'">
+                    <div class="row">
+                      <div class="col-md-4" style="height: 23rem; width: 23rem;">
+                        <img
+                          class="imgCard"
+                          src= "{{ currentRecord.logo }}" 
+                          alt="image"
+                          style="height: 22rem; width: 21rem;"
+                          (error)="changeImage($event)"
+                        />
+                      </div>
+                      <div class="col-md-8">
+                        <p class="ms-2"><strong>Cod. Proveedor: </strong>{{ currentRecord.codProvider }}</p>
+                        <p class="ms-2"><strong>Razon Social: </strong>{{ currentRecord.businessName }}</p>
+                        <p class="ms-2"><strong>Sitio Web: </strong>{{ currentRecord.website }}</p>
+                        <p class="ms-2"><strong>E-mail: </strong>{{ currentRecord.email }}</p>
+                        <p class="ms-2"><strong>Telefono: </strong>{{ currentRecord.phone }}</p>
+                        <p class="ms-2"><strong>Rubro: </strong>{{ currentRecord.sector.sector }}</p>
+                        <div class="b-degrade"></div>
+                        <p class="h4 ms-3 mt-2"><strong>Direccion:</strong></p>
+                        <div>
+                          <div class="d-flex align-content-between ms-2">
+                            <span>
+                              <p><strong>Calle: </strong>{{ currentRecord.location.street }}</p>
+                            </span>
+                            <span class="ms-5">
+                              <p><strong>Nro: </strong>{{ currentRecord.location.number }}</p>
+                            </span>
+                          </div>
+                          <div class="d-flex align-content-between ms-2">
+                            <span>
+                              <p><strong>Pais: </strong>{{ currentRecord.location.city.state.country.name }}</p>
+                            </span>
+                            <span class="ms-5">
+                              <p><strong>Provincia: </strong>{{ currentRecord.location.city.state.name }}</p>
+                            </span>
+                            <span class="ms-5">
+                              <p><strong>Localidad: </strong>{{ currentRecord.location.city.name }}</p>
+                            </span>
+                          </div>
+                        </div>                      
+                      </div>              
+                    </div>
                     <div class="b-degrade"></div>
-                    <p class="h4 ms-3 mt-2"><strong>Direccion:</strong></p>
-                    <div>
-                      <div class="d-flex align-content-between ms-2">
-                        <span>
-                          <p><strong>Calle: </strong>{{ currentRecord.location.street }}</p>
-                        </span>
-                        <span class="ms-5">
-                          <p><strong>Nro: </strong>{{ currentRecord.location.number }}</p>
-                        </span>
+                    <div class="row">                  
+                      <div class="col-md-4">
+                        <p class="h4 ms-3 mt-2"><strong>Datos Fiscales:</strong></p>                     
+                            <p class="ms-2"><strong>CUIT: </strong>{{ currentRecord.taxData.cuit }}</p>               
+                            <p class="ms-2"><strong>Cond. Iva: </strong>{{ currentRecord.taxData.ivaCondition.condition }}</p>
                       </div>
-                      <div class="d-flex align-content-between ms-2">
-                        <span>
-                          <p><strong>Pais: </strong>{{ currentRecord.location.city.state.country.name }}</p>
-                        </span>
-                        <span class="ms-5">
-                          <p><strong>Provincia: </strong>{{ currentRecord.location.city.state.name }}</p>
-                        </span>
-                        <span class="ms-5">
-                          <p><strong>Localidad: </strong>{{ currentRecord.location.city.name }}</p>
-                        </span>
+                      <div class="col-md-8 p-1">                    
+                        <p class="h4 ms-3 mt-2"><strong>Datos de Contacto:</strong></p>
+                        <div class="d-flex align-content-between ms-2">
+                          <span>
+                            <p><strong>Nombre: </strong>{{ currentRecord.contactData.name }}</p>
+                          </span>
+                          <span class="ms-5">
+                            <p><strong>Apellido: </strong>{{ currentRecord.contactData.lastName }}</p>
+                          </span>
+                          <span class="ms-5">
+                            <p><strong>Rol: </strong>{{ currentRecord.contactData.role }}</p>
+                          </span>                       
+                        </div>
+                        <div class="d-flex align-content-between ms-2">
+                          <span>
+                            <p><strong>E-mail: </strong>{{ currentRecord.contactData.email }}</p>
+                          </span>
+                          <span class="ms-5">
+                            <p><strong>Telefono: </strong>{{ currentRecord.contactData.phone }}</p>
+                          </span>                                            
+                        </div>
                       </div>
-                    </div>                      
-                  </div>              
-                </div>
-                <div class="b-degrade"></div>
-                <div class="row">                  
-                  <div class="col-md-4">
-                    <p class="h4 ms-3 mt-2"><strong>Datos Fiscales:</strong></p>                     
-                        <p class="ms-2"><strong>CUIT: </strong>{{ currentRecord.taxData.cuit }}</p>               
-                        <p class="ms-2"><strong>Cond. Iva: </strong>{{ currentRecord.taxData.ivaCondition.condition }}</p>
-                  </div>
-                  <div class="col-md-8 p-1">                    
-                    <p class="h4 ms-3 mt-2"><strong>Datos de Contacto:</strong></p>
-                    <div class="d-flex align-content-between ms-2">
-                      <span>
-                        <p><strong>Nombre: </strong>{{ currentRecord.contactData.name }}</p>
-                      </span>
-                      <span class="ms-5">
-                        <p><strong>Apellido: </strong>{{ currentRecord.contactData.lastName }}</p>
-                      </span>
-                      <span class="ms-5">
-                        <p><strong>Rol: </strong>{{ currentRecord.contactData.role }}</p>
-                      </span>                       
                     </div>
-                    <div class="d-flex align-content-between ms-2">
-                      <span>
-                        <p><strong>E-mail: </strong>{{ currentRecord.contactData.email }}</p>
-                      </span>
-                      <span class="ms-5">
-                        <p><strong>Telefono: </strong>{{ currentRecord.contactData.phone }}</p>
-                      </span>                                            
+                  </ng-container>
+                  <ng-container *ngSwitchCase="'purchase-order'">
+                    <div class="row">
+                      <p class="h4 text-center">{{currentRecord.provider.businessName}}</p>
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th>Articulo</th>                        
+                            <th>Precio</th>
+                            <th>Subtotal</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr class="col" *ngFor="let detail of currentRecord.details">
+                            <td>
+                              {{detail.article.name}} {{(detail.amount > 1)?'('+detail.amount+')':''}}
+                            </td>
+                            <td>
+                              {{detail.article.price}}
+                            </td>
+                            <td>
+                              {{detail.subtotal}}
+                            </td>
+                          </tr>
+                        </tbody>
+                        <tfoot>
+                          <tr>
+                            <th colspan="3" class="text-end">
+                              <p class="px-5 mx-5">Total: {{currentRecord.total}}</p>
+                            </th>
+                          </tr>
+                        </tfoot>
+                      </table>
                     </div>
-                  </div>
+                  </ng-container>
+                  <ng-container *ngSwitchCase="'article'">
+                    <div class="row">
+                      <div class="col-md-4" style="height: 23rem; width: 23rem;">
+                        <img
+                          class="imgCard"
+                          src= "{{ currentRecord.image }}" 
+                          alt="image"
+                          style="height: 22rem; width: 21rem;"
+                          (error)="changeImage($event)"
+                        />
+                      </div>
+                      <div class="col-md-8">
+                        <p class="ms-2"><strong>SKU: </strong>{{ currentRecord.codArticle }}</p>
+                        <p class="ms-2"><strong>Nombre: </strong>{{ currentRecord.name }}</p>
+                        <p class="ms-2"><strong>Proveedor: </strong>{{ currentRecord.provider.businessName }}</p>
+                        <p class="ms-2"><strong>Categoria: </strong>{{ currentRecord.category.name }}</p>
+                        <p class="ms-2"><strong>Precio: </strong>{{ currentRecord.price | currency:'USD':'symbol':'1.2-2' }}</p>
+                        <p class="ms-2"><strong>Descripcion: </strong>{{ currentRecord.description }}</p>                   
+                      </div>              
+                    </div>
+                  </ng-container>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <div *ngIf="condicion == 'purchase-order' && currentRecord != null" class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h2 class="modal-title fs-5" id="exampleModalLabel">Detalle Orden: {{currentRecord.numPurchaseOrder}}</h2>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                <div class="row">
-                  <p class="h4 text-center">{{currentRecord.provider.businessName}}</p>
-                  <table class="table">
-                    <thead>
-                      <tr>
-                        <th>Articulo</th>                        
-                        <th>Precio</th>
-                        <th>Subtotal</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr class="col" *ngFor="let detail of currentRecord.details">
-                        <td>
-                          {{detail.article.name}} {{(detail.amount > 1)?'('+detail.amount+')':''}}
-                        </td>
-                        <td>
-                          {{detail.article.price}}
-                        </td>
-                        <td>
-                          {{detail.subtotal}}
-                        </td>
-                      </tr>
-                    </tbody>
-                    <tfoot>
-                      <tr>
-                        <th colspan="3" class="text-end">
-                          <p class="px-5 mx-5">Total: {{currentRecord.total}}</p>
-                        </th>
-                      </tr>
-                    </tfoot>
-                  </table>
-                </div>
-              </div>              
-            </div>
-          </div>
-        </div>         
+        </ng-container>                
         <span class="row contextMenu  p-0 m-0" [ngStyle]="this.rightPanelStyle" (clickOutside)="closeContextMenu()">    
             <div class="col-12  p-0 m-0">
               <div class="d-flex flex-column p-0 m-0" role="group">

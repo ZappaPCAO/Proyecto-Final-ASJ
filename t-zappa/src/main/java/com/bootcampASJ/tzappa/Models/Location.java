@@ -28,7 +28,7 @@ public class Location {
 	private String street;
 	
 	@Min(value = 1, message = "[number] debe ser mayor o igual a 1.")
-    @Max(value = 10000, message = "[number] debe ser menor o igual a 10.000 .")
+    @Max(value = 99999, message = "[number] debe ser menor o igual a 99.999.")
 	@Column
 	private Integer number;
 	

@@ -24,9 +24,6 @@ import { PurchaseOrderService } from './services/purchase-order.service';
 import { FilterPipe } from './pipes/filter.pipe';
 import { LowFilterPipe } from './pipes/lowFilter.pipe';
 
-
-
-
 @NgModule({
   declarations: [
     AppComponent,

@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdministrarServicesService } from '../../services/administrar-services.service';
 import { Provider } from '../../models/provider';
@@ -33,7 +33,6 @@ export class ListadoComponent implements OnInit{
   }
 
   detectRightMouseClick($event: any, el: Provider | Article | PurchaseOrder) {
-    console.log("hola");
     if ($event.which === 3) {
       // Ajusta la posición del menú respecto a la ventana del navegador
       this.rightPanelStyle = {
@@ -108,7 +107,7 @@ export class ListadoComponent implements OnInit{
   onDelete(){
     Swal.fire({
       title: "¿Estas seguro?",
-      text: `¡Proveedor: ${this.currentRecord.businessName}, sera eliminado!`,      
+      text: `¡Proveedor: ${this.currentRecord.businessName}, sera eliminado!`,   // VER ACA   
       showCancelButton: true,
       allowOutsideClick: false,
       allowEscapeKey: false,
@@ -126,7 +125,7 @@ export class ListadoComponent implements OnInit{
           
         });        
         Swal.fire({
-          position: "bottom-end",
+          position: "bottom-start",
           icon: "success",
           title: "Eliminado con exito",
           showConfirmButton: false,
