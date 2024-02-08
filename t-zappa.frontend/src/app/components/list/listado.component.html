@@ -1,5 +1,12 @@
 <main class="mi-bg-black" oncontextmenu="return false;" (mouseleave)="closeContextMenu()">
   <div class="container-fluid p-0 m-0">
+    <nav class="p-0 m-0 pt-1" style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' %3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+      <ol class="breadcrumb p-0 m-0 text-uppercase">
+        <li class="p-0 m-0 ms-3 me-1 breadcrumb-item text-white fs-5"><a style="color: inherit;text-decoration: none; color: var(--color-secondary);"
+          routerLink="">Inicio </a></li>
+        <li class="p-0 m-0 breadcrumb-item active text-white fs-5" aria-current="page">Listado</li>
+      </ol>
+    </nav>
     <div class="row py-2 m-0 mb-1 mi-bg-black text-white">
       <div class="col-2 pe-0">
         <div class="form-check form-switch mt-4">
@@ -8,8 +15,8 @@
         </div>         
       </div>
       <div class="col-5 ps-0 pe-5"
-           [ngClass]="{'col-5':  (this.condicion === 'article' || this.condicion === 'provider'), 
-                       'col-7': !(this.condicion === 'article' || this.condicion === 'provider')}" >
+           [ngClass]="{'col-5':  (this.condicion === 'article' || this.condicion === 'provider' || this.condicion === 'purchase-order'), 
+                       'col-7': !(this.condicion === 'article' || this.condicion === 'provider' || this.condicion === 'purchase-order')}" >
         <h1 class="text-center m-0 h2">Listado de {{ (this.condicion === 'provider') ? 'Proveedores' :
                                                      (this.condicion === 'article') ? 'Articulos' :
                                                      (this.condicion === 'purchase-order') ? 'Ordenes de Compra' : 'Categorias' }}</h1>
@@ -20,8 +27,8 @@
         <label for="">Filtar: </label>
         <input class="form-control" type="text" name="filtro" [(ngModel)]="filter" placeholder="Buscar...">
       </div>
-      <div *ngIf="(this.condicion === 'article' || this.condicion === 'provider')" class="col-2"> 
-        <span>filtrar por {{(this.condicion === 'article') ? 'Categoria' : 'Sector'}}: </span>
+      <div *ngIf="(this.condicion === 'article' || this.condicion === 'provider' || this.condicion === 'purchase-order')" class="col-2"> 
+        <span>filtrar por {{(this.condicion === 'article') ? 'Categoria' : (this.condicion === 'provider') ? 'Sector' : 'Proveedor'}}: </span>
           <div *ngIf="this.condicion === 'provider'">
             <select [(ngModel)]="filtro" name="sector" class="form-select" (change)="updateList('sector')">
               <option selected value="0">Todo</option>
@@ -32,6 +39,12 @@
             <select [(ngModel)]="filtro" name="sector" class="form-select" (change)="updateList('category')">
               <option selected value="0">Todo</option>
               <option *ngFor="let category of this.categories" value="{{ category.id }}">{{ category.name }}</option>
+            </select>
+          </div>
+          <div *ngIf="this.condicion === 'purchase-order'">
+            <select [(ngModel)]="filtro" name="provider" class="form-select" (change)="updateList('provider')">
+              <option selected value="0">Todo</option>
+              <option *ngFor="let provider of this.providers" value="{{ provider.id }}">{{ provider.businessName }}</option>
             </select>
           </div>        
       </div>
@@ -48,8 +61,7 @@
                       <th>cod</th>
                       <th>raz. social</th>
                       <th>ubicación</th>
-                      <th>nombre completo</th>
-                      <th>contacto</th>                      
+                      <th>nombre completo</th>                                      
                     </ng-container>
                     <ng-container *ngSwitchCase="'article'">
                       <th>imagen</th>
@@ -99,16 +111,22 @@
                     <ng-container *ngSwitchCase="'contactData'">
                       <td [ngClass]="{'tr-delete': (el.isDeleted)}">
                         <span class="p-0 m-0 text-center">
-                          <p>{{el[key].name}}<strong> - </strong>{{el[key].lastName}}</p>
+                          <ng-template #tooltipTemplate>
+                            <ul class="list-group list-group-flush mi-bg-black">
+                              <li class="list-group-item mi-bg-black"><p class="p-0 m-0 mi-bg-black text-white text-start"><strong>Sitio: </strong> {{el['website'] | truncate:45}}</p></li>
+                              <li class="list-group-item mi-bg-black"><p class="p-0 m-0 mi-bg-black text-white text-start"><strong>Email: </strong> {{el[key].email}}</p></li>
+                              <li class="list-group-item mi-bg-black"><p class="p-0 m-0 mi-bg-black text-white text-start"><strong>Telefono: </strong> {{el[key].phone}}</p></li>
+                            </ul>
+                          </ng-template>
+                          <p>{{el[key].name}}<strong> - </strong>{{el[key].lastName}} 
+                            <svg xmlns="http://www.w3.org/2000/svg" height="18" width="18" viewBox="0 0 512 512"
+                            [ngbTooltip]="tooltipTemplate"                           
+                            ngbTooltipHtml="true">
+                              <path fill="var(--color-primary)" d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM216 336h24V272H216c-13.3 0-24-10.7-24-24s10.7-24 24-24h48c13.3 0 24 10.7 24 24v88h8c13.3 0 24 10.7 24 24s-10.7 24-24 24H216c-13.3 0-24-10.7-24-24s10.7-24 24-24zm40-208a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"/>
+                            </svg>
+                          </p>
                         </span>
-                      </td>
-                      <td [ngClass]="{'tr-delete': (el.isDeleted)}">
-                        <span class="p-0 m-0 text-start">
-                          <p class="p-0 m-0"><strong>Sitio: </strong> {{el['website']}}</p>
-                          <p class="p-0 m-0"><strong>Email: </strong> {{el[key].email}}</p>
-                          <p class="p-0 m-0"><strong>Telefono: </strong> {{el[key].phone}}</p>
-                        </span>           
-                      </td>                      
+                      </td>                                           
                     </ng-container>
                     <ng-container *ngSwitchCase="'provider'"> <!-- Empiezan los que manejo en articles -->
                       <td [ngClass]="{'tr-delete': (el.isDeleted || el.state == 'C')}">{{el[key].businessName}}</td>
@@ -323,7 +341,7 @@
                   <ng-container *ngIf="(condicion === 'purchase-order')">
                     <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14" viewBox="0 0 448 512"><path class="icono" d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0H284.2c12.1 0 23.2 6.8 28.6 17.7L320 32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 96 0 81.7 0 64S14.3 32 32 32h96l7.2-14.3zM32 128H416V448c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64V128zm96 64c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16z"/></svg>
                     Cancelar
-                  </ng-container>                  
+                  </ng-container>                                    
                 </button>
               </div>
             </div>

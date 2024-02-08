@@ -67,10 +67,10 @@ public class ArticleController {
 	
 	@PostMapping
 	public ResponseEntity<Object> newArticle(@Valid @RequestBody Article article, BindingResult bindingResult) {
-		 if (bindingResult.hasErrors()) {
-		        Map<String, String> errors = new ErrorHandler().inputValidate(bindingResult);
-		        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
-		    }
+		if (bindingResult.hasErrors()) {
+	        Map<String, String> errors = new ErrorHandler().inputValidate(bindingResult);
+	        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+		}
 	
 		Optional<Article> result = this.articleService.newArticle(article);
 

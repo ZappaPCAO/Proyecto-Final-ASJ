@@ -3,7 +3,7 @@ import { ProviderService } from '../../../services/provider.service';
 import { Provider } from '../../../models/provider';
 import { ActivatedRoute, Router } from '@angular/router';
 // import { verificarCamposEspeciales, verificarDatos, verificarLongitudes } from '../../../utils/validates';
-import { isCuit, isEmail, isWebsite } from '../../../utils/validates';
+import { checkDataProvider, checkLongsProvider, checkOnlyNumbers, checkSpecialCharacters, isCuit, isEmail, isPhoneNumber, isWebsite } from '../../../utils/validates';
 import { NgForm } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { City, Country, State } from '../../../models/geoLocation';
@@ -20,7 +20,9 @@ import { SectorService } from '../../../services/sector.service';
 export class AddProviderComponent implements OnInit {
   countries: Country[] = []; states: State[] = []; cities: City[] = [];
   ivaConditions: IvaCondition[] = []; sectors: Sector[] = [];
-  isWebsite = isWebsite; isCuit=isCuit; isEmail = isEmail;
+  isWebsite = isWebsite; isCuit=isCuit; isEmail = isEmail;isPhoneNumber=isPhoneNumber;
+  checkOnlyNumbers=checkOnlyNumbers;checkSpecialCharacters=checkSpecialCharacters;
+  show: boolean = false; showRequired: boolean = false;
 
   provider: Provider = {
     id: 0,
@@ -116,39 +118,62 @@ export class AddProviderComponent implements OnInit {
   }
 
   agregarProvider(form: NgForm){
-    if( form.valid 
-      // && 
-      // ( verificarDatos(this.provider) && // que no hay ningun caracter raro
-      //   verificarLongitudes(this.provider) && // que los largos sean los que quiero
-      //   verificarCamposEspeciales(this.provider) ) 
-        ){ // controlo campos especificos
-        if(this.idProvider === 0){ // 0 => Nuevo ; >0 => Edito
+    if(form.invalid){
+      this.showRequired = true;
+      return;
+    }
+
+    this.show = !( checkDataProvider(this.provider) && checkLongsProvider(this.provider) );
+
+    if( form.valid && !this.show ){ // controlo campos especificos
+
+        if(this.idProvider === 0){ // 0 => Nuevo ; >0 => Edito          
           this.providerService.post(this.provider).subscribe(data =>{
             this.provider = data;
-          } );
+          },(error) => {
+            Swal.fire({
+              position: "bottom-end",
+              icon: "error",
+              title: `Hubo un problema en la creacion: ${error.get}`,
+              showConfirmButton: false,
+              timer: 1500
+            });
+          }, () => {
+            Swal.fire({
+              title: "¿Desea crear otro?",          
+              icon: 'success',
+              timer: 2500,       
+              showCancelButton: true, 
+              confirmButtonColor: "var(--color-primary)",
+              cancelButtonColor: "var(--color-secondary)",          
+              confirmButtonText: "Si",
+              cancelButtonText: "No"
+            }).then((result) => {
+              if (result.isConfirmed) {  // Si quiere cargar otro formateo los datos.              
+                this.provider.id = 0;
+                this.provider.contactData.id = 0;
+                this.provider.taxData.id = 0;   
+                this.provider.location.id = 0;        
+                form.reset();
+              }else{
+                this.router.navigate(['provider', 'list']);
+              }
+            });
+          });
         }else{
           this.providerService.put(this.provider).subscribe(data => {
             this.provider = data;
+            Swal.fire({
+              position: "bottom-end",
+              icon: "success",
+              title: "Creado correctamente!",
+              showConfirmButton: false,
+              timer: 1500
+            }).then(() => {
+              this.router.navigate(['provider', 'list']);
+            });
           });
-        }
-        Swal.fire({
-          title: "¿Desea crear otro?",          
-          icon: 'success',
-          timer: 2500,       
-          showCancelButton: true, 
-          confirmButtonColor: "var(--color-primary)",
-          cancelButtonColor: "var(--color-secondary)",          
-          confirmButtonText: "Si",
-          cancelButtonText: "No"
-        }).then((result) => {
-          if (result.isConfirmed) {
-            form.reset();
-          }else{
-            this.router.navigate(['provider', 'list']);
-          }
-        });
-    }else{
-      // Hago lo que hizo el profe con los cartelitos.
+        }        
     }
   }
 

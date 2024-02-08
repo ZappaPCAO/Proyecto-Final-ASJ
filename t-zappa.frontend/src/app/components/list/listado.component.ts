@@ -5,11 +5,10 @@ import { Provider } from '../../models/provider';
 import { Article } from '../../models/article';
 import { PurchaseOrder } from '../../models/purchase-order';
 import Swal from 'sweetalert2';
-
-import { SectorService } from '../../services/sector.service';
+import '@sweetalert2/theme-dark/dark.css';
 import { Sector } from '../../models/sector';
 import { Category } from '../../models/category';
-import { CategoryService } from '../../services/category.service';
+
 
 @Component({
   selector: 'listado',
@@ -22,14 +21,13 @@ export class ListadoComponent implements OnInit{
   condicion: string = '';
   rightPanelStyle: any;
   currentRecord!:  Provider | Article | PurchaseOrder | any;
-  sectors: Sector[] = []; categories: Category[] = [];
+  sectors: Sector[] = []; categories: Category[] = []; providers: Provider[] = [];
   filtro: number = 0;
   filter: string= "";
   filtroBaja: boolean = false;
 
   constructor(private route: ActivatedRoute, private router: Router, 
-    private serivicioAdm: AdministrarServicesService, private sectorService: SectorService,
-    private categoryService: CategoryService){     
+    private serivicioAdm: AdministrarServicesService){     
   }
 
   detectRightMouseClick($event: any, el: Provider | Article | PurchaseOrder) {
@@ -66,7 +64,7 @@ export class ListadoComponent implements OnInit{
   }
 
   generarArreglos(){
-    this.serivicioAdm.get(this.condicion).subscribe( (data: Provider[] | Article[] | PurchaseOrder[] | Category[]) => {
+    this.serivicioAdm.get(this.condicion).subscribe( (data: Provider[] | Article[] | PurchaseOrder[] | Category[] | Sector[]) => {
       this.tbody = data;
       
       if(this.tbody && this.tbody.length > 0){
@@ -156,6 +154,8 @@ export class ListadoComponent implements OnInit{
     Swal.fire({
       title: "¡No hay nada para mostrar!",
       html: "Sera redirigido",
+      allowOutsideClick: false,
+      allowEscapeKey: false,
       timer: 3000,
       timerProgressBar: true,
       didOpen: () => {
@@ -179,12 +179,16 @@ export class ListadoComponent implements OnInit{
       }
 
       if(this.condicion === 'provider'){
-        this.sectorService.getSectors().subscribe((data: Sector[]) => {
-          this.sectors = data;        
+        this.serivicioAdm.get('sector').subscribe((data : Provider[] | Article[] | PurchaseOrder[] | Category[] | Sector[]) => {
+          this.sectors = data as Sector[];
         });
       }else if(this.condicion === 'article'){
-        this.categoryService.get().subscribe((data: Category[]) => {
-          this.categories = data;          
+        this.serivicioAdm.get('category').subscribe((data: Provider[] | Article[] | PurchaseOrder[] | Category[] | Sector[]) => {
+          this.categories = data as Category[];          
+        });
+      }else if(this.condicion === 'purchase-order'){
+        this.serivicioAdm.get('provider').subscribe((data: Provider[] | Article[] | PurchaseOrder[] | Category[] | Sector[]) => {
+          this.providers = data as Provider[];          
         });
       }
       

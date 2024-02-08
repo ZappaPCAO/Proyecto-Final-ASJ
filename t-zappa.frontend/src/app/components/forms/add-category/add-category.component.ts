@@ -46,7 +46,7 @@ export class AddCategoryComponent implements OnInit {
         if(this.idCategory === 0){ // 0 => Nuevo ; >0 => Edito
 
           this.categoryService.post(this.category).subscribe((data : Category) =>{
-            this.category = Object.assign({}, data);
+            this.category = data; //Object.assign({}, data);
           }, (error) => {
             Swal.fire({
               position: "bottom-end",

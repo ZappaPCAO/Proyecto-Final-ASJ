@@ -3,10 +3,11 @@ import { ProviderService } from '../../../services/provider.service';
 import { ArticleService } from '../../../services/article.service';
 import { Article } from '../../../models/article';
 import { ActivatedRoute, Router } from '@angular/router';
-// import { verificarCamposEspeciales, verificarDatos, verificarLongitudes } from '../../../utils/validates';
+import { checkSpecialCharacters, checkOnlyNumbers, isCuit, isEmail, isPhoneNumber, isWebsite, checkDataArticle, checkLongsArticle } from '../../../utils/validates';
 import { NgForm } from '@angular/forms';
 import { Provider } from '../../../models/provider';
 import Swal from 'sweetalert2';
+import '@sweetalert2/theme-dark/dark.css';
 import { Category } from '../../../models/category';
 import { CategoryService } from '../../../services/category.service';
 
@@ -75,8 +76,12 @@ export class AddArticleComponent implements OnInit {
       name: ''
     },
   };
+  
   providers: Provider[] = []; categories: Category[] = [];
   idArticle: number = 0;
+  checkSpecialCharacters = checkSpecialCharacters; checkOnlyNumbers = checkOnlyNumbers;
+  isCuit = isCuit; isEmail = isEmail; isPhoneNumber = isPhoneNumber; isWebsite = isWebsite;
+  show: boolean = false; showRequired = false;
 
   constructor(private router: Router, private route: ActivatedRoute,
     private providerService: ProviderService, private articleService: ArticleService,
@@ -91,41 +96,61 @@ export class AddArticleComponent implements OnInit {
   }
 
   agregarArticle(form: NgForm){
-    console.log(JSON.stringify(this.article))
-    
-    if( form.valid
-      //  && 
-      // ( verificarDatos(this.article) && // que no hay ningun caracter raro
-      //   verificarLongitudes(this.article) && // que los largos sean los que quiero
-      //   verificarCamposEspeciales(this.article) ) 
-        ){ // controlo campos especificos
-        if(this.idArticle === 0){ // 0 => Nuevo ; >0 => Edito
-          this.articleService.post(this.article).subscribe((data : Article) =>{
+    if(form.invalid){
+      this.showRequired = true;
+      return;
+    }
+
+    this.show = !( checkDataArticle(this.article) && checkLongsArticle(this.article) );
+
+    if( form.valid && !this.show ){ // controlo campos especificos
+
+        if(this.idArticle === 0){ // 0 => Nuevo ; >0 => Edito          
+          this.articleService.post(this.article).subscribe(data =>{
             this.article = data;
-          } );
+          },(error) => {
+            Swal.fire({
+              position: "bottom-end",
+              icon: "error",
+              title: `Hubo un problema en la creacion: ${error.get}`,
+              showConfirmButton: false,
+              timer: 1500
+            });
+          }, () => {
+            Swal.fire({
+              title: "¿Desea crear otro?",          
+              icon: 'success',
+              timer: 2500,       
+              showCancelButton: true, 
+              confirmButtonColor: "var(--color-primary)",
+              cancelButtonColor: "var(--color-secondary)",          
+              confirmButtonText: "Si",
+              cancelButtonText: "No"
+            }).then((result) => {
+              if (result.isConfirmed) {  // Si quiere cargar otro formateo los datos.              
+                this.article.id = 0;
+                this.article.provider.id = 0;                
+                this.article.category.id = 0;                       
+                form.reset();
+              }else{
+                this.router.navigate(['provider', 'list']);
+              }
+            });
+          });
         }else{
           this.articleService.put(this.article).subscribe(data => {
             this.article = data;
+            Swal.fire({
+              position: "bottom-end",
+              icon: "success",
+              title: "Creado correctamente!",
+              showConfirmButton: false,
+              timer: 1500
+            }).then(() => {
+              this.router.navigate(['article', 'list']);
+            });
           });
-        }
-        Swal.fire({
-          title: "¿Desea crear otro?",          
-          icon: 'success',
-          timer: 2500,       
-          showCancelButton: true, 
-          confirmButtonColor: "var(--color-primary)",
-          cancelButtonColor: "var(--color-secondary)",          
-          confirmButtonText: "Si",
-          cancelButtonText: "No"
-        }).then((result) => {
-          if (result.isConfirmed) {
-            form.reset();
-          }else{
-            this.router.navigate(['article', 'list']);
-          }
-        });
-    }else{
-      // Hago lo que hizo el profe con los cartelitos.
+        }        
     }
   }
 

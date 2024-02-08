@@ -46,7 +46,7 @@ public class Provider {
 	private String email;
 	
 	@NotNull(message="[phone] no puede ser nula.")
-	@Size(min = 8, max = 11, message = "[phone] longitud fuera de rango 8-11.")
+	@Size(min = 9, max = 14, message = "[phone] longitud fuera de rango 8-11.")
 	@Column(unique = true)
 	private String phone;
 	

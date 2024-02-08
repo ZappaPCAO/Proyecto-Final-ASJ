@@ -23,6 +23,8 @@ import { PurchaseOrderService } from './services/purchase-order.service';
 
 import { FilterPipe } from './pipes/filter.pipe';
 import { LowFilterPipe } from './pipes/lowFilter.pipe';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { TruncatePipe } from './pipes/truncate.pipe';
 
 @NgModule({
   declarations: [
@@ -38,12 +40,14 @@ import { LowFilterPipe } from './pipes/lowFilter.pipe';
     FilterPipe,
     LowFilterPipe,
     AddCategoryComponent,
+    TruncatePipe,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
+    NgbModule,
   ],
   providers: [
     ArticleService,

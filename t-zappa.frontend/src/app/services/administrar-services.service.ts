@@ -8,6 +8,8 @@ import { PurchaseOrder } from '../models/purchase-order';
 import { Observable } from 'rxjs';
 import { CategoryService } from './category.service';
 import { Category } from '../models/category';
+import { SectorService } from './sector.service';
+import { Sector } from '../models/sector';
 
 @Injectable({
   providedIn: 'root'
@@ -17,24 +19,22 @@ export class AdministrarServicesService {
   constructor(private serviceProvider: ProviderService,
     private serviceArticle: ArticleService,
     private servicePurchaseOrder: PurchaseOrderService,
-    private serviceCategory: CategoryService) { }
+    private serviceCategory: CategoryService,
+    private serviceSector: SectorService) { }
 
     // Administro los get por medio de parametros.
-    get(tipo: string) : Observable<Provider[] | Article[] | PurchaseOrder[] | Category[]>{
-
-      switch (tipo) {        
+    get(tipo: string) : Observable<Provider[] | Article[] | PurchaseOrder[] | Category[] | Sector[]>{
+      switch (tipo) {
         case 'article':
           return this.serviceArticle.get();
-          break;
         case 'provider':
           return this.serviceProvider.get();
-          break;
         case 'purchase-order':
           return this.servicePurchaseOrder.get();
-          break;
         case 'category':
           return this.serviceCategory.get();
-          break;
+        case 'sector':
+          return this.serviceSector.getSectors(); // Devuelve Observable<Sector[]>
         default:
           break;
       }
@@ -50,8 +50,8 @@ export class AdministrarServicesService {
         case 'sector':
           return this.serviceProvider.getBySector(id);
           break;
-        case 'purchase-order':
-          // datos = this.servicePurchaseOrder.get();
+        case 'provider':
+          return this.servicePurchaseOrder.getByProvider(id);
           break;
 
         default:
