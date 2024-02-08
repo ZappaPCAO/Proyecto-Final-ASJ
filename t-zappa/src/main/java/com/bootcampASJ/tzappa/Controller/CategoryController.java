@@ -1,8 +1,6 @@
 package com.bootcampASJ.tzappa.Controller;
 
-import java.util.Collections;
 import java.util.Map;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -50,18 +48,17 @@ public class CategoryController {
 	@PostMapping
 	public ResponseEntity<Object> newCategory(@Valid @RequestBody Category category, BindingResult bindingResult) {
 		 if (bindingResult.hasErrors()) {
-		        Map<String, String> errors = new ErrorHandler().inputValidate(bindingResult);
-		        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
-		    }
-	
-		Optional<Category> result = this.categoryService.newCategory(category);
+	        Map<String, String> errors = new ErrorHandler().inputValidate(bindingResult);
+	        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+		}
 
-	    if (result.isPresent()){
-	        return new ResponseEntity<>(result.get(), HttpStatus.OK);
-	    }else{
-	        Map<String, String> error = Collections.singletonMap("Error", "Error en la integridad de datos. (Ej. Campo Unique)");
-	        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
-	    }
+		try {
+			Category result = this.categoryService.newCategory(category);
+			
+			return new ResponseEntity<>(result, HttpStatus.OK);			
+		}catch(Exception error) {
+			 return new ResponseEntity<>("Error: " + error.getMessage(), HttpStatus.BAD_REQUEST);
+		}
 	}
 	
 	@PutMapping("/{id}")

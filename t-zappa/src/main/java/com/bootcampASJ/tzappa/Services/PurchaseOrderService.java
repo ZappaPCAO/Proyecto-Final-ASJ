@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
 
-import com.bootcampASJ.tzappa.IdenticalRecord;
+import com.bootcampASJ.tzappa.ExceptionCustom;
 
 import com.bootcampASJ.tzappa.Models.Provider;
 import com.bootcampASJ.tzappa.Models.PurchaseOrder;
@@ -68,7 +68,7 @@ public class PurchaseOrderService {
 	    PurchaseOrder aux =	this.purchaseOrderRepository.save(purchaseOrder);
 	    
 	    if(aux == null) {
-	    	throw new IdenticalRecord("Paso algo!");
+	    	throw new ExceptionCustom("Paso algo!");
 	    }
 	    
 	   return aux;    
@@ -79,9 +79,9 @@ public class PurchaseOrderService {
 		PurchaseOrder purchaseOrder = this.purchaseOrderRepository.findById(id).get();
 		
 		if(purchaseOrder == null)  
-			throw new IdenticalRecord("La entidad no fue encontrada en la base de datos");
+			throw new ExceptionCustom("La entidad no fue encontrada en la base de datos");
 		if(purchaseOrder.getState() == 'C' ) 
-			throw new IdenticalRecord("Este registro ya esta CANCELADO.");
+			throw new ExceptionCustom("Este registro ya esta CANCELADO.");
 	
 		purchaseOrder.setUpdatedAt(LocalDateTime.now());
 		purchaseOrder.setState('C');
@@ -94,9 +94,9 @@ public class PurchaseOrderService {
 		PurchaseOrder purchaseOrder = this.purchaseOrderRepository.findById(id).get();
 		
 		if(purchaseOrder == null)  
-			throw new IdenticalRecord("La entidad no fue encontrada en la base de datos");
+			throw new ExceptionCustom("La entidad no fue encontrada en la base de datos");
 		if(purchaseOrder.getState() == 'A' ) 
-			throw new IdenticalRecord("Este registro ya esta ACTIVO.");
+			throw new ExceptionCustom("Este registro ya esta ACTIVO.");
 	
 		purchaseOrder.setUpdatedAt(LocalDateTime.now());
 		purchaseOrder.setState('A');

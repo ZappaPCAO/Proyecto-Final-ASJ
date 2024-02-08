@@ -2,13 +2,11 @@ package com.bootcampASJ.tzappa.Services;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
-import com.bootcampASJ.tzappa.IdenticalRecord;
+import com.bootcampASJ.tzappa.ExceptionCustom;
 
 import com.bootcampASJ.tzappa.Models.Category;
 
@@ -35,27 +33,41 @@ public class CategoryService {
 	}
 	
 	@Transactional
-	public Optional<Category> newCategory(Category category) {	
-	    try {
-	        return Optional.ofNullable(this.categoryRepository.save(category));
-	    } catch (DataIntegrityViolationException error) {
-	    	System.out.println("Clave duplicada detectada");
-            return Optional.empty();
-	    }
+	public Category newCategory(Category category) {	
+
+		List<Category> storedCategorys = this.categoryRepository.findAll();
+				
+		for(Category cat : storedCategorys) {
+			if (category.getName().equals(cat.getName())) { // Si quiere insertar un registro que ya esta
+				throw new ExceptionCustom("Ya hay un registro con ese nombre.");
+			}
+		}
+		
+		this.categoryRepository.save(category);
+		return category;
 	}
 	
 	@Transactional
 	public Category updateCategory(Category category){
 						
 		Category storedCategory = this.categoryRepository.findById(category.getId()).get();
+		List<Category> storedCategorys = this.categoryRepository.findAll();
 		
-		if (!category.equals(storedCategory)) {
-			category.setUpdatedAt(LocalDateTime.now());
-			this.categoryRepository.save(category);
-			return category; 			
+		if(storedCategory == null)  
+			throw new ExceptionCustom("El registro no fue encontrado en la base de datos.");
+		
+		if (category.equals(storedCategory)) 
+			throw new ExceptionCustom("Debes cambiar algun dato.");		
+		
+		for(Category cat : storedCategorys) {
+			if (category.getName().equals(cat.getName())) { // Si quiere insertar un registro que ya esta
+				throw new ExceptionCustom("Ya hay un registro con ese nombre.");
+			}
 		}
 		
-		throw new IdenticalRecord("El registro que estás intentando editar es idéntico al existente en la base de datos.");
+		category.setUpdatedAt(LocalDateTime.now());
+		this.categoryRepository.save(category);
+		return category; 
 	}
 	
 	@Transactional
@@ -64,9 +76,9 @@ public class CategoryService {
 		Category category = this.categoryRepository.findById(id).get();
 		
 		if(category == null)  
-			throw new IdenticalRecord("La entidad no fue encontrada en la base de datos");
+			throw new ExceptionCustom("El registro no fue encontrado en la base de datos.");
 		if(category.getIsDeleted()) 
-			throw new IdenticalRecord("Este registro ya esta eliminado.");
+			throw new ExceptionCustom("Este registro ya esta eliminado.");
 	
 		category.setUpdatedAt(LocalDateTime.now());
 		category.setIsDeleted(true);
@@ -79,9 +91,9 @@ public class CategoryService {
 		Category category = this.categoryRepository.findById(id).get();
 		
 		if(category == null)  
-			throw new IdenticalRecord("La entidad no fue encontrada en la base de datos");
+			throw new ExceptionCustom("La entidad no fue encontrada en la base de datos");
 		if(!category.getIsDeleted()) 
-			throw new IdenticalRecord("Este registro ya esta salvado.");
+			throw new ExceptionCustom("Este registro ya esta salvado.");
 	
 		category.setUpdatedAt(LocalDateTime.now());
 		category.setIsDeleted(false);

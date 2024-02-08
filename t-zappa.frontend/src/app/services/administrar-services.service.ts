@@ -41,7 +41,7 @@ export class AdministrarServicesService {
       return new Observable();
     }
     
-    getBy(id:number, tipo: string) : Observable<Provider[] | Article[] | PurchaseOrder[]>{
+    getBy(id:number, tipo: string) : Observable<Provider[] | Article[] | PurchaseOrder[] >{
 
       switch (tipo) {        
         case 'category':
@@ -52,8 +52,7 @@ export class AdministrarServicesService {
           break;
         case 'provider':
           return this.servicePurchaseOrder.getByProvider(id);
-          break;
-
+          break;        
         default:
           break;
       }

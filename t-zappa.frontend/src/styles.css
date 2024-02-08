@@ -9,6 +9,16 @@
     --color-secondary: #CE1793;
   }
 
+.color-primary{
+    color: var(--color-primary) !important;
+    filter: brightness(200%) !important;
+}
+
+.color-secondary{
+    color: var(--color-secondary) !important;
+}
+
+
 .mi-bg-black{
     background-color: #202020 !important;
 }
@@ -30,6 +40,14 @@ background: linear-gradient(90deg, #fff 0%, rgb(150, 126, 197) 0%, var(--color-p
 background-size: 300% 100%;
 animation: gradient 5s ease infinite;
 }
+
+.m-degrade {
+    border-radius: 1rem;
+    border-width: 0.15rem; /* Ajusta el ancho del borde según sea necesario */
+    border-style: solid;
+    border-image: linear-gradient(90deg, #fff 0%, rgb(150, 126, 197) 0%, var(--color-primary), var(--color-secondary) 100%) 1;
+}
+
 .mi-btn-add{
     background-color: #8732CD !important;
     color: white !important;

@@ -23,7 +23,7 @@ public class Category {
 	
 	@NotNull(message="[category] no puede ser nula.")
 	@Size(min = 4, max = 30, message = "[category] longitud fuera de rango 4-30.")
-	@Column(name="category")
+	@Column(name="category", unique = true)
 	private String name;
 	
 	@JsonInclude(JsonInclude.Include.NON_NULL)

@@ -1,4 +1,119 @@
-<div class="container-fluid bg-dark text-light">
+<!-- dashboard.component.html -->
+
+<div class="container-fluid mi-bg-black text-white">
+  <section class="row">
+    <div class="col-md-12 text-center my-2 mb-3">
+      <img class="img-logo" src="../../../assets/img/logo-t-zappa.webp" alt="T-ZAPPA">
+    </div>
+  </section>
+  <section class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">      
+      <div class="text-center mb-2">        
+        <h1 class="h1">Gestion de Compras</h1>
+      </div>      
+      <div class="text-center mb-2">
+          <p class="description">
+            Solución integral diseñada para facilitar la gestión eficiente de proveedores,
+            productos y órdenes de compra en tu empresa. Con una interfaz intuitiva y poderosas herramientas de administración,
+            T-ZAPPA se convierte en tu aliado confiable para optimizar tus procesos de abastecimiento y mantener un control preciso 
+            sobre tus operaciones comerciales.
+          </p>
+      </div>
+    </div>
+    <div class="col-md-3"></div>
+  </section>
+  <div class="b-degrade my-2"></div>
+  <section class="row text-center">
+    <div class="col-md-2">
+      <button class="btn mi-btn-menu bg-transparent text-white text-center text-uppercase my-1" [routerLink]="['provider']">Alta Proveedor</button>
+    </div>
+    <div class="col-md-2">
+      <button class="btn mi-btn-menu bg-transparent text-white text-center text-uppercase my-1" routerLink="article">Alta Articulo</button>
+    </div>
+    <div class="col-md-2">
+      <button class="btn mi-btn-menu bg-transparent text-white text-center text-uppercase my-1" routerLink="purchase-order">Alta Orden de compra</button>
+    </div>
+    <div class="col-md-2">
+      <button class="btn mi-btn-menu bg-transparent text-white text-center text-uppercase my-1"  routerLink="provider/list">Listado de Proveedores</button>
+    </div>
+    <div class="col-md-2">
+      <button class="btn mi-btn-menu bg-transparent text-white text-center text-uppercase my-1" routerLink="article/list">Listado de Articulos</button>
+    </div>
+    <div class="col-md-2">
+      <button class="btn mi-btn-menu bg-transparent text-white text-center text-uppercase my-1"routerLink="purchase-order/list">Listado de Ordenes de Compra</button>
+    </div>
+  </section>
+  <div class="b-degrade my-2 mb-4"></div>
+  <section class="row">
+      <div class="col-md-4">
+        <div class="card-body m-degrade d-flex justify-content-between flex-wrap">
+          <div>
+              <h5 class="card-title mb-3 ms-3 mt-5 fs-3"><strong>Cantidad total de proveedores: </strong></h5>
+              <p class="card-subtitle mb-3 ms-3 mt-1 fs-4"><strong>Eliminados: </strong> {{ providersDeleted }}</p>           
+          </div>
+          <div class="align-self-center me-5 my-0">
+              <p class="card-text text-uppercase font-total m-0 p-0 color-secondary"><strong>{{ amountProviders }}</strong></p>              
+          </div>
+        </div>        
+      </div>
+      <div class="col-md-4">
+        <div class="card-body m-degrade d-flex justify-content-between flex-wrap">
+          <div>
+              <h5 class="card-title mb-3 ms-3 mt-5 fs-3"><strong>Cantidad total de articulos: </strong></h5>
+              <p class="card-subtitle mb-3 ms-3 mt-1 fs-4"><strong>Eliminados: </strong> {{articlesDeleted}}</p>           
+          </div>
+          <div class="align-self-center me-5 my-0">
+              <p class="card-text text-uppercase font-total m-0 p-0 color-secondary"><strong>{{ amountArticles }}</strong></p>              
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card-body m-degrade d-flex justify-content-between flex-wrap">
+          <div>
+              <h5 class="card-title mb-3 ms-3 mt-5 fs-3"><strong>Cantidad total de ordenes: </strong></h5>
+              <p class="card-subtitle mb-3 ms-3 mt-1 fs-4"><strong>Eliminados: </strong> {{purchaseOrderDeleted}}</p>           
+          </div>
+          <div class="align-self-center me-5 my-0">
+              <p class="card-text text-uppercase font-total m-0 p-0 color-secondary"><strong>{{ amountPurchaseOrders }}</strong></p>              
+          </div>
+        </div>
+      </div>
+  </section>
+  <section class="row mt-4 pb-4">
+      <div class="col-md-6">
+          <div class="card shadow bg-transparent text-white m-degrade">
+            <div class="card-body m-degrade d-flex justify-content-center flex-wrap">
+              <div class=" text-center p-0 text-uppercase">
+                  <p class="card-title fs-3">
+                    <strong>Datos eliminados / cancelados </strong></p>
+                  <p class="card-text fs-1">
+                    <strong class="color-primary">Promedio General: </strong>
+                    <strong class="color-secondary">{{avgDelete | number:'1.1-1'}}% </strong> 
+                  </p>
+              </div>             
+            </div>
+          </div>
+      </div>
+      <div class="col-md-6">
+          <div class="card shadow bg-transparent text-white m-degrade">
+            <div class="card-body m-degrade d-flex justify-content-center flex-wrap">
+              <div class=" text-center p-0 text-uppercase">
+                  <p class="card-title fs-3">
+                    <strong>Proveedor con mas Ordenes de Compra </strong></p>
+                  <p class="card-text fs-1">
+                    <strong class="color-primary">Razon Social: </strong>
+                    <strong class="color-secondary">{{provider.businessName}} </strong> 
+                  </p>
+              </div>             
+            </div>
+          </div>
+      </div>
+  </section>
+</div>
+
+
+<!-- <div class="container-fluid bg-dark text-light">
     <div class="row">
         <div class="col-12">
             <h1 class="text-center text-uppercase">Bienvenidos</h1>
@@ -27,4 +142,4 @@
         <button class="btn btn-outline-secondary text-white text-center text-uppercase btn-block mb-2"routerLink="purchase-order/list">Listado de Ordenes de Compra</button>
       </div>
     </div>
-</div>
+</div> -->

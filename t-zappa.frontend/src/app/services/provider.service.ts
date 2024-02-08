@@ -28,6 +28,10 @@ export class ProviderService {
     return this.http.get<Provider[]>(`${this.url}/actives`);
   }
 
+  getWithMostOrders() : Observable<Provider> {
+    return this.http.get<Provider>(`${this.url}/purchase-orders/top-1`);
+  }
+
   post(provider: Provider) : Observable<Provider>{
     return this.http.post<Provider>(this.url, provider);
   }

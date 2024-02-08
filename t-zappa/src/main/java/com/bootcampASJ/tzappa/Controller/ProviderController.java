@@ -55,6 +55,13 @@ public class ProviderController {
 		return ResponseEntity.ok(this.providerService.getProviderBySector(id));
 	}
 	
+	@GetMapping("purchase-orders/top-1")
+	public ResponseEntity<Object> getProviderWithMostOrders(){
+	
+		return ResponseEntity.ok(this.providerService.getProviderWithMostOrders());
+		
+	}
+	
 	@PostMapping
 	public ResponseEntity<Object> newProvider(@Valid @RequestBody Provider provider, BindingResult bindingResult) {
 		System.out.println("prueba a ver si llega con datos q no estan en la bd. ");

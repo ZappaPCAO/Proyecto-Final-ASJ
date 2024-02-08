@@ -1,0 +1,19 @@
+.img-logo{
+    border-radius: 3rem;
+    width: 25rem;
+    height: 8rem;
+    margin: .5rem .5rem !important;
+}
+.font-total{
+    font-size: 7rem !important;    
+}
+.mi-btn-menu{
+    border: .1rem var(--color-secondary) solid;
+    border-radius: 0% !important;
+    color: white !important;    
+    transition: all .3s linear !important;
+}
+.mi-btn-menu:hover{
+    background-color: var(--color-secondary) !important;
+    color: black !important;
+}

@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
-import com.bootcampASJ.tzappa.IdenticalRecord;
+import com.bootcampASJ.tzappa.ExceptionCustom;
 import com.bootcampASJ.tzappa.Models.Article;
 import com.bootcampASJ.tzappa.Models.Category;
 import com.bootcampASJ.tzappa.Models.Provider;
@@ -83,7 +83,7 @@ public class ArticleService {
 			return article; 			
 		}
 		
-		throw new IdenticalRecord("El registro que estás intentando editar es idéntico al existente en la base de datos.");
+		throw new ExceptionCustom("El registro que estás intentando editar es idéntico al existente en la base de datos.");
 	}
 	
 	@Transactional
@@ -92,9 +92,9 @@ public class ArticleService {
 		Article article = this.articleRepository.findById(id).get();
 		
 		if(article == null)  
-			throw new IdenticalRecord("La entidad no fue encontrada en la base de datos");
+			throw new ExceptionCustom("La entidad no fue encontrada en la base de datos");
 		if(article.getIsDeleted()) 
-			throw new IdenticalRecord("Este registro ya esta eliminado.");
+			throw new ExceptionCustom("Este registro ya esta eliminado.");
 	
 		article.setUpdatedAt(LocalDateTime.now());
 		article.setIsDeleted(true);
@@ -107,9 +107,9 @@ public class ArticleService {
 		Article article = this.articleRepository.findById(id).get();
 		
 		if(article == null)  
-			throw new IdenticalRecord("La entidad no fue encontrada en la base de datos");
+			throw new ExceptionCustom("La entidad no fue encontrada en la base de datos");
 		if(!article.getIsDeleted()) 
-			throw new IdenticalRecord("Este registro ya esta salvado.");
+			throw new ExceptionCustom("Este registro ya esta salvado.");
 	
 		article.setUpdatedAt(LocalDateTime.now());
 		article.setIsDeleted(false);

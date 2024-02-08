@@ -66,6 +66,10 @@ public class ProviderService {
 		
 		return Optional.ofNullable(this.providerRepository.findBySector(sector));
 	}
+	
+	public Optional<Provider> getProviderWithMostOrders(){
+		return Optional.ofNullable(this.providerRepository.findWithMostOrders());
+	}
 
 	@Transactional
 	public Optional<Provider> newProvider(Provider provider) {
