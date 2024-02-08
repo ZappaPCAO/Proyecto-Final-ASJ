@@ -133,7 +133,7 @@ export class AddArticleComponent implements OnInit {
                 this.article.category.id = 0;                       
                 form.reset();
               }else{
-                this.router.navigate(['provider', 'list']);
+                this.router.navigate(['article', 'list']);
               }
             });
           });

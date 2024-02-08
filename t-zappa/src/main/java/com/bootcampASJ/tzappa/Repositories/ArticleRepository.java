@@ -13,4 +13,5 @@ public interface ArticleRepository extends JpaRepository<Article, Integer> {
 	List<Article> findByProvider(Provider provider);
 	List<Article> findAllByOrderByName();
 	List<Article> findByIsDeletedFalse();
+	List<Article> findByProviderAndIsDeletedFalse(Provider provider);
 }

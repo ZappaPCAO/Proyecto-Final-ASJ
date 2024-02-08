@@ -32,6 +32,10 @@ export class ArticleService {
     return this.http.get<Article[]>(`${this.url}/actives`);
   }
 
+  getByProviderActives(id: number) : Observable<Article[]>{ // Trae los articulos activos de ese proveedor
+    return this.http.get<Article[]>(`${this.url}/provider/${id}/actives`);
+  }
+
   post(article: Article) : Observable<Article>{
     return this.http.post<Article>(this.url, article);
   }

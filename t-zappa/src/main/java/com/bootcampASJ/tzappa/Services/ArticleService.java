@@ -55,6 +55,13 @@ public class ArticleService {
 		return Optional.ofNullable(this.articleRepository.findByProvider(provider));
 	}
 	
+	public Optional<List<Article>> getArticlesActivesByProvider(Integer id) {
+		
+		Provider provider = this.providerRepository.findById(id).get();
+		
+		return Optional.ofNullable(this.articleRepository.findByProviderAndIsDeletedFalse(provider));
+	}
+	
 	@Transactional
 	public Optional<Article> newArticle(Article article) {	
 	    try {

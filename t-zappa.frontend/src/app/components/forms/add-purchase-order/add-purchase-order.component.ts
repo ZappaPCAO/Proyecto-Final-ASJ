@@ -22,7 +22,7 @@ export class AddPurchaseOrderComponent implements OnInit {
   purchaseOrder!: PurchaseOrder;
   
   providers: Provider[] = []; articles: Article[] = []; // arreglos para los select
-  amount: number = 0;
+  amount: number = 1;
   idPurchaseOrder: number = 0; idArticle: number = 0; idProvider: number = 0;
   checkSpecialCharacters = checkSpecialCharacters; checkOnlyNumbers = checkOnlyNumbers;
   isCuit = isCuit; isEmail = isEmail; isPhoneNumber = isPhoneNumber; isWebsite = isWebsite;
@@ -145,6 +145,18 @@ export class AddPurchaseOrderComponent implements OnInit {
 
     this.show = !( checkDataPurchaseOrder(this.purchaseOrder) && checkLongsPurchaseOrder(this.purchaseOrder) );
 
+    console.log("Test 1-");
+
+    if(this.purchaseOrder.details.length < 1){
+      console.log("Test 2-");
+      Swal.fire({
+        title: "No puede crear una orden de compra sin tener un detalle",
+        text: "Seleccione un producto y una cantidad, luego en el boton '+' para agregar.",
+        icon: "warning"
+      });
+      return;
+    }
+
     if( form.valid && !this.show ){ // controlo campos especificos
         if(this.idPurchaseOrder === 0){ // 0 => Nuevo ; >0 => Edito  
           this.purchaseOrder.sendDate = new Date(this.purchaseOrder.sendDate).toISOString();
@@ -170,9 +182,10 @@ export class AddPurchaseOrderComponent implements OnInit {
               confirmButtonText: "Si",
               cancelButtonText: "No"
             }).then((result) => {
-              if (result.isConfirmed) {  // Si quiere cargar otro formateo los datos.
+              if (result.isConfirmed){  // Si quiere cargar otro formateo los datos.
                 this.idArticle = 0;
-                this.idProvider = 0;           
+                this.idProvider = 0;      
+                this.amount = 1;     
                 this.initializePurchaseOrder();                                  
                 form.reset();
                 this.purchaseOrderService.getNewNumOrder().subscribe((data : string) => {
@@ -189,8 +202,8 @@ export class AddPurchaseOrderComponent implements OnInit {
   }
 
   updateArticles() {  
-    this.articleService.getByProvider(this.idProvider).subscribe((data : Article[]) => {
-      this.articles = data; // ver xq no me va a traer los activos.     
+    this.articleService.getByProviderActives(this.idProvider).subscribe((data : Article[]) => {
+      this.articles = data;   
       this.idArticle = 0;
     });    
   }

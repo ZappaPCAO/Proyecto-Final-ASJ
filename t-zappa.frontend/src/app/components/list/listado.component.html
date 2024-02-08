@@ -28,7 +28,7 @@
         <input class="form-control" type="text" name="filtro" [(ngModel)]="filter" placeholder="Buscar...">
       </div>
       <div *ngIf="(this.condicion === 'article' || this.condicion === 'provider' || this.condicion === 'purchase-order')" class="col-2"> 
-        <span>filtrar por {{(this.condicion === 'article') ? 'Categoria' : (this.condicion === 'provider') ? 'Sector' : 'Proveedor'}}: </span>
+        <span>Filtrar por {{(this.condicion === 'article') ? 'Categoria' : (this.condicion === 'provider') ? 'Sector' : 'Proveedor'}}: </span>
           <div *ngIf="this.condicion === 'provider'">
             <select [(ngModel)]="filtro" name="sector" class="form-select" (change)="updateList('sector')">
               <option selected value="0">Todo</option>

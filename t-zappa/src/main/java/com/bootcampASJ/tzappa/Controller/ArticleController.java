@@ -65,6 +65,12 @@ public class ArticleController {
 		return ResponseEntity.ok(this.articleService.getArticlesByProvider(id));
 	}
 	
+	@GetMapping("/provider/{id}/actives")
+	public ResponseEntity<Object> getArticlesActivesByProvider(@PathVariable Integer id) {		
+		return ResponseEntity.ok( this.articleService.getArticlesActivesByProvider(id) );
+	}
+	
+	
 	@PostMapping
 	public ResponseEntity<Object> newArticle(@Valid @RequestBody Article article, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
