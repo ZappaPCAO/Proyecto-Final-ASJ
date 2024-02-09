@@ -33,7 +33,7 @@ public class ArticleService {
 	private dataValidation data = new dataValidation();
 	
 	public List<Article> getArticles() {
-		return this.articleRepository.findAllByOrderByName();
+		return this.articleRepository.findAllOrderByIgnoreCaseName();
 	}
 	
 	public List<Article> getArticlesByActive(){

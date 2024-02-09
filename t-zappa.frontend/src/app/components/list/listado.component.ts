@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 import '@sweetalert2/theme-dark/dark.css';
 import { Sector } from '../../models/sector';
 import { Category } from '../../models/category';
+import { Detail } from '../../models/detail';
 
 
 @Component({
@@ -74,7 +75,14 @@ export class ListadoComponent implements OnInit{
                      (this.condicion === 'purchase-order') ? ['numPurchaseOrder','sendDate','receiptDate', 'provider', 'state', 'total'] : ['name'];
       }else{
         this.sinInfo();
-      }      
+      }
+      
+      if(this.condicion === 'purchase-order'){
+       // Suponiendo que this.tbody es un array de arrays, y cada array interno contiene objetos de tipo Detail
+        for (let array of this.tbody) {
+          array.details.sort((a: Detail, b: Detail) => b.subtotal - a.subtotal);
+        }
+      }
     });
   }                                                                        
   
