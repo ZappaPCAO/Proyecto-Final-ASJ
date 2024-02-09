@@ -26,31 +26,31 @@ public class Provider {
 	@Column
 	private Integer id;
 	
-	@NotNull(message="[cod_provider] no puede ser nula.")
-	@Size(min = 3, max = 30, message = "[cod_provider] longitud fuera de rango 3-30.")
+	@NotNull(message="Proveedor: no puede ser nula.")
+	@Size(min = 3, max = 30, message = "Proveedor: longitud fuera de rango 3-30.")
 	@Column(name = "cod_provider", unique = true)
 	private String codProvider;
 	
-	@NotNull(message="[business_name] no puede ser nula.")
-	@Size(min = 3, max = 50, message = "[business_name] longitud fuera de rango 3-50.")
+	@NotNull(message="Raz. Social: no puede ser nula.")
+	@Size(min = 3, max = 50, message = "Raz. Social: longitud fuera de rango 3-50.")
 	@Column(name = "business_name", unique = true)
 	private String businessName;
 	
-	@Size(min = 3, message = "[website] longitud fuera de rango 3-inf.")
+	@Size(min = 3, message = "Web: longitud fuera de rango 3-inf.")
 	@Column(unique = true, columnDefinition = "text")
 	private String website;
 	
-	@NotNull(message="[email] no puede ser nula.")
-	@Size(min = 4, max = 50, message = "[email] longitud fuera de rango 4-50.")
+	@NotNull(message="Email: no puede ser nula.")
+	@Size(min = 4, max = 50, message = "Email: longitud fuera de rango 4-50.")
 	@Column(unique = true)
 	private String email;
 	
-	@NotNull(message="[phone] no puede ser nula.")
-	@Size(min = 9, max = 14, message = "[phone] longitud fuera de rango 8-11.")
+	@NotNull(message="Telefono: no puede ser nula.")
+	@Size(min = 9, max = 14, message = "Telefono: longitud fuera de rango 8-11.")
 	@Column(unique = true)
 	private String phone;
 	
-	@Size(min = 3, message = "[website] longitud fuera de rango 3-inf.")
+	@Size(min = 3, message = "Logo: longitud fuera de rango 3-inf.")
 	@Column(unique = true, columnDefinition = "text")
 	private String logo;
 	

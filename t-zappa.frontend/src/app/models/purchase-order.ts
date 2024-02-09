@@ -6,7 +6,7 @@ export interface PurchaseOrder {
   numPurchaseOrder: string;
   sendDate: string;
   receiptDate: string;
-  description: string;
+  description?: any;
   details: Detail[];
   state: 'A' | 'C';
   total: number;

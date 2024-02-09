@@ -1,7 +1,5 @@
 package com.bootcampASJ.tzappa.Controller;
 
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -60,7 +58,8 @@ public class PurchaseOrderController {
 	@PostMapping
 	public ResponseEntity<Object> newPurchaseOrder(@Valid @RequestBody PurchaseOrder purchaseOrder, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
-			Map<String, String> errors = new ErrorHandler().inputValidate(bindingResult);
+			System.out.println("prueba");
+			String errors = new ErrorHandler().inputValidate(bindingResult);
 			return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
 		}
 		try {			

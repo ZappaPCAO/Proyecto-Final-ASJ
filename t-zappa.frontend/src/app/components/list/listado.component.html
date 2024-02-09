@@ -178,9 +178,9 @@
             <div class="modal-dialog modal-xl">
               <div class="modal-content mi-bg-black text-white">          
                 <div class="modal-header b-degrade">
-                  <h2 class="modal-title fs-5 text-uppercase" id="exampleModalLabel">Detalle{{(this.condicion === 'purchase-order') ? ' Orden de compra: ' + currentRecord.numPurchaseOrder :
-                                                                                              (this.condicion === 'provider') ? ' Proveedor: ' + currentRecord.businessName :
-                                                                                                                                ' Articulo: ' + currentRecord.name}}</h2>
+                  <h2 class="modal-title fs-5 text-uppercase" id="exampleModalLabel">Detalle{{(this.condicion === 'purchase-order') ? ' Orden de compra: ' + currentRecord.numPurchaseOrder + ((this.currentRecord.state === 'C') ? ' (CANCELADA)' : '') :
+                                                                                              (this.condicion === 'provider') ? ' Proveedor: ' + currentRecord.businessName + ((this.currentRecord.isDeleted) ? ' (ELIMINADO)' : '') :
+                                                                                                                                ' Articulo: ' + currentRecord.name + ((this.currentRecord.isDeleted) ? ' (ELIMINADO)' : '')}}</h2>
                   <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body container-fluid">
@@ -261,37 +261,39 @@
                   </ng-container>
                   <ng-container *ngSwitchCase="'purchase-order'">
                     <div class="row">
-                      <p class="h4 text-center">{{currentRecord.provider.businessName}}</p>
-                      <table class="table">
-                        <thead>
-                          <tr>
-                            <th>Articulo</th>                        
-                            <th>Precio</th>
-                            <th>Subtotal</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr class="col" *ngFor="let detail of currentRecord.details">
-                            <td>
-                              {{detail.article.name}} {{(detail.amount > 1)?'('+detail.amount+')':''}}
-                            </td>
-                            <td>
-                              {{detail.article.price}}
-                            </td>
-                            <td>
-                              {{detail.subtotal}}
-                            </td>
-                          </tr>
-                        </tbody>
-                        <tfoot>
-                          <tr>
-                            <th colspan="3" class="text-end">
-                              <p class="px-5 mx-5">Total: {{currentRecord.total}}</p>
-                            </th>
-                          </tr>
-                        </tfoot>
-                      </table>
-                    </div>
+                      <p class="h4 text-center">{{currentRecord.provider.businessName}}</p>                  
+                        <div class="col-md-12 table-responsive table-scroll" style="height: 20rem !important;">
+                            <table class="table table-dark table-bordered text-center p-0 m-0">
+                                <thead>
+                                  <tr>                                    
+                                    <th>Articulo</th>                        
+                                    <th>Precio</th>
+                                    <th>Subtotal</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr class="col" *ngFor="let detail of currentRecord.details">                                   
+                                    <td>
+                                      {{detail.article.name}} {{(detail.amount > 1)?'('+detail.amount+')':''}}
+                                    </td>
+                                    <td>
+                                      {{detail.article.price | currency:'USD':'symbol':'1.2-2'}}
+                                    </td>
+                                    <td>
+                                      {{detail.subtotal | currency:'USD':'symbol':'1.2-2'}}
+                                    </td>
+                                  </tr>
+                                </tbody>
+                                <tfoot>
+                                  <tr>
+                                    <th colspan="3" class="text-end">
+                                      <p class="color-secondary fs-3 p-0 m-0 px-5 mx-5">Total: {{currentRecord.total | currency:'USD':'symbol':'1.2-2'}}</p>
+                                    </th>
+                                  </tr>
+                                </tfoot>
+                              </table>
+                        </div>
+                      </div>
                   </ng-container>
                   <ng-container *ngSwitchCase="'article'">
                     <div class="row">

@@ -15,6 +15,7 @@ import com.bootcampASJ.tzappa.Repositories.ArticleRepository;
 import com.bootcampASJ.tzappa.Repositories.ProviderRepository;
 import com.bootcampASJ.tzappa.Repositories.PurchaseOrderRepository;
 import com.bootcampASJ.tzappa.utils.ExceptionCustom;
+import com.bootcampASJ.tzappa.utils.dataValidation;
 
 import jakarta.transaction.Transactional;
 
@@ -28,6 +29,9 @@ public class PurchaseOrderService {
 	ArticleRepository articleRepository;
 	@Autowired
 	ProviderRepository providerRepository;
+	
+	// Validaciones
+	private dataValidation data = new dataValidation();
 	
 	public List<PurchaseOrder> getPurchaseOrders() {
 		return this.purchaseOrderRepository.findAllByOrderBySendDate();
@@ -57,7 +61,7 @@ public class PurchaseOrderService {
             Integer newNumber = currentNum + 1;
             return String.format("%08d", newNumber);
         }).orElse("00000001"); // Si no hay ninguna orden de compra, comienza desde 1
-
+        
         return newNumPurchaseOrder;
 	}
 	
@@ -65,6 +69,9 @@ public class PurchaseOrderService {
 	public PurchaseOrder newPurchaseOrder(PurchaseOrder purchaseOrder) {
 		List<PurchaseOrder> storedPurchaseOrders = this.purchaseOrderRepository.findAll(); 
 		
+		if(!data.validatePurchaseOrder(purchaseOrder))
+			throw new ExceptionCustom("Hay inconsistencias en los datos, verifique y vuelva a mandar.");
+				
 		for(PurchaseOrder order : storedPurchaseOrders) {
 			if( (purchaseOrder.getNumPurchaseOrder().toLowerCase()).equals(order.getNumPurchaseOrder().toLowerCase()) )
 				throw new ExceptionCustom("Ya hay un registro asociado a ese nro de orden.");			

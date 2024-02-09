@@ -40,7 +40,7 @@ export class AddPurchaseOrderComponent implements OnInit {
       numPurchaseOrder: '',
       sendDate: '',
       receiptDate: '',
-      description: '',
+      description: null,
       details: [],
       state: 'A',
       total: 0,
@@ -167,13 +167,21 @@ export class AddPurchaseOrderComponent implements OnInit {
           next: (response : PurchaseOrder) => {
             this.purchaseOrder = response;
           }, error: (error) => {
+            console.log(error.error + "q es")
+            // Verifico si es el string.
+            if(error && typeof error.error === 'string' && error.error){              
               Swal.fire({
                 position: "bottom-end",
                 icon: "error",
                 title: `${error.error}`,
                 showConfirmButton: false,
-                timer: 1500
+                timer: 2500
               });
+            }
+            else {              
+              alert('Ocurrió un error al procesar la solicitud. Por favor, inténtalo de nuevo más tarde.');
+            }
+
           }, complete: () => {
               Swal.fire({
                 title: "¿Desea crear otro?",          

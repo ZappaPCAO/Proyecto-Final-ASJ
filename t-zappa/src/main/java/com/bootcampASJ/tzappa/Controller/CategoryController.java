@@ -1,7 +1,5 @@
 package com.bootcampASJ.tzappa.Controller;
 
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,7 +45,7 @@ public class CategoryController {
 	@PostMapping
 	public ResponseEntity<Object> newCategory(@Valid @RequestBody Category category, BindingResult bindingResult) {
 		 if (bindingResult.hasErrors()) {
-	        Map<String, String> errors = new ErrorHandler().inputValidate(bindingResult);
+			String errors = new ErrorHandler().inputValidate(bindingResult);
 	        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
 		}
 
@@ -65,7 +63,7 @@ public class CategoryController {
 													BindingResult bindingResult){
 		
 		if (bindingResult.hasErrors()) {
-			Map<String, String> errors = new ErrorHandler().inputValidate(bindingResult);
+			String errors = new ErrorHandler().inputValidate(bindingResult);
 			return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
 		}
 		

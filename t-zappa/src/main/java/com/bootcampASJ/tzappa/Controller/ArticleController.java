@@ -1,7 +1,5 @@
 package com.bootcampASJ.tzappa.Controller;
 
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -72,7 +70,7 @@ public class ArticleController {
 	@PostMapping
 	public ResponseEntity<Object> newArticle(@Valid @RequestBody Article article, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
-	        Map<String, String> errors = new ErrorHandler().inputValidate(bindingResult);
+			String errors = new ErrorHandler().inputValidate(bindingResult);
 	        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
 		}
 		
@@ -90,7 +88,7 @@ public class ArticleController {
 													BindingResult bindingResult){
 		
 		if (bindingResult.hasErrors()) {
-			Map<String, String> errors = new ErrorHandler().inputValidate(bindingResult);
+			String errors = new ErrorHandler().inputValidate(bindingResult);
 			return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
 		}
 		

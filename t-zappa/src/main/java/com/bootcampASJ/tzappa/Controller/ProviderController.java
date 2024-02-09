@@ -1,7 +1,5 @@
 package com.bootcampASJ.tzappa.Controller;
 
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -64,7 +62,7 @@ public class ProviderController {
 	public ResponseEntity<Object> newProvider(@Valid @RequestBody Provider provider, BindingResult bindingResult) {
 		System.out.println("prueba a ver si llega con datos q no estan en la bd. ");
 		if (bindingResult.hasErrors()) {
-			Map<String, String> errors = new ErrorHandler().inputValidate(bindingResult);
+			String errors = new ErrorHandler().inputValidate(bindingResult);
 			return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
 		}
 		try {
@@ -81,7 +79,7 @@ public class ProviderController {
 													BindingResult bindingResult){
 		
 		if (bindingResult.hasErrors()) {
-			Map<String, String> errors = new ErrorHandler().inputValidate(bindingResult);
+			String errors = new ErrorHandler().inputValidate(bindingResult);
 			return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
 		}
 		

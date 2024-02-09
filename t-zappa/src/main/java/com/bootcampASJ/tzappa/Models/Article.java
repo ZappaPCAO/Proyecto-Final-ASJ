@@ -26,26 +26,26 @@ public class Article {
 	@Column
 	private Integer id;
 	
-	@NotNull(message="[cod_article] no puede ser nula.")
-	@Size(min = 3, max = 30, message = "[cod_article] longitud fuera de rango 3-30.")
+	@NotNull(message="SKU: no puede ser nula.")
+	@Size(min = 3, max = 30, message = "SKU: longitud fuera de rango 3-30.")
 	@Column(name = "cod_article", unique = true)
 	private String codArticle;
 	
 	@Column
-	@NotNull(message="[name] no puede ser nula.")
-	@Size(min = 3, max = 50, message = "[name] longitud fuera de rango 3-50.")
+	@NotNull(message="Nombre: no puede ser nula.")
+	@Size(min = 3, max = 50, message = "Nombre: longitud fuera de rango 3-50.")
 	private String name;
 	
-	@Size(min = 3, message = "[description] longitud fuera de rango 3-inf.")
+	@Size(min = 3, message = "Descripcion: longitud fuera de rango 3-inf.")
 	@Column(columnDefinition = "text")
 	private String description;
 	
-	@NotNull(message="[name] no puede ser nula.")
-	@Min(value = 1, message = "[number] debe ser un numero positivo.")
+	@NotNull(message="Precio: no puede ser nula.")
+	@Min(value = 1, message = "Precio: debe ser un numero positivo.")
 	@Column
 	private Double price;
 	
-	@Size(min = 3, message = "[image] longitud fuera de rango 3-inf.")
+	@Size(min = 3, message = "Imagen: longitud fuera de rango 3-inf.")
 	@Column(columnDefinition = "text")
 	private String image;
 	

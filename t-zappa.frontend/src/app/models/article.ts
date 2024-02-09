@@ -5,9 +5,9 @@ export interface Article {
   id: number;
   codArticle: string;
   name: string;
-  description?: string;
+  description?: any;
   price: number;
-  image: string;
+  image?: any;
   isDeleted?: boolean;
   category: Category;
   provider: Provider;

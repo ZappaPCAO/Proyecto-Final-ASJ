@@ -30,29 +30,29 @@ public class PurchaseOrder {
 	@Column
 	private Integer id;
 	
-	@NotNull(message="[num_purchase_order] no puede ser nula.")
-	@Min(value = 1, message = "[num_purchase_order] debe ser un numero positivo.")
+	@NotNull(message="N° Ord. Compra: no puede ser nula.")
+	@Min(value = 1, message = "N° Ord. Compra: debe ser un numero positivo.")
 	@Column(name = "num_purchase_order", unique = true)
 	private String numPurchaseOrder;
 	
-	@NotNull(message="[send_date] no puede ser nula.")
+	@NotNull(message="Fec. Emision: no puede ser nula.")
 	@Column(name = "send_date")
 	private LocalDateTime sendDate;
 	
-	@NotNull(message="[receipt_date] no puede ser nula.")
+	@NotNull(message="Fec. Recepcion: no puede ser nula.")
 	@Column(name = "receipt_date")
 	private LocalDateTime receiptDate;
 	
-	@Size(min = 3, message = "[description] longitud fuera de rango 3-inf.")
+	@Size(min = 3, message = "Descripcion: longitud fuera de rango 3-inf.")
 	@Column(columnDefinition = "text")
 	private String description;
 	
 	@Column(name="estado") // Cambiar a ingles
-	@NotNull(message="[estado] no puede ser nula.")
+	@NotNull(message="Estado: no puede ser nula.")
 	private Character state;
 
-	@NotNull(message="[total] no puede ser nula.")
-	@Min(value = 1, message = "[total] debe ser un numero positivo.")
+	@NotNull(message="Total: no puede ser nula.")
+	@Min(value = 1, message = "Total: debe ser un numero positivo.")
 	@Column
 	private Double total;
 	

@@ -30,9 +30,9 @@ export class AddArticleComponent implements OnInit {
       id: 0,
       codArticle: '',
       name: '',
-      description: '',
+      description: null,
       price: 0,
-      image: '',
+      image: null,
       provider: {
         id: 0,
         codProvider: '',

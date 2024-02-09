@@ -14,6 +14,7 @@ import com.bootcampASJ.tzappa.Repositories.ArticleRepository;
 import com.bootcampASJ.tzappa.Repositories.CategoryRepository;
 import com.bootcampASJ.tzappa.Repositories.ProviderRepository;
 import com.bootcampASJ.tzappa.utils.ExceptionCustom;
+import com.bootcampASJ.tzappa.utils.dataValidation;
 
 import jakarta.transaction.Transactional;
 
@@ -27,6 +28,9 @@ public class ArticleService {
 	CategoryRepository categoryRepository;
 	@Autowired
 	ProviderRepository providerRepository;
+	
+	// Validaciones
+	private dataValidation data = new dataValidation();
 	
 	public List<Article> getArticles() {
 		return this.articleRepository.findAllByOrderByName();
@@ -62,6 +66,9 @@ public class ArticleService {
 	public Article newArticle(Article article) {	
 		List<Article> storedArticles = this.articleRepository.findAll();
 		
+		if(!data.validateArticle(article))
+			throw new ExceptionCustom("Hay inconsistencias en los datos, verifique y vuelva a mandar.");
+		
 		for(Article art : storedArticles) {
 			if( (article.getCodArticle().toLowerCase()).equals(art.getCodArticle().toLowerCase()) )
 				throw new ExceptionCustom("Ya hay un registro asociado a ese SKU.");			
@@ -73,6 +80,9 @@ public class ArticleService {
 	@Transactional
 	public Article updateArticle(Article article){
 		List<Article> storedArticles = this.articleRepository.findAll();
+		
+		if(!data.validateArticle(article))
+			throw new ExceptionCustom("Hay inconsistencias en los datos, verifique y vuelva a mandar.");
 		
 		if( article.equals(this.articleRepository.findById(article.getId()).get()) )
 			throw new ExceptionCustom("El registro que estás intentando editar es idéntico "

@@ -1,4 +1,3 @@
-import { Provider } from "./provider";
 import { Article } from "./article";
 
 export interface Detail{

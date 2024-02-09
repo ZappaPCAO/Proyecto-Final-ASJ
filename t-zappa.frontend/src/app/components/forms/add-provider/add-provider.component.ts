@@ -39,10 +39,10 @@ export class AddProviderComponent implements OnInit {
       id: 0,
       codProvider: '',
       businessName: '',
-      website: '',
+      website: null,
       email: '',
       phone: '',
-      logo: '',
+      logo: null,
       sector:{
         id: 0,
         sector: ''

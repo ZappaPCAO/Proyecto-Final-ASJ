@@ -17,7 +17,7 @@ export class FilterPipe implements PipeTransform {
     if(!all){ // Si busca solo por algunos campos
       filteredValue = value.filter((item) => {
         for (const key in item) {
-          console.log("clave: " + key +", valor: "+  item[key])
+          if(item[key] !== null){
             if ( (key === 'businessName'|| key === 'codProvider'||
                   key === 'name'|| key === 'description') &&
                   (item[key].toLowerCase().includes(args.toLowerCase()))){    
@@ -27,6 +27,7 @@ export class FilterPipe implements PipeTransform {
                     item[key].lastName.toLowerCase().includes(args.toLowerCase()) )){
               return true;
             }
+          }
         }
         return false;
       });

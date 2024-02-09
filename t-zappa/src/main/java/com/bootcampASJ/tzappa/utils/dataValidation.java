@@ -1,8 +1,10 @@
 package com.bootcampASJ.tzappa.utils;
 
+import com.bootcampASJ.tzappa.Models.Article;
 import com.bootcampASJ.tzappa.Models.ContactData;
 import com.bootcampASJ.tzappa.Models.Location;
 import com.bootcampASJ.tzappa.Models.Provider;
+import com.bootcampASJ.tzappa.Models.PurchaseOrder;
 import com.bootcampASJ.tzappa.Models.TaxData;
 
 public  class dataValidation {
@@ -95,4 +97,41 @@ public  class dataValidation {
         
         return true;
     }
+
+	public Boolean validateArticle(Article article) {
+		
+		// Requeridos
+		if(!this.checkSpecialCharacters(article.getName()))
+			return false;
+		if(!this.checkSpecialCharacters(article.getCodArticle()))
+			return false;
+	
+		// No requeridos
+		if(article.getImage() != null) {
+			if(!this.isWebsite(article.getImage()))
+				return false;
+		}
+		
+		if(article.getDescription() != null) {
+			if(!this.checkSpecialCharacters(article.getDescription()))
+				return false;
+		}
+		
+		return true;
+	}
+
+	public Boolean validatePurchaseOrder(PurchaseOrder purchaseOrder) {
+		
+		// Requeridos
+		if(!this.checkOnlyNumbers(purchaseOrder.getNumPurchaseOrder()))
+			return false;		
+		
+		// No requeridos		
+		if(purchaseOrder.getDescription() != null) {
+			if(!this.checkSpecialCharacters(purchaseOrder.getDescription()))
+				return false;
+		}
+		
+		return true;
+	}
 }

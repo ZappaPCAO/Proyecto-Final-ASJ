@@ -15,7 +15,13 @@
         <div class="row justify-content-center">
             <div class="col-lg-12">
                 <div class="card shadow-light bg-light px-2">
-                    <div class="card-header"><h3 class="text-center font-weight-light my-3">Nuevo Articulo</h3></div>
+                    <div class="card-header">
+                        <h3 class="text-center font-weight-light my-3">Nuevo Articulo</h3>
+                        <p class="h6 text-start p-0 m-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="16" width="12" viewBox="0 0 384 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.--><path fill="#d6b300" d="M192 32c17.7 0 32 14.3 32 32V199.5l111.5-66.9c15.2-9.1 34.8-4.2 43.9 11s4.2 34.8-11 43.9L254.2 256l114.3 68.6c15.2 9.1 20.1 28.7 11 43.9s-28.7 20.1-43.9 11L224 312.5V448c0 17.7-14.3 32-32 32s-32-14.3-32-32V312.5L48.5 379.4c-15.2 9.1-34.8 4.2-43.9-11s-4.2-34.8 11-43.9L129.8 256 15.5 187.4c-15.2-9.1-20.1-28.7-11-43.9s28.7-20.1 43.9-11L160 199.5V64c0-17.7 14.3-32 32-32z"/></svg>
+                            <strong class="mx-2">Requerido</strong>
+                        </p>
+                    </div>
                     <div class="card-body">
                         <form #miForm="ngForm" (ngSubmit)="agregarArticle(miForm)">
                             <div class="row mb-3">

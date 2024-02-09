@@ -5,10 +5,10 @@ export interface Provider {
   id: number;
   codProvider: string;
   businessName: string;
-  website?: string;
+  website?: any;
   email: string;  
   phone: string;
-  logo: string;
+  logo?: any;
   isDeleted?: boolean;
   location:{
     id: number;

@@ -41,7 +41,7 @@ public class SectorController {
 													BindingResult bindingResult){
 		System.out.println("prueba a ver si llega con datos q no estan en la bd. ");
 		if (bindingResult.hasErrors()) {
-			Map<String, String> errors = new ErrorHandler().inputValidate(bindingResult);
+			String errors = new ErrorHandler().inputValidate(bindingResult);
 			return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
 		}
 	
@@ -59,7 +59,7 @@ public class SectorController {
 	public ResponseEntity<Object> updateSector(@Valid @RequestBody Sector sector,
 														BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
-			Map<String, String> errors = new ErrorHandler().inputValidate(bindingResult);
+			String errors = new ErrorHandler().inputValidate(bindingResult);
 			return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
 		}
 		
