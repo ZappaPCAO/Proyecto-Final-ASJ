@@ -60,7 +60,6 @@ public class ProviderController {
 	
 	@PostMapping
 	public ResponseEntity<Object> newProvider(@Valid @RequestBody Provider provider, BindingResult bindingResult) {
-		System.out.println("prueba a ver si llega con datos q no estan en la bd. ");
 		if (bindingResult.hasErrors()) {
 			String errors = new ErrorHandler().inputValidate(bindingResult);
 			return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);

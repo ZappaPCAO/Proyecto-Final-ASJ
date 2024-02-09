@@ -74,7 +74,22 @@ public class ProviderService {
 		if(!data.validateProvider(provider))
 			throw new ExceptionCustom("Hay inconsistencias en los datos, verifique y vuelva a mandar.");
 		
-		for(TaxData taxData : storedTaxsData) {
+		if(!(provider.getTaxData().getIvaCondition().getId() > 0) )
+			throw new ExceptionCustom("Debe seleccionar una Cond. Iva.");
+		
+		if(!(provider.getLocation().getCity().getId() > 0) )
+			throw new ExceptionCustom("Debe seleccionar una Localidad.");
+		
+		if(!(provider.getLocation().getCity().getState().getId() > 0) )
+			throw new ExceptionCustom("Debe seleccionar una Provincia.");
+		
+		if(!(provider.getLocation().getCity().getState().getCountry().getId() > 0) )
+			throw new ExceptionCustom("Debe seleccionar un Pais.");
+		
+		if(!(provider.getSector().getId() > 0) )
+			throw new ExceptionCustom("Debe seleccionar un Sector.");
+		
+		for(TaxData taxData : storedTaxsData) {			
 			if( (provider.getTaxData().getCuit().toLowerCase()).equals(taxData.getCuit().toLowerCase()) )
 				throw new ExceptionCustom("Ya hay un registro asociado a ese CUIT.");	
 		}
@@ -84,7 +99,7 @@ public class ProviderService {
 			if((provider.getContactData().getPhone()).equals(contactData.getPhone()))
 				throw new ExceptionCustom("En datos de contacto ya hay un registro asociado a ese telefono.");
 		}
-		System.out.println("llega aca?");
+		
 		for(Provider provi : storedProviders) {
 			
 			if(provider.getLogo() != null && provi.getLogo() != null) {
@@ -104,7 +119,7 @@ public class ProviderService {
 			if(provider.getEmail().toLowerCase().equals(provi.getEmail().toLowerCase()))
 				throw new ExceptionCustom("Ya hay un registro asociado a ese correo.");
 		}
-		System.out.println("llega aca?2");
+		
 		this.taxDataRepository.save(provider.getTaxData());
 		this.locationRepository.save(provider.getLocation());
 		this.contactDataRepository.save(provider.getContactData());
@@ -121,6 +136,21 @@ public class ProviderService {
 		
 		if(!data.validateProvider(provider))
 			throw new ExceptionCustom("Hay inconsistencias en los datos, verifique y vuelva a mandar.");
+		
+		if(!(provider.getTaxData().getIvaCondition().getId() > 0) )
+			throw new ExceptionCustom("Debe seleccionar una Cond. Iva.");
+		
+		if(!(provider.getLocation().getCity().getId() > 0) )
+			throw new ExceptionCustom("Debe seleccionar una Localidad.");
+		
+		if(!(provider.getLocation().getCity().getState().getId() > 0) )
+			throw new ExceptionCustom("Debe seleccionar una Provincia.");
+		
+		if(!(provider.getLocation().getCity().getState().getCountry().getId() > 0) )
+			throw new ExceptionCustom("Debe seleccionar un Pais.");
+		
+		if(!(provider.getSector().getId() > 0) )
+			throw new ExceptionCustom("Debe seleccionar un Sector.");
 		
 		if( provider.equals(this.providerRepository.findById(provider.getId()).get()) )
 			throw new ExceptionCustom("El registro que estás intentando editar es idéntico "

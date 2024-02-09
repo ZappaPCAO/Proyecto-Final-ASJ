@@ -69,6 +69,12 @@ public class ArticleService {
 		if(!data.validateArticle(article))
 			throw new ExceptionCustom("Hay inconsistencias en los datos, verifique y vuelva a mandar.");
 		
+		if(!(article.getCategory().getId() > 0) )
+			throw new ExceptionCustom("Debe seleccionar una Categoria.");
+		
+		if(!(article.getProvider().getId() > 0) )
+			throw new ExceptionCustom("Debe seleccionar un Proveedor.");
+		
 		for(Article art : storedArticles) {
 			if( (article.getCodArticle().toLowerCase()).equals(art.getCodArticle().toLowerCase()) )
 				throw new ExceptionCustom("Ya hay un registro asociado a ese SKU.");			
@@ -83,6 +89,12 @@ public class ArticleService {
 		
 		if(!data.validateArticle(article))
 			throw new ExceptionCustom("Hay inconsistencias en los datos, verifique y vuelva a mandar.");
+		
+		if(!(article.getCategory().getId() > 0) )
+			throw new ExceptionCustom("Debe seleccionar una Categoria.");
+		
+		if(!(article.getProvider().getId() > 0) )
+			throw new ExceptionCustom("Debe seleccionar un Proveedor.");
 		
 		if( article.equals(this.articleRepository.findById(article.getId()).get()) )
 			throw new ExceptionCustom("El registro que estás intentando editar es idéntico "

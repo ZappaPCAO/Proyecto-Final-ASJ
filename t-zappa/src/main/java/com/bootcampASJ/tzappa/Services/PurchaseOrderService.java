@@ -55,7 +55,6 @@ public class PurchaseOrderService {
 	public String getNumPurchaseOrder() {
         Optional<PurchaseOrder> lastPurchaseOrder = Optional.ofNullable(this.purchaseOrderRepository.findLastNumPurchaseOrders());
         
-        // Incrementa el número de compra en 1 y formatea como cadena de 8 caracteres con ceros a la izquierda
         String newNumPurchaseOrder = lastPurchaseOrder.map(order -> {
             Integer currentNum = Integer.parseInt(order.getNumPurchaseOrder());
             Integer newNumber = currentNum + 1;
@@ -70,8 +69,11 @@ public class PurchaseOrderService {
 		List<PurchaseOrder> storedPurchaseOrders = this.purchaseOrderRepository.findAll(); 
 		
 		if(!data.validatePurchaseOrder(purchaseOrder))
-			throw new ExceptionCustom("Hay inconsistencias en los datos, verifique y vuelva a mandar.");
-				
+			throw new ExceptionCustom("Hay inconsistencias en los datos, verifique y vuelva a mandar.");	
+		
+		if(!(purchaseOrder.getProvider().getId() > 0) )
+			throw new ExceptionCustom("Debe seleccionar un Proveedor.");
+		
 		for(PurchaseOrder order : storedPurchaseOrders) {
 			if( (purchaseOrder.getNumPurchaseOrder().toLowerCase()).equals(order.getNumPurchaseOrder().toLowerCase()) )
 				throw new ExceptionCustom("Ya hay un registro asociado a ese nro de orden.");			

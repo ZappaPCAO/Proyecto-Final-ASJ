@@ -3,7 +3,7 @@ import { ProviderService } from '../../../services/provider.service';
 import { ArticleService } from '../../../services/article.service';
 import { Article } from '../../../models/article';
 import { ActivatedRoute, Router } from '@angular/router';
-import { checkSpecialCharacters, checkOnlyNumbers, isCuit, isEmail, isPhoneNumber, isWebsite, checkDataArticle, checkLongsArticle } from '../../../utils/validates';
+import { checkSpecialCharacters, checkOnlyNumbers, isCuit, isEmail, isPhoneNumber, isWebsite, checkDataArticle, checkLongsArticle, isSelected } from '../../../utils/validates';
 import { NgForm } from '@angular/forms';
 import { Provider } from '../../../models/provider';
 import Swal from 'sweetalert2';

@@ -144,12 +144,20 @@ export class AddPurchaseOrderComponent implements OnInit {
       return;
     }
 
+    if(new Date(this.purchaseOrder.sendDate) > new Date(this.purchaseOrder.receiptDate)){
+      Swal.fire({
+        position: "bottom-end",
+        icon: "error",
+        title: `La fecha de emision, no puede ser posterior a la de recepcion.`,
+        showConfirmButton: false,
+        timer: 2500
+      });
+      return;
+    }
+
     this.show = !( checkDataPurchaseOrder(this.purchaseOrder) && checkLongsPurchaseOrder(this.purchaseOrder) );
 
-    console.log("Test 1-");
-
     if(this.purchaseOrder.details.length < 1){
-      console.log("Test 2-");
       Swal.fire({
         title: "No puede crear una orden de compra sin tener un detalle",
         text: "Seleccione un producto y una cantidad, luego en el boton '+' para agregar.",

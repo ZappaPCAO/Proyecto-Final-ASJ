@@ -28,6 +28,10 @@ export function isPhoneNumber(phone: string): boolean {
     const regex: RegExp = /^\(\d{3}\) \d{3}-\d{4}$/;
     return regex.test(phone);
 }
+export function isSelected(id : number){
+    return (id>0);
+}
+
 // //--------------------------------------------------------------------------//
 // Providers
 
