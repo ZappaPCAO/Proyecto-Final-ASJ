@@ -116,13 +116,25 @@ export class AddArticleComponent implements OnInit {
             next: (response : Article) => {
               this.article = response;
             },error: (error) => {
-              Swal.fire({
-                position: "bottom-end",
-                icon: "error",
-                title: `${error.error}`,
-                showConfirmButton: false,
-                timer: 1500
-              });
+              // Verifico si es el string.
+              if(error && typeof error.error === 'string' && error.error){              
+                Swal.fire({
+                  position: "bottom-end",
+                  icon: "error",
+                  title: `${error.error}`,
+                  showConfirmButton: false,
+                  timer: 2500
+                });
+              }
+              else {
+                Swal.fire({
+                  position: "center",
+                  icon: "error",
+                  title: `Ocurrió un error al procesar la solicitud. Por favor, inténtalo de nuevo más tarde`,
+                  showConfirmButton: false,
+                  timer: 2500
+                }); 
+              }
             },complete: () => {
               Swal.fire({
                 title: "¿Desea crear otro?",          
@@ -148,13 +160,25 @@ export class AddArticleComponent implements OnInit {
             next: (response : Article) => {
               this.article = response;
             }, error: (error) => {
-              Swal.fire({
-                position: "bottom-end",
-                icon: "error",
-                title: `${error.error}`,
-                showConfirmButton: false,
-                timer: 2500
-              });
+              // Verifico si es el string.
+              if(error && typeof error.error === 'string' && error.error){              
+                Swal.fire({
+                  position: "bottom-end",
+                  icon: "error",
+                  title: `${error.error}`,
+                  showConfirmButton: false,
+                  timer: 2500
+                });
+              }
+              else {
+                Swal.fire({
+                  position: "center",
+                  icon: "error",
+                  title: `Ocurrió un error al procesar la solicitud. Por favor, inténtalo de nuevo más tarde`,
+                  showConfirmButton: false,
+                  timer: 2500
+                }); 
+              }
             }, complete: () => {
               Swal.fire({
                 position: "bottom-end",

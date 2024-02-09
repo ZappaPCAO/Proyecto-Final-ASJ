@@ -166,8 +166,7 @@ export class AddPurchaseOrderComponent implements OnInit {
         this.purchaseOrderService.post(this.purchaseOrder).subscribe({
           next: (response : PurchaseOrder) => {
             this.purchaseOrder = response;
-          }, error: (error) => {
-            console.log(error.error + "q es")
+          }, error: (error) => {           
             // Verifico si es el string.
             if(error && typeof error.error === 'string' && error.error){              
               Swal.fire({
@@ -178,10 +177,15 @@ export class AddPurchaseOrderComponent implements OnInit {
                 timer: 2500
               });
             }
-            else {              
-              alert('Ocurrió un error al procesar la solicitud. Por favor, inténtalo de nuevo más tarde.');
+            else {
+              Swal.fire({
+                position: "center",
+                icon: "error",
+                title: `Ocurrió un error al procesar la solicitud. Por favor, inténtalo de nuevo más tarde`,
+                showConfirmButton: false,
+                timer: 2500
+              }); 
             }
-
           }, complete: () => {
               Swal.fire({
                 title: "¿Desea crear otro?",          

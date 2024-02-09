@@ -6,7 +6,7 @@
             <ng-container *ngIf="idProvider !== 0">
                 <li class="p-0 m-0 ms-3 me-3 breadcrumb-item text-white fs-5"><a style="color: inherit;text-decoration: none; color: var(--color-secondary);"
                     routerLink="../list">Listado de Proveedores </a></li>
-                <li class="p-0 m-0 breadcrumb-item active text-white fs-5" aria-current="page">Editar Articulo: {{ provider.businessName }} | COD: {{ provider.codProvider }}</li>
+                <li class="p-0 m-0 breadcrumb-item active text-white fs-5" aria-current="page">Editar Proveedor: {{ provider.businessName }} | COD: {{ provider.codProvider }}</li>
             </ng-container>
             <li *ngIf="idProvider === 0" class="p-0 m-0 breadcrumb-item active text-white fs-5" aria-current="page">Agregar articulo</li>
         </ol>
@@ -205,7 +205,7 @@
                                 <div class="col-md-4">
                                     <div class=" form-floating">                                                        
                                         <input max="99999" type="number" class="form-control form-control-sm" name="streetNum" [(ngModel)]="provider.location.number" placeholder=""
-                                        #streetNumber="ngModel" [ngClass]="!streetNumber.value ? '': streetNumber.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'">
+                                        #streetNumber="ngModel" [ngClass]="!streetNumber.value ? 'mi-requerido': streetNumber.errors ? 'is-invalid mi-invalid' : 'is-valid mi-valid'">
                                         <label for="inputCalleNro">Numero de calle: </label>
                                         <ng-container *ngIf="streetNumber.value">
                                             <span *ngIf="streetNumber.errors?.['max'] && !show" class="mi-invalid-feedback">

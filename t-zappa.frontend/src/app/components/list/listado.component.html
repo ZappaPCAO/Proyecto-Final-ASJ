@@ -4,7 +4,11 @@
       <ol class="breadcrumb p-0 m-0 text-uppercase">
         <li class="p-0 m-0 ms-3 me-1 breadcrumb-item text-white fs-5"><a style="color: inherit;text-decoration: none; color: var(--color-secondary);"
           routerLink="">Inicio </a></li>
-        <li class="p-0 m-0 breadcrumb-item active text-white fs-5" aria-current="page">Listado</li>
+        <li class="p-0 m-0 breadcrumb-item active text-white fs-5" aria-current="page">Listado de {{
+          (this.condicion === 'purchase-order') ? ' Ordenes de compra' :
+          (this.condicion === 'article') ? ' Articulos' :
+          (this.condicion === 'provider') ? ' Proveedores' : ' Categorias'
+          }}</li>
       </ol>
     </nav>
     <div class="row py-2 m-0 mb-1 mi-bg-black text-white">
