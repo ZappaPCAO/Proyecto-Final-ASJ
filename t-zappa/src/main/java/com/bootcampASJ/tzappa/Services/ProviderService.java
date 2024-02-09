@@ -12,7 +12,6 @@ import com.bootcampASJ.tzappa.Models.Provider;
 import com.bootcampASJ.tzappa.Models.Sector;
 import com.bootcampASJ.tzappa.Models.Location;
 import com.bootcampASJ.tzappa.Models.TaxData;
-import com.bootcampASJ.tzappa.ExceptionCustom;
 import com.bootcampASJ.tzappa.Models.ContactData;
 
 import com.bootcampASJ.tzappa.Repositories.ContactDataRepository;
@@ -20,6 +19,8 @@ import com.bootcampASJ.tzappa.Repositories.LocationRepository;
 import com.bootcampASJ.tzappa.Repositories.ProviderRepository;
 import com.bootcampASJ.tzappa.Repositories.SectorRepository;
 import com.bootcampASJ.tzappa.Repositories.TaxDataRepository;
+import com.bootcampASJ.tzappa.utils.ExceptionCustom;
+import com.bootcampASJ.tzappa.utils.dataValidation;
 
 import jakarta.transaction.Transactional;
 
@@ -66,6 +67,11 @@ public class ProviderService {
 		List<ContactData> storedContactsData = this.contactDataRepository.findAll();
 		List<TaxData> storedTaxsData = this.taxDataRepository.findAll();
 		List<Provider> storedProviders = this.providerRepository.findAll();
+		
+		dataValidation data = new dataValidation();
+		
+		if(!data.validateProvider(provider))
+			throw new ExceptionCustom("error probando.");
 		
 		for(TaxData taxData : storedTaxsData) {
 			if( (provider.getTaxData().getCuit().toLowerCase()).equals(taxData.getCuit().toLowerCase()) )

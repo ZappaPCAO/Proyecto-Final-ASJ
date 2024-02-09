@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bootcampASJ.tzappa.Models.Provider;
 import com.bootcampASJ.tzappa.Services.ProviderService;
-import com.bootcampASJ.tzappa.ErrorHandler;
+import com.bootcampASJ.tzappa.utils.ErrorHandler;
 
 import jakarta.validation.Valid;
 

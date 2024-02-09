@@ -1,4 +1,4 @@
-package com.bootcampASJ.tzappa;
+package com.bootcampASJ.tzappa.utils;
 
 public class ExceptionCustom extends RuntimeException {
     

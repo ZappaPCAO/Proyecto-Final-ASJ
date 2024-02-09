@@ -6,11 +6,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.bootcampASJ.tzappa.ExceptionCustom;
-
 import com.bootcampASJ.tzappa.Models.Category;
 
 import com.bootcampASJ.tzappa.Repositories.CategoryRepository;
+import com.bootcampASJ.tzappa.utils.ExceptionCustom;
 
 import jakarta.transaction.Transactional;
 

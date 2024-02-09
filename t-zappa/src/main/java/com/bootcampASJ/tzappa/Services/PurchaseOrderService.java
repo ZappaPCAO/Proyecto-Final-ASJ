@@ -8,14 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
 
-import com.bootcampASJ.tzappa.ExceptionCustom;
-
 import com.bootcampASJ.tzappa.Models.Detail;
 import com.bootcampASJ.tzappa.Models.Provider;
 import com.bootcampASJ.tzappa.Models.PurchaseOrder;
 import com.bootcampASJ.tzappa.Repositories.ArticleRepository;
 import com.bootcampASJ.tzappa.Repositories.ProviderRepository;
 import com.bootcampASJ.tzappa.Repositories.PurchaseOrderRepository;
+import com.bootcampASJ.tzappa.utils.ExceptionCustom;
 
 import jakarta.transaction.Transactional;
 

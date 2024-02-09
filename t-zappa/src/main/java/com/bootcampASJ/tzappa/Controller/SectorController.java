@@ -2,9 +2,9 @@ package com.bootcampASJ.tzappa.Controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bootcampASJ.tzappa.ErrorHandler;
 import com.bootcampASJ.tzappa.Models.Sector;
 import com.bootcampASJ.tzappa.Services.SectorService;
+import com.bootcampASJ.tzappa.utils.ErrorHandler;
 
 import jakarta.validation.Valid;
 

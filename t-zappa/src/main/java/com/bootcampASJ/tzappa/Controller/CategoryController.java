@@ -15,11 +15,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bootcampASJ.tzappa.ErrorHandler;
-
 import com.bootcampASJ.tzappa.Models.Category;
 
 import com.bootcampASJ.tzappa.Services.CategoryService;
+import com.bootcampASJ.tzappa.utils.ErrorHandler;
 
 import jakarta.validation.Valid;
 
