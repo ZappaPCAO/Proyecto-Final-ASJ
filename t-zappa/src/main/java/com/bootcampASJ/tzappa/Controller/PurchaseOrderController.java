@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bootcampASJ.tzappa.ErrorHandler;
-import com.bootcampASJ.tzappa.Models.Detail;
+
 import com.bootcampASJ.tzappa.Models.PurchaseOrder;
 import com.bootcampASJ.tzappa.Services.PurchaseOrderService;
 
@@ -60,22 +60,16 @@ public class PurchaseOrderController {
 	
 	@PostMapping
 	public ResponseEntity<Object> newPurchaseOrder(@Valid @RequestBody PurchaseOrder purchaseOrder, BindingResult bindingResult) {
-		 if (bindingResult.hasErrors()) {
-		        Map<String, String> errors = new ErrorHandler().inputValidate(bindingResult);
-		        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
-		 }
-		 
-		for (Detail detail : purchaseOrder.getDetails()) {
-			detail.setPurchaseOrder(purchaseOrder);
+		if (bindingResult.hasErrors()) {
+			Map<String, String> errors = new ErrorHandler().inputValidate(bindingResult);
+			return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
 		}
-		
-		try {
-			
+		try {			
 			PurchaseOrder result = this.purchaseOrderService.newPurchaseOrder(purchaseOrder);
 		   
 		    return new ResponseEntity<>(result, HttpStatus.OK);
 		}catch(Exception error) {        
-	        return new ResponseEntity<>(error.getMessage(), HttpStatus.BAD_REQUEST);		    
+			return new ResponseEntity<>("Error: " + error.getMessage(), HttpStatus.BAD_REQUEST);		    
 		}
 	}
 	

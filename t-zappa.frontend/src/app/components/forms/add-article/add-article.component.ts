@@ -17,65 +17,7 @@ import { CategoryService } from '../../../services/category.service';
   styleUrl: './add-article.component.css'
 })
 export class AddArticleComponent implements OnInit {
-  article: Article = {
-    id: 0,
-    codArticle: '',
-    name: '',
-    description: '',
-    price: 0,
-    image: '',
-    provider: {
-      id: 0,
-      codProvider: '',
-      businessName: '',
-      website: '',
-      email: '',
-      phone: '',
-      logo: '',
-      sector:{
-        id: 0,
-        sector: ''
-      },
-      location: {
-        id: 0,
-        street: '',
-        number: 0,
-        postalCode: '',
-        city: {
-          id: 0,
-          name: '',
-          state:{
-            id: 0,
-            name: '',
-            country: {
-              id: 0,
-              name: ''
-            }
-          }
-        }      
-      },
-      taxData: {
-        id: 0,
-        cuit: '',
-        ivaCondition: {
-          id: 0,
-          condition: ''
-        },
-      },
-      contactData: {
-        id: 0,
-        name: '',
-        lastName: '',
-        phone: '',
-        email: '',
-        role: '',
-      }
-    },    
-    category: {
-      id: 0,
-      name: ''
-    },
-  };
+  article!: Article;
   
   providers: Provider[] = []; categories: Category[] = [];
   idArticle: number = 0;
@@ -83,9 +25,73 @@ export class AddArticleComponent implements OnInit {
   isCuit = isCuit; isEmail = isEmail; isPhoneNumber = isPhoneNumber; isWebsite = isWebsite;
   show: boolean = false; showRequired = false;
 
+  private initializeArticle(){
+    this.article = {
+      id: 0,
+      codArticle: '',
+      name: '',
+      description: '',
+      price: 0,
+      image: '',
+      provider: {
+        id: 0,
+        codProvider: '',
+        businessName: '',
+        website: '',
+        email: '',
+        phone: '',
+        logo: '',
+        sector:{
+          id: 0,
+          sector: ''
+        },
+        location: {
+          id: 0,
+          street: '',
+          number: 0,
+          postalCode: '',
+          city: {
+            id: 0,
+            name: '',
+            state:{
+              id: 0,
+              name: '',
+              country: {
+                id: 0,
+                name: ''
+              }
+            }
+          }      
+        },
+        taxData: {
+          id: 0,
+          cuit: '',
+          ivaCondition: {
+            id: 0,
+            condition: ''
+          },
+        },
+        contactData: {
+          id: 0,
+          name: '',
+          lastName: '',
+          phone: '',
+          email: '',
+          role: '',
+        }
+      },    
+      category: {
+        id: 0,
+        name: ''
+      },
+    };
+  }
+
   constructor(private router: Router, private route: ActivatedRoute,
     private providerService: ProviderService, private articleService: ArticleService,
-    private categoryService: CategoryService){}
+    private categoryService: CategoryService){
+      this.initializeArticle();
+    }
   
   verificarUpdate(){
     if(this.idArticle > 0){      
@@ -106,49 +112,60 @@ export class AddArticleComponent implements OnInit {
     if( form.valid && !this.show ){ // controlo campos especificos
 
         if(this.idArticle === 0){ // 0 => Nuevo ; >0 => Edito          
-          this.articleService.post(this.article).subscribe(data =>{
-            this.article = data;
-          },(error) => {
-            Swal.fire({
-              position: "bottom-end",
-              icon: "error",
-              title: `Hubo un problema en la creacion: ${error.get}`,
-              showConfirmButton: false,
-              timer: 1500
-            });
-          }, () => {
-            Swal.fire({
-              title: "¿Desea crear otro?",          
-              icon: 'success',
-              timer: 2500,       
-              showCancelButton: true, 
-              confirmButtonColor: "var(--color-primary)",
-              cancelButtonColor: "var(--color-secondary)",          
-              confirmButtonText: "Si",
-              cancelButtonText: "No"
-            }).then((result) => {
-              if (result.isConfirmed) {  // Si quiere cargar otro formateo los datos.              
-                this.article.id = 0;
-                this.article.provider.id = 0;                
-                this.article.category.id = 0;                       
-                form.reset();
-              }else{
-                this.router.navigate(['article', 'list']);
-              }
-            });
-          });
+          this.articleService.post(this.article).subscribe({
+            next: (response : Article) => {
+              this.article = response;
+            },error: (error) => {
+              Swal.fire({
+                position: "bottom-end",
+                icon: "error",
+                title: `${error.error}`,
+                showConfirmButton: false,
+                timer: 1500
+              });
+            },complete: () => {
+              Swal.fire({
+                title: "¿Desea crear otro?",          
+                icon: 'success',
+                timer: 2500,       
+                showCancelButton: true, 
+                confirmButtonColor: "var(--color-primary)",
+                cancelButtonColor: "var(--color-secondary)",          
+                confirmButtonText: "Si",
+                cancelButtonText: "No"
+              }).then((result) => {
+                if (result.isConfirmed) {  // Si quiere cargar otro formateo los datos.              
+                  this.initializeArticle();                      
+                  form.reset();
+                }else{
+                  this.router.navigate(['article', 'list']);
+                }
+              });
+            }
+          });  
         }else{
-          this.articleService.put(this.article).subscribe(data => {
-            this.article = data;
-            Swal.fire({
-              position: "bottom-end",
-              icon: "success",
-              title: "Creado correctamente!",
-              showConfirmButton: false,
-              timer: 1500
-            }).then(() => {
-              this.router.navigate(['article', 'list']);
-            });
+          this.articleService.put(this.article).subscribe({
+            next: (response : Article) => {
+              this.article = response;
+            }, error: (error) => {
+              Swal.fire({
+                position: "bottom-end",
+                icon: "error",
+                title: `${error.error}`,
+                showConfirmButton: false,
+                timer: 2500
+              });
+            }, complete: () => {
+              Swal.fire({
+                position: "bottom-end",
+                icon: "success",
+                title: "Editado correctamente!",
+                showConfirmButton: false,
+                timer: 1500
+              }).then(() => {
+                this.router.navigate(['article', 'list']);
+              });
+            }       
           });
         }        
     }

@@ -1,8 +1,6 @@
 package com.bootcampASJ.tzappa.Controller;
 
-import java.util.Collections;
 import java.util.Map;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -42,14 +40,14 @@ public class ArticleController {
 	
 	@GetMapping("/{id}") // [GET] localhost:8080/proveedores/3
 	public ResponseEntity<Object> getProviderById(@PathVariable Integer id) {
-		return ResponseEntity.ok(this.articleService.getArticleById(id));
+		return ResponseEntity.ok( this.articleService.getArticleById(id) );
 	}
 	
 	@GetMapping("/category/{id}")
 	public ResponseEntity<Object> getArticlesByCategory(@PathVariable Integer id){
 		
 		if(id == 0) {
-			return ResponseEntity.ok(this.articleService.getArticles());
+			return ResponseEntity.ok( this.articleService.getArticles() );
 		}
 		
 		return ResponseEntity.ok(this.articleService.getArticlesByCategory(id));
@@ -77,15 +75,14 @@ public class ArticleController {
 	        Map<String, String> errors = new ErrorHandler().inputValidate(bindingResult);
 	        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
 		}
-	
-		Optional<Article> result = this.articleService.newArticle(article);
-
-	    if (result.isPresent()){
-	        return new ResponseEntity<>(result.get(), HttpStatus.OK);
-	    }else{
-	        Map<String, String> error = Collections.singletonMap("Error", "Error en la integridad de datos. (Ej. Campo Unique)");
-	        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
-	    }
+		
+		try {
+			Article result = this.articleService.newArticle(article);
+			
+			return new ResponseEntity<>(result, HttpStatus.OK);
+		}catch(Exception error) {
+			return new ResponseEntity<>("Error: " + error.getMessage(), HttpStatus.BAD_REQUEST);
+		}
 	}
 	
 	@PutMapping("/{id}")

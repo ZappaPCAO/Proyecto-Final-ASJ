@@ -121,10 +121,11 @@ export class AddPurchaseOrderComponent implements OnInit {
       icon: 'success',      
       title: "Agregado al detalle!",
       showConfirmButton: false,
-      timer: 1000
+      timer: 1500
     });
     this.calcularTotal();
     this.idArticle = 0; // Limpio el select
+    this.amount = 1;
   }
 
   eliminarDetalle(detail: Detail) {
@@ -158,46 +159,49 @@ export class AddPurchaseOrderComponent implements OnInit {
     }
 
     if( form.valid && !this.show ){ // controlo campos especificos
-        if(this.idPurchaseOrder === 0){ // 0 => Nuevo ; >0 => Edito  
-          this.purchaseOrder.sendDate = new Date(this.purchaseOrder.sendDate).toISOString();
-          this.purchaseOrder.receiptDate = new Date(this.purchaseOrder.receiptDate).toISOString();        
-          this.purchaseOrderService.post(this.purchaseOrder).subscribe(data =>{            
-            this.purchaseOrder = data;
-          },(error) => {
-            Swal.fire({
-              position: "bottom-end",
-              icon: "error",
-              title: `Hubo un problema en la creacion: ${error.get}`,
-              showConfirmButton: false,
-              timer: 1500
+      if(this.idPurchaseOrder === 0){ // 0 => Nuevo ; >0 => Edito  
+        this.purchaseOrder.sendDate = new Date(this.purchaseOrder.sendDate).toISOString();
+        this.purchaseOrder.receiptDate = new Date(this.purchaseOrder.receiptDate).toISOString(); 
+
+        this.purchaseOrderService.post(this.purchaseOrder).subscribe({
+          next: (response : PurchaseOrder) => {
+            this.purchaseOrder = response;
+          }, error: (error) => {
+              Swal.fire({
+                position: "bottom-end",
+                icon: "error",
+                title: `${error.error}`,
+                showConfirmButton: false,
+                timer: 1500
+              });
+          }, complete: () => {
+              Swal.fire({
+                title: "¿Desea crear otro?",          
+                icon: 'success',
+                timer: 2500,       
+                showCancelButton: true, 
+                confirmButtonColor: "var(--color-primary)",
+                cancelButtonColor: "var(--color-secondary)",          
+                confirmButtonText: "Si",
+                cancelButtonText: "No"
+              }).then((result) => {
+                if (result.isConfirmed){  // Si quiere cargar otro formateo los datos.
+                  this.idArticle = 0;
+                  this.idProvider = 0;
+                  this.initializePurchaseOrder();                                  
+                  form.reset();
+                  this.purchaseOrderService.getNewNumOrder().subscribe((data : string) => {
+                    this.purchaseOrder.numPurchaseOrder = data;              
+                    this.purchaseOrder.sendDate = formatDate(new Date());               
+                  });
+                  this.amount = 1;
+                }else{
+                  this.router.navigate(['purchase-order', 'list']);
+                }
             });
-          }, () => {
-            Swal.fire({
-              title: "¿Desea crear otro?",          
-              icon: 'success',
-              timer: 2500,       
-              showCancelButton: true, 
-              confirmButtonColor: "var(--color-primary)",
-              cancelButtonColor: "var(--color-secondary)",          
-              confirmButtonText: "Si",
-              cancelButtonText: "No"
-            }).then((result) => {
-              if (result.isConfirmed){  // Si quiere cargar otro formateo los datos.
-                this.idArticle = 0;
-                this.idProvider = 0;      
-                this.amount = 1;     
-                this.initializePurchaseOrder();                                  
-                form.reset();
-                this.purchaseOrderService.getNewNumOrder().subscribe((data : string) => {
-                  this.purchaseOrder.numPurchaseOrder = data;              
-                  this.purchaseOrder.sendDate = formatDate(new Date());               
-                });
-              }else{
-                this.router.navigate(['purchase-order', 'list']);
-              }
-            });
-          });
-        }    
+          }
+        });
+      }
     }
   }
 

@@ -83,12 +83,6 @@ public class Provider {
 	@JoinColumn(name = "tax_data_id", referencedColumnName = "id", nullable = false)
 	private TaxData taxData;
 	
-//	// Relacion bidirecc
-//	
-//	@OneToMany(mappedBy = "provider", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//	@JsonBackReference
-//	private List<Article> articles;
-	
 	// Metodos
 
 	public Provider() {
@@ -199,14 +193,6 @@ public class Provider {
 	public void setTaxData(TaxData taxData) {
 		this.taxData = taxData;
 	}
-
-//	public List<Article> getArticles() {
-//		return articles;
-//	}
-//
-//	public void setArticles(List<Article> articles) {
-//		this.articles = articles;
-//	}
 
 	public String getLogo() {
 		return logo;

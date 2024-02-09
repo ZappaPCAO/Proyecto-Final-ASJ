@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.bootcampASJ.tzappa.ExceptionCustom;
 
+import com.bootcampASJ.tzappa.Models.Detail;
 import com.bootcampASJ.tzappa.Models.Provider;
 import com.bootcampASJ.tzappa.Models.PurchaseOrder;
 import com.bootcampASJ.tzappa.Repositories.ArticleRepository;
@@ -49,7 +50,6 @@ public class PurchaseOrderService {
 	}
 	
 	public String getNumPurchaseOrder() {
-		// Busca la última orden de compra ordenada por númeroCompra de forma descendente
         Optional<PurchaseOrder> lastPurchaseOrder = Optional.ofNullable(this.purchaseOrderRepository.findLastNumPurchaseOrders());
         
         // Incrementa el número de compra en 1 y formatea como cadena de 8 caracteres con ceros a la izquierda
@@ -64,14 +64,18 @@ public class PurchaseOrderService {
 	
 	@Transactional
 	public PurchaseOrder newPurchaseOrder(PurchaseOrder purchaseOrder) {
+		List<PurchaseOrder> storedPurchaseOrders = this.purchaseOrderRepository.findAll(); 
+		
+		for(PurchaseOrder order : storedPurchaseOrders) {
+			if( (purchaseOrder.getNumPurchaseOrder().toLowerCase()).equals(order.getNumPurchaseOrder().toLowerCase()) )
+				throw new ExceptionCustom("Ya hay un registro asociado a ese nro de orden.");			
+		}		
+		
+		for (Detail detail : purchaseOrder.getDetails()) {
+			detail.setPurchaseOrder(purchaseOrder);
+		}
 	    
-	    PurchaseOrder aux =	this.purchaseOrderRepository.save(purchaseOrder);
-	    
-	    if(aux == null) {
-	    	throw new ExceptionCustom("Paso algo!");
-	    }
-	    
-	   return aux;    
+		return this.purchaseOrderRepository.save(purchaseOrder);  
 	}
 	
 	@Transactional
@@ -79,9 +83,9 @@ public class PurchaseOrderService {
 		PurchaseOrder purchaseOrder = this.purchaseOrderRepository.findById(id).get();
 		
 		if(purchaseOrder == null)  
-			throw new ExceptionCustom("La entidad no fue encontrada en la base de datos");
-		if(purchaseOrder.getState() == 'C' ) 
-			throw new ExceptionCustom("Este registro ya esta CANCELADO.");
+			throw new ExceptionCustom("Este registro no fue encontrado en la base de datos.");
+		if(purchaseOrder.getState() == 'C') 
+			throw new ExceptionCustom("Esta orden ya esta CANCELADA.");
 	
 		purchaseOrder.setUpdatedAt(LocalDateTime.now());
 		purchaseOrder.setState('C');
@@ -96,7 +100,7 @@ public class PurchaseOrderService {
 		if(purchaseOrder == null)  
 			throw new ExceptionCustom("La entidad no fue encontrada en la base de datos");
 		if(purchaseOrder.getState() == 'A' ) 
-			throw new ExceptionCustom("Este registro ya esta ACTIVO.");
+			throw new ExceptionCustom("Esta orden ya esta ACTIVA.");
 	
 		purchaseOrder.setUpdatedAt(LocalDateTime.now());
 		purchaseOrder.setState('A');

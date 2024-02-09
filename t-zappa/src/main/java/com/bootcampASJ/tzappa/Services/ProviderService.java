@@ -1,18 +1,18 @@
 package com.bootcampASJ.tzappa.Services;
 
 import java.time.LocalDateTime;
+
 import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
+
 import org.springframework.stereotype.Service;
 
 import com.bootcampASJ.tzappa.Models.Provider;
 import com.bootcampASJ.tzappa.Models.Sector;
 import com.bootcampASJ.tzappa.Models.Location;
 import com.bootcampASJ.tzappa.Models.TaxData;
+import com.bootcampASJ.tzappa.ExceptionCustom;
 import com.bootcampASJ.tzappa.Models.ContactData;
 
 import com.bootcampASJ.tzappa.Repositories.ContactDataRepository;
@@ -22,22 +22,12 @@ import com.bootcampASJ.tzappa.Repositories.SectorRepository;
 import com.bootcampASJ.tzappa.Repositories.TaxDataRepository;
 
 import jakarta.transaction.Transactional;
-import jakarta.validation.ConstraintViolationException;
 
 @Service
 public class ProviderService {
 	
 	@Autowired
 	private ProviderRepository providerRepository;
-	
-	@Autowired
-	private LocationService locationService;
-	@Autowired
-	private TaxDataService taxDataService;
-	@Autowired
-	private ContactDataService contactDataService;
-	
-	// Prueba con solo los jpa.
 	
 	@Autowired
 	private SectorRepository sectorRepository;
@@ -56,130 +46,160 @@ public class ProviderService {
 		return this.providerRepository.findByIsDeletedFalse();
 	}
 	
-	public Optional<Provider> getProviderById(Integer id) {
-		return this.providerRepository.findById(id);
+	public Provider getProviderById(Integer id) {
+		return this.providerRepository.findById(id).get();
 	}
 	
-	public Optional<List<Provider>> getProviderBySector(Integer id) {
+	public List<Provider> getProviderBySector(Integer id) {
 		
 		Sector sector = this.sectorRepository.findById(id).get();
 		
-		return Optional.ofNullable(this.providerRepository.findBySector(sector));
+		return this.providerRepository.findBySector(sector);
 	}
 	
-	public Optional<Provider> getProviderWithMostOrders(){
-		return Optional.ofNullable(this.providerRepository.findWithMostOrders());
+	public Provider getProviderWithMostOrders(){
+		return this.providerRepository.findWithMostOrders();
 	}
 
 	@Transactional
-	public Optional<Provider> newProvider(Provider provider) {
+	public Provider newProvider(Provider provider) {
+		List<ContactData> storedContactsData = this.contactDataRepository.findAll();
+		List<TaxData> storedTaxsData = this.taxDataRepository.findAll();
+		List<Provider> storedProviders = this.providerRepository.findAll();
 		
-		System.out.println(provider.toString()); 
+		for(TaxData taxData : storedTaxsData) {
+			if( (provider.getTaxData().getCuit().toLowerCase()).equals(taxData.getCuit().toLowerCase()) )
+				throw new ExceptionCustom("Ya hay un registro asociado a ese CUIT.");	
+		}
+		for(ContactData contactData : storedContactsData){
+			if( (provider.getContactData().getEmail().toLowerCase()).equals(contactData.getEmail().toLowerCase()) )
+				throw new ExceptionCustom("En datos de contacto ya hay un registro asociado a ese correo.");	
+			if((provider.getContactData().getPhone()).equals(contactData.getPhone()))
+				throw new ExceptionCustom("En datos de contacto ya hay un registro asociado a ese telefono.");
+		}
+		for(Provider provi : storedProviders) {
+			if(provider.getLogo().toLowerCase().equals(provi.getLogo()))
+				throw new ExceptionCustom("Ya hay un registro asociado a ese logo.");
+			if(provider.getCodProvider().toLowerCase().equals(provi.getCodProvider().toLowerCase()))
+				throw new ExceptionCustom("Ya hay un registro asociado a ese codigo de proveedor.");
+			if(provider.getBusinessName().toLowerCase().equals(provi.getBusinessName().toLowerCase()))
+				throw new ExceptionCustom("Ya hay un registro asociado a esa razon social.");
+			if(provider.getWebsite().toLowerCase().equals(provi.getWebsite().toLowerCase()))
+				throw new ExceptionCustom("Ya hay un registro asociado a ese sitio web.");
+			if(provider.getPhone().toLowerCase().equals(provi.getPhone().toLowerCase()))
+				throw new ExceptionCustom("Ya hay un registro asociado a ese telefono.");
+			if(provider.getEmail().toLowerCase().equals(provi.getEmail().toLowerCase()))
+				throw new ExceptionCustom("Ya hay un registro asociado a ese correo.");
+		}
+		this.taxDataRepository.save(provider.getTaxData());
+		this.locationRepository.save(provider.getLocation());
+		this.contactDataRepository.save(provider.getContactData());
+		this.providerRepository.save(provider);
 		
-	    try {
-	    	
-			this.contactDataService.newContactData(provider.getContactData());
-			
-			this.taxDataService.newTaxData(provider.getTaxData());
-			
-			this.locationService.newLocation(provider.getLocation());
-	        
-	        return Optional.ofNullable(this.providerRepository.save(provider));
-	    } catch (DataIntegrityViolationException error) {
-	    	System.out.println("Clave duplicada detectada");
-            return Optional.empty();
-	    }
+	    return provider;	    
 	}
 	
 	@Transactional
-	public Optional<Provider> updateProvider(Provider provider){
-		try {
-			System.out.println("Llegue!!");		
-			Location currentLocation = provider.getLocation();
-			ContactData currentContactData = provider.getContactData();
-			TaxData currentTaxData = provider.getTaxData();
+	public Provider updateProvider(Provider provider){		
+		Location currentLocation = provider.getLocation();
+		ContactData currentContactData = provider.getContactData();
+		TaxData currentTaxData = provider.getTaxData();
+		
+		if( provider.equals(this.providerRepository.findById(provider.getId()).get()) )
+			throw new ExceptionCustom("El registro que estás intentando editar es idéntico "
+					+ "al existente en la base de datos.");
 			
-			if (currentLocation != null) {	            
-	            Location storedLocation = this.locationRepository.findById(currentLocation.getId()).get();
+		if (currentLocation != null) {	            
+			Location storedLocation = this.locationRepository.findById(currentLocation.getId()).get();
 
-	            if (!currentLocation.equals(storedLocation)) {
-	                this.locationRepository.save(currentLocation);
-	            }
-	        }			
-			if (currentTaxData != null) {	            
-	            TaxData storedTaxData = this.taxDataRepository.findById(currentTaxData.getId()).get();
-
-	            if (!currentTaxData.equals(storedTaxData)) {
-	                this.taxDataRepository.save(currentTaxData);
-	            }
+	        if (!currentLocation.equals(storedLocation)) {	        	
+	        	this.locationRepository.save(currentLocation);
 	        }
-			if (currentContactData != null) {	            
-	            ContactData storedContactData = this.contactDataRepository.findById(currentContactData.getId()).get();
-
-	            if (!currentContactData.equals(storedContactData)) {
-	                this.contactDataRepository.save(currentContactData);
-	            }
-	        }
-			
-			provider.setUpdatedAt(LocalDateTime.now());
-			
-			return Optional.ofNullable(this.providerRepository.save(provider));
-			
-		}catch (RuntimeException error) {
-		    if (error instanceof DataIntegrityViolationException) {
-		        if (error.getCause() instanceof ConstraintViolationException) {
-		            System.out.println("Clave duplicada detectada");
-		        } else {
-		            // Manejar otras violaciones de integridad de datos si es necesario
-		        }
-		    } else if (error instanceof NoSuchElementException) {		       
-		        System.out.println("La entidad no fue encontrada en la base de datos");
-		    }
-		    return Optional.empty();
-		}						
+        }			
+		if (currentTaxData != null) {	            
+            TaxData storedTaxData = this.taxDataRepository.findById(currentTaxData.getId()).get();
+            List <TaxData> storedTaxsData = this.taxDataRepository.findAll();
+            
+            if (!currentTaxData.equals(storedTaxData)) {
+            	for(TaxData taxData : storedTaxsData) {
+            		if (currentTaxData.getId() != taxData.getId()) { // Si no es el mismo controlo
+	        			if( (currentTaxData.getCuit().toLowerCase()).equals(taxData.getCuit().toLowerCase()) )
+	        				throw new ExceptionCustom("Ya hay un registro asociado a ese CUIT.");
+            		}
+        		}
+                this.taxDataRepository.save(currentTaxData);
+            }
+        }
+		if (currentContactData != null) {	            
+            ContactData storedContactData = this.contactDataRepository.findById(currentContactData.getId()).get();
+            List<ContactData> storedContactsData = this.contactDataRepository.findAll();
+            
+            if (!currentContactData.equals(storedContactData)) {
+            	for(ContactData contactData : storedContactsData){
+            		
+            		if(currentContactData.getId() != contactData.getId()) {
+	        			if( (currentContactData.getEmail().toLowerCase()).equals(contactData.getEmail().toLowerCase()) )        				
+	        				throw new ExceptionCustom("En datos de contacto ya hay un registro asociado a ese correo.");	
+	        			if( (currentContactData.getPhone()).equals(contactData.getPhone()) )
+	        				throw new ExceptionCustom("En datos de contacto ya hay un registro asociado a ese telefono.");
+	            	}        			
+            	}
+            	this.contactDataRepository.save(currentContactData);
+            }
+		}
+		
+		List<Provider> storedProviders = this.providerRepository.findAll();
+		
+		for(Provider provi : storedProviders) {
+			if(provider.getId() != provi.getId()) { // Si no es el mismo me fijo.
+				if(provider.getLogo().toLowerCase().equals(provi.getLogo()))
+					throw new ExceptionCustom("Ya hay un registro asociado a ese logo.");
+				if(provider.getCodProvider().toLowerCase().equals(provi.getCodProvider().toLowerCase()))
+					throw new ExceptionCustom("Ya hay un registro asociado a ese codigo de proveedor.");
+				if(provider.getBusinessName().toLowerCase().equals(provi.getBusinessName().toLowerCase()))
+					throw new ExceptionCustom("Ya hay un registro asociado a esa razon social.");
+				if(provider.getWebsite().toLowerCase().equals(provi.getWebsite().toLowerCase()))
+					throw new ExceptionCustom("Ya hay un registro asociado a ese sitio web.");
+				if(provider.getPhone().toLowerCase().equals(provi.getPhone().toLowerCase()))
+					throw new ExceptionCustom("Ya hay un registro asociado a ese telefono.");
+				if(provider.getEmail().toLowerCase().equals(provi.getEmail().toLowerCase()))
+					throw new ExceptionCustom("Ya hay un registro asociado a ese correo.");
+			}
+		}	
+		
+		provider.setUpdatedAt(LocalDateTime.now());
+		this.providerRepository.save(provider);
+		
+		return provider;					
 	}
 	
 	@Transactional
-	public Optional<Provider> deleteProvider(Integer id) {
-		try {
-			Provider provider = this.providerRepository.findById(id).get();
-			
-			if(provider != null) {
-				provider.setIsDeleted(true);
-				provider.setUpdatedAt(LocalDateTime.now());
-				
-				return Optional.ofNullable(this.providerRepository.save(provider));
-			}
-			
-			return Optional.empty();
-			
-		}catch (RuntimeException error) {
-			if (error instanceof NoSuchElementException) {		       
-		        System.out.println("La entidad no fue encontrada en la base de datos");
-		    }
-		    return Optional.empty();
-		}
+	public Provider deleteProvider(Integer id) {
+		Provider provider = this.providerRepository.findById(id).get();
+		
+		if(provider == null)  
+			throw new ExceptionCustom("El registro no fue encontrado en la base de datos.");
+		if(provider.getIsDeleted()) 
+			throw new ExceptionCustom("Este registro ya esta eliminado.");
+		
+		provider.setUpdatedAt(LocalDateTime.now());
+		provider.setIsDeleted(true);
+		
+		return this.providerRepository.save(provider);
 	}
 	
 	@Transactional
-	public Optional<Provider> rescueProvider(Integer id) {
-		try {
-			Provider provider = this.providerRepository.findById(id).get();
-			
-			if(provider != null) {
-				provider.setIsDeleted(false);
-				provider.setUpdatedAt(LocalDateTime.now());
-				
-				return Optional.ofNullable(this.providerRepository.save(provider));
-			}
-			
-			return Optional.empty();
-			
-		}catch (RuntimeException error) {
-			if (error instanceof NoSuchElementException) {		       
-		        System.out.println("La entidad no fue encontrada en la base de datos");
-		    }
-		    return Optional.empty();
-		}
+	public Provider rescueProvider(Integer id) {
+		Provider provider = this.providerRepository.findById(id).get();
+		
+		if(provider == null)  
+			throw new ExceptionCustom("El registro no fue encontrado en la base de datos.");
+		if(!provider.getIsDeleted()) 
+			throw new ExceptionCustom("Este registro ya esta salvado.");
+		
+		provider.setUpdatedAt(LocalDateTime.now());
+		provider.setIsDeleted(false);
+		
+		return this.providerRepository.save(provider);
 	}
 }

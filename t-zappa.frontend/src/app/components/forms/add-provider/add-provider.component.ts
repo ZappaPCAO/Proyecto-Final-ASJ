@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ProviderService } from '../../../services/provider.service';
 import { Provider } from '../../../models/provider';
 import { ActivatedRoute, Router } from '@angular/router';
-// import { verificarCamposEspeciales, verificarDatos, verificarLongitudes } from '../../../utils/validates';
 import { checkDataProvider, checkLongsProvider, checkOnlyNumbers, checkSpecialCharacters, isCuit, isEmail, isPhoneNumber, isWebsite } from '../../../utils/validates';
 import { NgForm } from '@angular/forms';
 import Swal from 'sweetalert2';
@@ -24,72 +23,81 @@ export class AddProviderComponent implements OnInit {
   checkOnlyNumbers=checkOnlyNumbers;checkSpecialCharacters=checkSpecialCharacters;
   show: boolean = false; showRequired: boolean = false;
 
-  provider: Provider = {
-    id: 0,
-    codProvider: '',
-    businessName: '',
-    website: '',
-    email: '',
-    phone: '',
-    logo: '',
-    sector:{
-      id: 0,
-      sector: ''
-    },
-    location: {
-      id: 0,
-      street: '',
-      number: 0,
-      postalCode: '',
-      city: {
-        id: 0,
-        name: '',
-        state:{
-          id: 0,
-          name: '',
-          country: {
-            id: 0,
-            name: ''
-          }
-        }
-      }      
-    },
-    taxData: {
-      id: 0,
-      cuit: '',
-      ivaCondition: {
-        id: 0,
-        condition: ''
-      },
-    },
-    contactData: {
-      id: 0,
-      name: '',
-      lastName: '',
-      phone: '',
-      email: '',
-      role: '',
-    }
-  };
+  provider!: Provider;
   
   idProvider: any;
 
   constructor(private router: Router, private route: ActivatedRoute,
     public providerService: ProviderService,
     private inicializadorService: InicializadorService,
-    private sectorService: SectorService){}
+    private sectorService: SectorService){
+      this.initializeProvider();
+    }
   
-  formatPhoneNumber(event: any) {
+  private initializeProvider(){
+    this.provider = {
+      id: 0,
+      codProvider: '',
+      businessName: '',
+      website: '',
+      email: '',
+      phone: '',
+      logo: '',
+      sector:{
+        id: 0,
+        sector: ''
+      },
+      location: {
+        id: 0,
+        street: '',
+        number: 0,
+        postalCode: '',
+        city: {
+          id: 0,
+          name: '',
+          state:{
+            id: 0,
+            name: '',
+            country: {
+              id: 0,
+              name: ''
+            }
+          }
+        }      
+      },
+      taxData: {
+        id: 0,
+        cuit: '',
+        ivaCondition: {
+          id: 0,
+          condition: ''
+        },
+      },
+      contactData: {
+        id: 0,
+        name: '',
+        lastName: '',
+        phone: '',
+        email: '',
+        role: '',
+      }
+    };
+  }
+
+  protected formatPhoneNumber(event: any, band:boolean) {
     let phoneNumber = event.target.value.replace(/\D/g, '');
 
     if (phoneNumber.length === 10) {
       phoneNumber = phoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
     }
 
-    this.provider.phone = phoneNumber;
+    if(band)
+      this.provider.phone = phoneNumber;  
+    else
+      this.provider.contactData.phone = phoneNumber;
   }
 
-  formatCuil(event: any) {
+  protected formatCuil(event: any) {
     let cuit = event.target.value.replace(/\D/g, ''); // Eliminar todos los caracteres no numéricos
 
     if (cuit.length >= 2 && cuit.length <= 11) {
@@ -123,22 +131,23 @@ export class AddProviderComponent implements OnInit {
       return;
     }
 
-    this.show = !( checkDataProvider(this.provider) && checkLongsProvider(this.provider) );
+    this.show = !( checkDataProvider(this.provider) && checkLongsProvider(this.provider) ); // controlo campos especificos
 
-    if( form.valid && !this.show ){ // controlo campos especificos
+    if( form.valid && !this.show ){
 
-        if(this.idProvider === 0){ // 0 => Nuevo ; >0 => Edito          
-          this.providerService.post(this.provider).subscribe(data =>{
-            this.provider = data;
-          },(error) => {
+      if(this.idProvider === 0){ // 0 => Nuevo ; >0 => Edito          
+        this.providerService.post(this.provider).subscribe({
+          next: (response) => {
+            this.provider = response;
+          }, error: (error) => {
             Swal.fire({
               position: "bottom-end",
               icon: "error",
-              title: `Hubo un problema en la creacion: ${error.get}`,
+              title: `${error.error}`,
               showConfirmButton: false,
-              timer: 1500
+              timer: 2500
             });
-          }, () => {
+          }, complete: () => {
             Swal.fire({
               title: "¿Desea crear otro?",          
               icon: 'success',
@@ -150,46 +159,56 @@ export class AddProviderComponent implements OnInit {
               cancelButtonText: "No"
             }).then((result) => {
               if (result.isConfirmed) {  // Si quiere cargar otro formateo los datos.              
-                this.provider.id = 0;
-                this.provider.contactData.id = 0;
-                this.provider.taxData.id = 0;   
-                this.provider.location.id = 0;        
+                this.initializeProvider();        
                 form.reset();
               }else{
                 this.router.navigate(['provider', 'list']);
               }
             });
-          });
-        }else{
-          this.providerService.put(this.provider).subscribe(data => {
-            this.provider = data;
+          }
+        });
+      }else{
+        this.providerService.put(this.provider).subscribe({
+          next: (response : Provider) => {
+            this.provider = response;
+          },error: (error) => {
+            Swal.fire({
+              position: "bottom-end",
+              icon: "error",
+              title: `${error.error}`,
+              showConfirmButton: false,
+              timer: 2500
+            });
+          }, complete: () => {
             Swal.fire({
               position: "bottom-end",
               icon: "success",
-              title: "Creado correctamente!",
+              title: "Editado correctamente!",
               showConfirmButton: false,
               timer: 1500
             }).then(() => {
               this.router.navigate(['provider', 'list']);
             });
-          });
-        }        
+          }
+        });        
+      }
     }
   }
-
+  
   ngOnInit(): void {    
     this.route.params.subscribe((params) => {
-      this.idProvider = params['id'] || 0;
+      this.idProvider = params['id'] || 0;      
       this.inicializadorService.getGeoLocations().subscribe(data => {
         this.countries = data;
         this.inicializadorService.getIvaConditions().subscribe(data => {
           this.ivaConditions = data;
           this.sectorService.getSectors().subscribe(data => {
             this.sectors = data;
-            this.verificarUpdate();
+            this.verificarUpdate();            
           }); // Get de Sectors
         }); // GET de IVA       
       });// GET de geoLocations        
-    });  
+    });
+     
   }
 }

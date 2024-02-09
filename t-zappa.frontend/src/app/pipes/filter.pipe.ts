@@ -20,17 +20,18 @@ export class FilterPipe implements PipeTransform {
           console.log("clave: " + key +", valor: "+  item[key])
             if ( (key === 'businessName'|| key === 'codProvider'||
                   key === 'name'|| key === 'description') &&
-                  (item[key].toLowerCase().includes(args))){    
+                  (item[key].toLowerCase().includes(args.toLowerCase()))){    
                 return true;            
             }else if(( key === 'contactData' ) &&
-                  ( item[key].name.toLowerCase().includes(args) || item[key].lastName.toLowerCase().includes(args) )){
+                  ( item[key].name.toLowerCase().includes(args.toLowerCase()) ||
+                    item[key].lastName.toLowerCase().includes(args.toLowerCase()) )){
               return true;
             }
         }
         return false;
       });
     }else{ // Si busca por todos los campos
-      filteredValue = value.filter((item) => JSON.stringify(item).toLowerCase().includes(args));
+      filteredValue = value.filter((item) => JSON.stringify(item).toLowerCase().includes(args.toLowerCase()));
     }
 
     if (filteredValue.length == 0) { // Me fijo si encontro coincidencias

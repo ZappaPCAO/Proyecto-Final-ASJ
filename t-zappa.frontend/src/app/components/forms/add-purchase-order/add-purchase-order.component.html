@@ -1,12 +1,12 @@
 <main class="mi-bg-black">
-    <div class="container py-1">
-        <nav class="p-0 m-0 pt-1" style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' %3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
-            <ol class="breadcrumb p-0 m-0 text-uppercase">
-              <li class="p-0 m-0 ms-3 me-1 breadcrumb-item text-white fs-5"><a style="color: inherit;text-decoration: none; color: var(--color-secondary);"
-                routerLink="">Inicio </a></li>
-              <li class="p-0 m-0 breadcrumb-item active text-white fs-5" aria-current="page">Agregar orden de compra</li>
-            </ol>
-        </nav>
+    <nav class="p-0 m-0 pt-1" style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' %3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+        <ol class="breadcrumb p-0 m-0 text-uppercase">
+          <li class="p-0 m-0 ms-3 me-1 breadcrumb-item text-white fs-5"><a style="color: inherit;text-decoration: none; color: var(--color-secondary);"
+            routerLink="">Inicio </a></li>
+          <li class="p-0 m-0 breadcrumb-item active text-white fs-5" aria-current="page">Agregar orden de compra</li>
+        </ol>
+    </nav>
+    <div class="container py-1">        
         <div class="row justify-content-center">
             <div class="col-lg-12">
                 <div class="card shadow-light bg-light px-2">
@@ -127,7 +127,7 @@
                                     </div>
                                     <!-- Ver q onda --> 
                                     <div class="form-floating mt-1 ms-3 ">                                                        
-                                        <button title="Agregar al detalle" type="button" class="btn btn-lg btn-outline-success" (click)="agregarDetalle()">
+                                        <button [disabled]="idArticle === 0"  title="Agregar al detalle" type="button" class="btn btn-lg btn-outline-success" (click)="agregarDetalle()">
                                             <svg xmlns="http://www.w3.org/2000/svg" height="14" width="12" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.--><path fill="#8732cd" d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"/></svg>
                                         </button>
                                     </div>

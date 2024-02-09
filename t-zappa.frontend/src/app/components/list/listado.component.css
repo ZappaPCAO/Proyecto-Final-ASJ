@@ -15,7 +15,7 @@ thead tr th{
 
 .table-scroll{
   position: relative !important;
-  height: 44.9rem !important;
+  height: 43rem !important;
 }
 
 .table-scroll::-webkit-scrollbar {

@@ -64,10 +64,6 @@ public class PurchaseOrder {
 	@Column(name="updated_at")
 	private LocalDateTime updatedAt;
 	
-//	@JsonInclude(JsonInclude.Include.NON_NULL)
-//	@Column(name="is_deleted")
-//	private Boolean isDeleted;
-	
 	// FK 
 	
 	@ManyToOne(fetch = FetchType.EAGER)	

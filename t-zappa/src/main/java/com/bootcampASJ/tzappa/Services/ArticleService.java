@@ -1,11 +1,10 @@
 package com.bootcampASJ.tzappa.Services;
 
 import java.time.LocalDateTime;
+
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.bootcampASJ.tzappa.ExceptionCustom;
@@ -37,53 +36,57 @@ public class ArticleService {
 		return this.articleRepository.findByIsDeletedFalse();
 	}
 	
-	public Optional<Article> getArticleById(Integer id) {
-		return this.articleRepository.findById(id);
+	public Article getArticleById(Integer id) {
+		return this.articleRepository.findById(id).get();
 	}
 	
-	public Optional<List<Article>> getArticlesByCategory(Integer id) {
-		
+	public List<Article> getArticlesByCategory(Integer id) {		
 		Category category = this.categoryRepository.findById(id).get();
 		
-		return Optional.ofNullable(this.articleRepository.findByCategory(category));
+		return this.articleRepository.findByCategory(category);
 	}
 	
-	public Optional<List<Article>> getArticlesByProvider(Integer id) {
-		
+	public List<Article> getArticlesByProvider(Integer id) {		
 		Provider provider = this.providerRepository.findById(id).get();
 		
-		return Optional.ofNullable(this.articleRepository.findByProvider(provider));
+		return this.articleRepository.findByProvider(provider);
 	}
 	
-	public Optional<List<Article>> getArticlesActivesByProvider(Integer id) {
-		
+	public List<Article> getArticlesActivesByProvider(Integer id) {		
 		Provider provider = this.providerRepository.findById(id).get();
 		
-		return Optional.ofNullable(this.articleRepository.findByProviderAndIsDeletedFalse(provider));
+		return this.articleRepository.findByProviderAndIsDeletedFalse(provider);
 	}
 	
 	@Transactional
-	public Optional<Article> newArticle(Article article) {	
-	    try {
-	        return Optional.ofNullable(this.articleRepository.save(article));
-	    } catch (DataIntegrityViolationException error) {
-	    	System.out.println("Clave duplicada detectada");
-            return Optional.empty();
-	    }
+	public Article newArticle(Article article) {	
+		List<Article> storedArticles = this.articleRepository.findAll();
+		
+		for(Article art : storedArticles) {
+			if( (article.getCodArticle().toLowerCase()).equals(art.getCodArticle().toLowerCase()) )
+				throw new ExceptionCustom("Ya hay un registro asociado a ese SKU.");			
+		}
+		
+		return this.articleRepository.save(article);
 	}
 	
 	@Transactional
 	public Article updateArticle(Article article){
-						
-		Article storedArticle = this.articleRepository.findById(article.getId()).get();
+		List<Article> storedArticles = this.articleRepository.findAll();
 		
-		if (!article.equals(storedArticle)) {
-			article.setUpdatedAt(LocalDateTime.now());
-			this.articleRepository.save(article);
-			return article; 			
+		if( article.equals(this.articleRepository.findById(article.getId()).get()) )
+			throw new ExceptionCustom("El registro que estás intentando editar es idéntico "
+					+ "al existente en la base de datos.");
+		
+		for(Article arti : storedArticles) {
+			if(article.getId() != arti.getId()) { // Si no es el mismo me fijo.
+				if( (article.getCodArticle().toLowerCase()).equals(arti.getCodArticle().toLowerCase()) )
+					throw new ExceptionCustom("Ya hay un registro asociado a ese SKU.");				
+			}
 		}
+		article.setUpdatedAt(LocalDateTime.now());
 		
-		throw new ExceptionCustom("El registro que estás intentando editar es idéntico al existente en la base de datos.");
+		return this.articleRepository.save(article);
 	}
 	
 	@Transactional
@@ -92,7 +95,7 @@ public class ArticleService {
 		Article article = this.articleRepository.findById(id).get();
 		
 		if(article == null)  
-			throw new ExceptionCustom("La entidad no fue encontrada en la base de datos");
+			throw new ExceptionCustom("Este registro no fue encontrado en la base de datos.");
 		if(article.getIsDeleted()) 
 			throw new ExceptionCustom("Este registro ya esta eliminado.");
 	
@@ -107,7 +110,7 @@ public class ArticleService {
 		Article article = this.articleRepository.findById(id).get();
 		
 		if(article == null)  
-			throw new ExceptionCustom("La entidad no fue encontrada en la base de datos");
+			throw new ExceptionCustom("Este registro no fue encontrado en la base de datos.");
 		if(!article.getIsDeleted()) 
 			throw new ExceptionCustom("Este registro ya esta salvado.");
 	

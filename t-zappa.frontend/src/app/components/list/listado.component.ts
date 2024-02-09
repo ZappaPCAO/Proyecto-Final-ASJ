@@ -16,7 +16,6 @@ import { Category } from '../../models/category';
   styleUrl: './listado.component.css'
 })
 export class ListadoComponent implements OnInit{
-
   thead: any = [];tbody: any = [];
   condicion: string = '';
   rightPanelStyle: any;
@@ -50,12 +49,13 @@ export class ListadoComponent implements OnInit{
     };
   }
   
-  onInfo() {
-    console.log(this.currentRecord);
-  }
+  // onInfo() {
+  //   console.log(this.currentRecord);
+  // }
 
   onAdd() {
-    this.sinInfo();
+    this.router.navigate([this.condicion]);
+    this.closeContextMenu();
   }
 
   changeImage(event: Event): void {
@@ -83,7 +83,7 @@ export class ListadoComponent implements OnInit{
     this.closeContextMenu();
   }
 
-  onRecuperar(){
+  onRescue(){
     this.serivicioAdm.rescue(this.currentRecord.id, this.condicion).subscribe( (data : Provider | Article | PurchaseOrder | Category) => {
           
       let index = this.tbody.findIndex((item: Provider | Article | PurchaseOrder) => item.id === this.currentRecord.id);
@@ -93,7 +93,7 @@ export class ListadoComponent implements OnInit{
         Swal.fire({
           position: "bottom-end",
           icon: "success",
-          title: "Recuperado correctamente!",
+          title: `${this.condicion === 'purchase-order' ? '¡Activado ' : '¡Recuperado '} correctamente!`,
           showConfirmButton: false,
           timer: 1500
         });
@@ -105,7 +105,10 @@ export class ListadoComponent implements OnInit{
   onDelete(){
     Swal.fire({
       title: "¿Estas seguro?",
-      text: `¡Proveedor: ${this.currentRecord.businessName}, sera eliminado!`,   // VER ACA   
+      text: `${(this.condicion === 'purchase-order') ? `¡Orden de compra nro: ${this.currentRecord.numPurchaseOrder}, sera cancelada!` :
+               (this.condicion === 'provider') ? `¡Proveedor: ${this.currentRecord.businessName}, sera eliminado!` : 
+               (this.condicion === 'article') ?  `¡Articulo: ${this.currentRecord.name}, sera eliminado!` :
+                                                 `¡Categoria: ${this.currentRecord.name}, sera eliminada!`}`,  
       showCancelButton: true,
       allowOutsideClick: false,
       allowEscapeKey: false,
@@ -114,22 +117,32 @@ export class ListadoComponent implements OnInit{
       confirmButtonText: "Si, eliminaló!"
     }).then((result) => {
       if (result.isConfirmed) {
-        this.serivicioAdm.delete(this.currentRecord.id, this.condicion).subscribe( (data : Provider | Article | PurchaseOrder | Category) => {
-          
-          let index = this.tbody.findIndex((item: Provider | Article | PurchaseOrder) => item.id === this.currentRecord.id);
-
-          if (index !== -1)
-            Object.assign(this.tbody[index], data);          
-          
-        });        
-        Swal.fire({
-          position: "bottom-start",
-          icon: "success",
-          title: "Eliminado con exito",
-          showConfirmButton: false,
-          timer: 1500
+        this.serivicioAdm.delete(this.currentRecord.id, this.condicion).subscribe({
+          next: (data : Provider | Article | PurchaseOrder | Category) => {
+            
+            let index = this.tbody.findIndex((item: Provider | Article | PurchaseOrder) => item.id === this.currentRecord.id);
+  
+            if (index !== -1)
+              Object.assign(this.tbody[index], data);     
+          }, error: (error) => {
+            Swal.fire({
+              position: "bottom-end",
+              icon: "error",
+              title: `${error.error}`,
+              showConfirmButton: false,
+              timer: 1500
+            });
+          }, complete: () => {
+            Swal.fire({
+              position: "bottom-end",
+              icon: "success",
+              title: `${this.condicion === 'purchase-order' ? 'Cancelado' : 'Eliminado'} con exito`,
+              showConfirmButton: false,
+              timer: 1500
+            });
+            this.closeContextMenu();
+          }
         });
-        this.closeContextMenu();
       }
     });
   }
@@ -139,7 +152,6 @@ export class ListadoComponent implements OnInit{
       this.tbody = data;
 
       if(this.tbody.length == 0){ // Me fijo si encontro coincidencias         
-          console.log("deberia mostrar el cartel!")
           Swal.fire({
             title: "No se econtraron registros para el filtro aplicado!",
             icon: "warning",

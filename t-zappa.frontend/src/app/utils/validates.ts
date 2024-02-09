@@ -86,7 +86,7 @@ export function checkLongsProvider(data: Provider): boolean{
     
     // No requeridos
     if(data.location.number)
-        bands.push((''+data.location.number).length > 1);
+        bands.push((''+data.location.number).length > 0);
 
     if(data.logo)
         bands.push((''+data.logo).length > 3);

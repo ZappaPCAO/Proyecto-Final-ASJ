@@ -17,4 +17,21 @@
 
 .mi-btn{
     color: white !important;
+    transition: color .3s ease;
+}
+
+.mi-btn:hover{
+    color: var(--color-secondary) !important;
+}
+
+.dropdown-item:hover{
+    background-color: rgb(26, 26, 26) !important;
+}
+
+.dropdown-item:hover + .mi-btn{
+    color: var(--color-secondary) !important;
+}
+
+.mi-btn-active{
+    color: var(--color-secondary) !important;
 }

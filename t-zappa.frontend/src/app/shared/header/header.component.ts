@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -7,4 +8,10 @@ import { Component } from '@angular/core';
 })
 export class HeaderComponent {
   icono = "fa-regular fa-user";
+
+  constructor(private route: Router){}
+
+  isActive(word:string):boolean{
+    return this.route.routerState.snapshot.url.split('/').includes(word);
+  }
 }
