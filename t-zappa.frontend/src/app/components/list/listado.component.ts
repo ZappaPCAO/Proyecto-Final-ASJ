@@ -114,7 +114,7 @@ export class ListadoComponent implements OnInit{
       allowEscapeKey: false,
       confirmButtonColor: "var(--color-primary)",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Si, eliminaló!"
+      confirmButtonText: `¡Si, ${(this.condicion === 'purchase-order')? 'Cancelala' : 'eliminaló'}!`
     }).then((result) => {
       if (result.isConfirmed) {
         this.serivicioAdm.delete(this.currentRecord.id, this.condicion).subscribe({

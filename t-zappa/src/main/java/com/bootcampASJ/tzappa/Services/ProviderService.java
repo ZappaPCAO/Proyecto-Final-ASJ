@@ -84,12 +84,14 @@ public class ProviderService {
 			if((provider.getContactData().getPhone()).equals(contactData.getPhone()))
 				throw new ExceptionCustom("En datos de contacto ya hay un registro asociado a ese telefono.");
 		}
+		System.out.println("llega aca?");
 		for(Provider provi : storedProviders) {
-			if(provider.getLogo() != null) {
+			
+			if(provider.getLogo() != null && provi.getLogo() != null) {
 				if(provider.getLogo().toLowerCase().equals(provi.getLogo()))
 					throw new ExceptionCustom("Ya hay un registro asociado a ese logo.");
 			}
-			if(provider.getWebsite() != null) {
+			if(provider.getWebsite() != null && provi.getWebsite() != null) {
 				if(provider.getWebsite().toLowerCase().equals(provi.getWebsite().toLowerCase()))
 					throw new ExceptionCustom("Ya hay un registro asociado a ese sitio web.");
 			}
@@ -102,6 +104,7 @@ public class ProviderService {
 			if(provider.getEmail().toLowerCase().equals(provi.getEmail().toLowerCase()))
 				throw new ExceptionCustom("Ya hay un registro asociado a ese correo.");
 		}
+		System.out.println("llega aca?2");
 		this.taxDataRepository.save(provider.getTaxData());
 		this.locationRepository.save(provider.getLocation());
 		this.contactDataRepository.save(provider.getContactData());
@@ -166,14 +169,20 @@ public class ProviderService {
 		
 		for(Provider provi : storedProviders) {
 			if(provider.getId() != provi.getId()) { // Si no es el mismo me fijo.
-				if(provider.getLogo().toLowerCase().equals(provi.getLogo()))
-					throw new ExceptionCustom("Ya hay un registro asociado a ese logo.");
+				
+				if(provider.getLogo() != null && provi.getLogo() != null) {
+					if(provider.getLogo().toLowerCase().equals(provi.getLogo()))
+						throw new ExceptionCustom("Ya hay un registro asociado a ese logo.");
+				}
+				if(provider.getWebsite() != null && provi.getWebsite() != null) {
+					if(provider.getWebsite().toLowerCase().equals(provi.getWebsite().toLowerCase()))
+						throw new ExceptionCustom("Ya hay un registro asociado a ese sitio web.");
+				}
+				
 				if(provider.getCodProvider().toLowerCase().equals(provi.getCodProvider().toLowerCase()))
 					throw new ExceptionCustom("Ya hay un registro asociado a ese codigo de proveedor.");
 				if(provider.getBusinessName().toLowerCase().equals(provi.getBusinessName().toLowerCase()))
 					throw new ExceptionCustom("Ya hay un registro asociado a esa razon social.");
-				if(provider.getWebsite().toLowerCase().equals(provi.getWebsite().toLowerCase()))
-					throw new ExceptionCustom("Ya hay un registro asociado a ese sitio web.");
 				if(provider.getPhone().toLowerCase().equals(provi.getPhone().toLowerCase()))
 					throw new ExceptionCustom("Ya hay un registro asociado a ese telefono.");
 				if(provider.getEmail().toLowerCase().equals(provi.getEmail().toLowerCase()))

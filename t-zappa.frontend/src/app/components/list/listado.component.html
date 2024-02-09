@@ -281,7 +281,7 @@
                                       {{detail.article.name}} {{(detail.amount > 1)?'('+detail.amount+')':''}}
                                     </td>
                                     <td>
-                                      {{detail.article.price | currency:'USD':'symbol':'1.2-2'}}
+                                      {{ (detail.subtotal / detail.amount) | currency:'USD':'symbol':'1.2-2'}}
                                     </td>
                                     <td>
                                       {{detail.subtotal | currency:'USD':'symbol':'1.2-2'}}
